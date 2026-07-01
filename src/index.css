@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Caveat:wght@700&family=Geist:wght@800;900&family=Space+Grotesk:wght@700;900&family=JetBrains+Mono:wght@800&display=swap');
+
+:root {
+  --bg-color: #fbf9f4; /* Match light hero background to eliminate any dark flashes */
+  --text-color: #1a1a1a;
+
+  --color-custom-white: #fdf7eb;
+  --color-custom-black: #2a2a2a;
+  --color-custom-red: #c53b3a;
+  --color-custom-green: #0c9367;
+  --color-custom-blue: #09407e;
+  --color-custom-yellow: #f1b333;
+  --color-custom-orange: #f07633;
+  --color-custom-purple: #6758a5;
+
+  --font-hakobi: "Hakobi", sans-serif;
+  --font-new-spirit: "New Spirit", serif;
+  --font-poppins: "Poppins", sans-serif;
+}
+
+@font-face {
+  font-family: "Hakobi";
+  src: url("/_fonts/hakobi-condensed.DXNvv6p5.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "New Spirit";
+  src: url("/_fonts/New-Spirit-Medium.C_xuludA.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/_fonts/ZSg8KrVpBpHsi8CAn-AwHI_nhgQKA42WEqQ0uLqSn0U-4in6v2_cLX1EF4HrRqCG8tzoR1wRCxQzF2wyBWc2Y2s.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Hide scrollbar completely across all browsers while keeping smooth scroll working */
+html, body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #fbf9f4;
+  color: var(--text-color);
+  min-height: 100vh;
+  overflow-x: hidden !important;
+  -ms-overflow-style: none !important;  /* IE and Edge */
+  scrollbar-width: none !important;  /* Firefox */
+}
+
+/* Hide webkit scrollbars (Chrome, Safari, Opera) */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+#root::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #fbf9f4;
+}
