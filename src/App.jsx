@@ -542,7 +542,7 @@ function App() {
       <div className="iim-bg-overlay" />
       <div className="mckinsey-bg-overlay" />
 
-      <Hero />
+      <Hero setShowPaymentModal={setShowPaymentModal} />
 
       <div className="horizontal-scroll-outer" id="why" ref={outer1Ref}>
         <div className="horizontal-scroll-track" ref={track1Ref}>
@@ -951,7 +951,8 @@ function App() {
 
           <div className="sec8-footer-bottom-bar">
             <span>© 2026 Dhandha School · Made in India · All rights reserved</span>
-            <span>Cohort 01 · 2026</span>
+            <a href="https://www.upforgeconsulting.com" target="_blank" rel="noopener noreferrer" className="footer-upforge-link">— made by UpForge —</a>
+            <span>Cohort 02 · 2026</span>
           </div>
         </footer>
       </section>

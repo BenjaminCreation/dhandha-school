@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Hero.css';
 
-const Hero = () => {
+const Hero = ({ setShowPaymentModal }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [visibleItemsCount, setVisibleItemsCount] = useState(0);
   const [menuBgColor, setMenuBgColor] = useState('#050505');
@@ -207,8 +207,7 @@ const Hero = () => {
 
           {/* Right Links */}
           <div className="nav_right_box">
-            <a href="#signin" className="nav-link sign-in">Sign in</a>
-            <button className="primer-btn get-started-btn">Get started</button>
+            <button className="primer-btn get-started-btn" onClick={() => setShowPaymentModal(true)}>Get started</button>
           </div>
         </div>
       </header>
@@ -228,7 +227,7 @@ const Hero = () => {
             <span className="capsule-blue-text">12 years of school. Zero lessons on how to earn, build, or create wealth.</span>
           </div>
 
-          <button className="hero-cta-btn">
+          <button className="hero-cta-btn" onClick={() => setShowPaymentModal(true)}>
             Join the Masterclass
           </button>
         </div>

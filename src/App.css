@@ -1026,6 +1026,16 @@
   margin-top: 24px;
 }
 
+.footer-upforge-link {
+  color: #111827;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.footer-upforge-link:hover {
+  opacity: 0.7;
+}
+
 @media (max-width: 1180px) {
   .premise-layout,
   .pricing-layout,
