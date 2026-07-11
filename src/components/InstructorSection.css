@@ -17,14 +17,14 @@
 }
 
 .instructor-content {
-  background-color: var(--color-custom-black);
-  color: var(--color-custom-white);
+  background-color: #fbf9f4; /* Same as page background */
+  color: #000;
   border-radius: 30px;
   padding: 3rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  border: 3px solid var(--color-custom-black);
+  border: 3px solid #000;
   margin: 0 auto;
   flex-grow: 1;
   width: 100%;
@@ -33,9 +33,9 @@
 }
 
 body.inverted-theme .instructor-content {
-  background-color: var(--color-custom-white);
-  color: var(--color-custom-black);
-  border-color: var(--color-custom-white);
+  background-color: #fbf9f4;
+  color: #000;
+  border-color: #000;
 }
 
 .instructor-content h3 {

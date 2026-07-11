@@ -19,7 +19,7 @@ const faqData = [
   {
     question: "What's the format? Live or recorded?",
     answer:
-      "One 3-hour live session, online. Q&A throughout. The session is recorded and you get lifetime access, so missing the live class is not fatal, but the live experience is the most valuable part."
+      "One 4-hour live session, online. Q&A throughout. The session is recorded and you get lifetime access, so missing the live class is not fatal, but the live experience is the most valuable part."
   },
   {
     question: 'What language will the session be in?',
@@ -27,9 +27,9 @@ const faqData = [
       "Primarily English, with Hinglish where it makes the idea clearer. The goal is clarity, not formality. If demand grows for fully regional-language cohorts, we'll build those."
   },
   {
-    question: "Why is it ₹499? What's the catch?",
+    question: "Why is it ₹999? What's the catch?",
     answer:
-      'Because this is cohort 01 and accessibility is the point. Early students take a leap of faith with us; founding member pricing is our way of saying thank you.'
+      `Because you're joining early. Cohort 02 is intentionally priced at ₹999 to reward early believers and help us build the community with your feedback.`
   },
   {
     question: "What if it's not for me?",
@@ -86,45 +86,49 @@ const whyCards = [
 
 const curriculumModules = [
   {
-    index: 'i',
+    index: 'Day 1',
     ribbon: 'Signal',
     title: 'Reading Financial Statements',
     body: 'The three statements every business runs on: P&L, balance sheet, and cash flow, explained the way they actually work.',
     tags: ['P&L', 'Balance Sheet', 'Cash Flow', 'Red Flags'],
-    accent: 'yellow'
+    accent: 'yellow',
+    timing: '2 hr'
   },
   {
-    index: 'ii',
+    index: 'Day 1',
     ribbon: 'Markets',
     title: 'Stock Market Basics',
     body: 'How public markets price businesses and how to read an annual report the way an analyst does.',
     tags: ['Annual Reports', 'Multiples', 'Market Cap', 'P/E'],
-    accent: 'blue'
+    accent: 'blue',
+    timing: '1 hr'
   },
   {
-    index: 'iii',
+    index: 'Day 2',
     ribbon: 'Fundraise',
     title: 'Pitching VCs',
     body: 'What VCs are really looking for, the story you need in the room, and the questions you will be asked.',
     tags: ['VC Mindset', 'The Pitch', 'Term Sheets', 'Dilution'],
-    accent: 'pink'
+    accent: 'pink',
+    timing: '1 hr'
   },
   {
-    index: 'iv',
+    index: 'Day 2',
     ribbon: 'Value',
     title: 'Valuation Fundamentals',
     body: 'DCF intuition without the scary math, comparable multiples, and the frameworks you need to negotiate.',
     tags: ['DCF', 'Comps', 'Multiples', 'Negotiation'],
-    accent: 'purple'
+    accent: 'purple',
+    timing: '1 hr'
   }
 ];
 
 const pricingPerks = [
-  '3-hour live session with Vibhanshu',
+  '4-hour live session with Vibhanshu',
   'Workbook with templates for all 4 modules',
   'Live Q&A across the full session',
   'Lifetime access to recordings',
-  'Private community of cohort 01',
+  'Private community of cohort 02',
   'Discounted access to future masterclasses'
 ];
 
@@ -151,6 +155,37 @@ const differenceItems = [
   }
 ];
 
+const testimonials = [
+  { name: 'Mridul gehlot', rating: 5, review: 'It was worth it.' },
+  { name: 'Tejas Rajguru', rating: 4, review: 'Good session overall.' },
+  { name: 'Ritesh Beuria', rating: 4, review: 'Very insightful, fast-paced session.' },
+  { name: 'Sneha Kurcheeti', rating: 5, review: 'Great session!' },
+  { name: 'Shreya Singh', rating: 5, review: 'Loved how you broke down intimidating concepts like financial statements and VC so simply.' },
+  { name: 'Raghavendra Acharya', rating: 5, review: 'Amazing session — no BS, just straight to the point useful information.' },
+  { name: 'Ansh Sambhariya', rating: 5, review: 'Loved the session, content, and delivery! This info isn\'t easily available anywhere.' },
+  { name: 'Aryan Singh', rating: 4, review: 'Great session! Not a business master yet, but it set a solid base and curiosity for finance.' },
+  { name: 'Viraj Joshi', rating: 5, review: 'Literally great! Topics like P/E ratio are now crystal clear.' },
+  { name: 'Jyoti Bhandari', rating: 5, review: 'Simplified a lot for someone from a non-financial background.' },
+  { name: 'Prajwal', rating: 5, review: 'Highly insightful and practical! Explained balance sheet, P&L, cash flow, stocks, and VC simply.' },
+  { name: 'Gurtej Singh', rating: 5, review: 'First finance class as a 12th grader — learned a ton about stocks, VC pitch, and balance sheet.' },
+  { name: 'Geetha', rating: 5, review: 'No prior finance exposure — this session was so helpful and engaging!' },
+  { name: 'Yajnesh Amuru', rating: 5, review: 'Covered financial statements, stock market, and VC in depth — extremely useful!' },
+  { name: 'Savar Jaiswal', rating: 5, review: 'One of the most insightful finance sessions — complex concepts broken into simple, practical lessons.' },
+  { name: 'Moksh Kumar', rating: 5, review: 'Best cohort I\'ve done. Learned a lot quickly — kaafi cool session!' },
+  { name: 'Devesh Gupta', rating: 5, review: 'Great session! Takeaways: balance sheet analysis and VC pitching. Now more confident analyzing companies.' },
+  { name: 'Harsh Mishra', rating: 5, review: 'Content and delivery were excellent. Non-finance background but understood almost everything.' },
+  { name: 'Thanushree N', rating: 5, review: 'Very informative — starting with real numbers was a great approach!' },
+  { name: 'Soham waradkar', rating: 5, review: 'First time seeing a balance sheet and understood it easily. From medical background, learned a lot about VC and pitch decks. Worth the money!' },
+  { name: 'Umar Fareed', rating: 5, review: 'Really enjoyed the session! Concepts explained simply and relatable. Great practical approach and vibe.' },
+  { name: 'Prajjwal Adarkar', rating: 5, review: 'From humanities background, always struggled with finance — this session made it easier!' },
+  { name: 'Vartika Yadav', rating: 5, review: 'Best finance class! Heard terms before but now financial statements feel simple. Looking forward to more!' },
+  { name: 'Sarthak Goswami', rating: 4, review: 'All modules gave a fundamental understanding of finance. Vibhanshu\'s insights maximized learning.' },
+  { name: 'Annangi Hruday', rating: 4, review: 'Really great, content-packed session — completely worth it!' },
+  { name: 'Aditi', rating: 5, review: 'Great session! Everything you\'d want in a basic course covered in one session.' },
+  { name: 'Gagan Deep Kardam', rating: 5, review: 'Understood finance like never before — hooked for 3 straight hours!' },
+  { name: 'Pooja Kewat', rating: 5, review: 'Best class, learned a lot, built new perspective. Appreciate the priceless content!' }
+];
+
 const sectionAnnouncements = [
   'Finance for Builders · 4 modules',
   'Live cohort energy',
@@ -168,6 +203,41 @@ function App() {
   const track2Ref = useRef(null);
   const outer3Ref = useRef(null);
   const track3Ref = useRef(null);
+
+  const openRazorpayCheckout = () => {
+    // Razorpay test key - replace with your live key in production
+    const key = "rzp_test_YourKeyHere";
+    
+    const options = {
+      key: key,
+      amount: 99900, // Amount in paise (₹999)
+      currency: "INR",
+      name: "Dhandha School",
+      description: "Finance for Builders - Cohort 02",
+      image: "/favicon.svg",
+      handler: function (response) {
+        alert(`Payment Successful! Payment ID: ${response.razorpay_payment_id}`);
+        // Here you can send the payment details to your backend for verification
+      },
+      prefill: {
+        name: "",
+        email: "",
+        contact: ""
+      },
+      notes: {
+        "address": "Dhandha School Office"
+      },
+      theme: {
+        color: "#FFD93D"
+      }
+    };
+
+    const rzp1 = new window.Razorpay(options);
+    rzp1.on('payment.failed', function (response){
+      alert(`Payment Failed! Reason: ${response.error.description}`);
+    });
+    rzp1.open();
+  };
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -228,22 +298,26 @@ function App() {
       const outer2 = outer2Ref.current;
       if (track2 && outer2) {
         const shiftAmount = window.innerWidth;
-        gsap.fromTo(
-          track2,
-          { x: () => -shiftAmount },
-          {
-            x: 0,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: outer2,
-              pin: true,
-              scrub: 1,
-              start: 'top top',
-              end: () => `+=${shiftAmount}`,
-              invalidateOnRefresh: true
-            }
+        const verticalScrollAmount = window.innerHeight * 1.2; // Allow scrolling down section4 first with some extra space
+        
+        gsap.set(track2, { x: 0 }); // Start with section4 visible
+        
+        const timeline2 = gsap.timeline({
+          scrollTrigger: {
+            trigger: outer2,
+            pin: true,
+            scrub: 1,
+            start: 'top top',
+            end: () => `+=${verticalScrollAmount + shiftAmount}`,
+            invalidateOnRefresh: true
           }
-        );
+        });
+        
+        timeline2.to({}, { duration: verticalScrollAmount / 1000 }); // First: vertical scroll to see all of section4
+        timeline2.to(track2, {
+          x: () => -shiftAmount,
+          ease: 'none'
+        }); // Then: horizontal scroll to section3
       }
 
       const track3 = track3Ref.current;
@@ -469,12 +543,11 @@ function App() {
               <img src="/bill.png" alt="" aria-hidden="true" className="floating-cutout cutout-bill" />
               <div className="story-topbar">
                 <span className="story-badge">02 / WHY WE EXIST</span>
-                <p className="story-top-copy">Inspired by loud, editorial fintech layouts, but adapted to the exact Dhandha School graphic language.</p>
+                <p className="story-top-copy">Turning ambitious learners into confident builders.</p>
               </div>
               <div className="manifesto-header">
                 <h2 className="story-heading">
-                  <span className="story-highlight story-highlight-lavender">Why Dhandha School</span>
-                  <span className="story-heading-line">needs to exist.</span>
+                  <span className="story-highlight story-highlight-lavender">Why Dhandha School needs to exist.</span>
                 </h2>
                 <p className="story-body">
                   Business education in India is broken in two directions: an expensive gate on one side, chaos on the other.
@@ -500,21 +573,21 @@ function App() {
             <div className="story-stage story-stage-pricing story-panel">
               <img src="/credit.png" alt="" aria-hidden="true" className="floating-cutout cutout-credit" />
               <div className="story-topbar">
-                <span className="story-badge">03 / FOUNDING PRICE</span>
+                <span className="story-badge">04 / Second Cohort</span>
                 <div className="story-chip-row">
-                  <span className="story-chip">One live session</span>
+                  <span className="story-chip">Online session</span>
                   <span className="story-chip">Lifetime recording access</span>
-                  <span className="story-chip">Cohort 01</span>
+                  <span className="story-chip">Weekend</span>
                 </div>
               </div>
               <div className="pricing-layout">
                 <div className="pricing-copy story-panel">
                   <h2 className="story-heading">
-                    <span className="story-highlight story-highlight-blue">₹499</span>
-                    <span className="story-heading-line">for the first leap.</span>
+                    <span className="story-highlight story-highlight-blue">₹999</span>
+                    <span className="story-heading-line">for the second leap.</span>
                   </h2>
                   <div className="story-slant-capsule story-slant-capsule-dark">
-                    <span className="story-capsule-text story-capsule-text-dark">Founding member pricing for the first cohort only.</span>
+                    <span className="story-capsule-text story-capsule-text-dark">Early member pricing for the second cohort only.</span>
                   </div>
                   <p className="story-body">
                     Tight, dense, live, and useful the same day. The offer is small on price so the ambition can be big on access.
@@ -524,8 +597,8 @@ function App() {
                   <div className="pricing-poster-top">
                     <span className="pricing-eyebrow">Finance for Builders</span>
                     <div className="pricing-amounts">
-                      <span className="pricing-old">₹1,499</span>
-                      <span className="pricing-new">₹499</span>
+                      <span className="pricing-old">₹1,999</span>
+                      <span className="pricing-new">₹999</span>
                     </div>
                   </div>
                   <ul className="pricing-list">
@@ -533,7 +606,7 @@ function App() {
                       <li key={perk}>{perk}</li>
                     ))}
                   </ul>
-                  <button className="primer-btn get-started-btn pricing-primary-btn">Join the waitlist</button>
+                  <button className="primer-btn get-started-btn pricing-primary-btn" onClick={openRazorpayCheckout}>Join</button>
                 </div>
               </div>
             </div>
@@ -544,7 +617,7 @@ function App() {
               <img src="/laptop.png" alt="" aria-hidden="true" className="floating-cutout cutout-laptop" />
               <img src="/trophy.png" alt="" aria-hidden="true" className="floating-cutout cutout-trophy" />
               <div className="story-topbar">
-                <span className="story-badge">04 / MASTERCLASS 01</span>
+                <span className="story-badge">03 / MASTERCLASS </span>
                 <div className="story-marquee-inline">
                   <div className="story-marquee-track">
                     {sectionAnnouncements.concat(sectionAnnouncements).map((item, index) => (
@@ -570,7 +643,7 @@ function App() {
                     <div className="module-ribbon">
                       <span>{module.index}</span>
                       <span>{module.ribbon}</span>
-                      <span>45 min</span>
+                      <span>{module.timing}</span>
                     </div>
                     <div className="module-main">
                       <div className="module-copy">
@@ -649,20 +722,43 @@ function App() {
           <div className="cta-shell">
             <span className="story-badge">06 / YOUR MOVE</span>
             <h2 className="story-heading story-heading-center">
-              <span className="story-highlight story-highlight-yellow">Three hours</span>
+              <span className="story-highlight story-highlight-yellow">Four hours</span>
               <span className="story-heading-line">can change how you read a business.</span>
             </h2>
             <div className="story-slant-capsule">
-              <span className="story-capsule-text">One masterclass. One leap.</span>
+              <span className="story-capsule-text">Two masterclass . Only Leap</span>
             </div>
             <p className="story-black-strip">
-              The first cohort opens with a single, focused masterclass. ₹499. Three hours. One language every builder eventually has to learn.
+              One language every builder eventually has to learn.
             </p>
             <div className="cta-actions">
-              <button className="primer-btn get-started-btn">Join the waitlist</button>
-              <a href="#pricing" className="cta-link">
-                See pricing
-              </a>
+              <button className="primer-btn get-started-btn" onClick={openRazorpayCheckout}>Join the masterclass</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="placeholder-section section-testimonials">
+        <div className="story-stage story-stage-testimonials story-panel">
+          <div className="story-topbar">
+            <span className="story-badge">07 / TESTIMONIALS</span>
+          </div>
+          <h2 className="story-heading">
+            <span className="story-highlight story-highlight-pink">What our students say</span>
+          </h2>
+          <div className="testimonials-marquee-container">
+            <div className="testimonials-marquee-track">
+              {[...testimonials, ...testimonials].map((testimonial, index) => (
+                <article key={index} className={`testimonial-card story-panel testimonial-card-${(index % 4) + 1}`}>
+                  <div className="testimonial-rating">
+                    {[...Array(5)].map((_, i) => (
+                      <span key={i} className={i < testimonial.rating ? 'star-filled' : 'star-empty'}>★</span>
+                    ))}
+                  </div>
+                  <p className="testimonial-review">{testimonial.review}</p>
+                  <span className="testimonial-name">— {testimonial.name}</span>
+                </article>
+              ))}
             </div>
           </div>
         </div>
@@ -673,7 +769,7 @@ function App() {
           <a href="#signin" className="nav-link sign-in">
             Sign in
           </a>
-          <button className="primer-btn get-started-btn">Get started</button>
+          <button className="primer-btn get-started-btn" onClick={openRazorpayCheckout}>Get started</button>
         </div>
 
         <div className="sec8-faq-top" id="faq">

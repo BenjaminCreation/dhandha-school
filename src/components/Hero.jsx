@@ -184,22 +184,13 @@ const Hero = () => {
               pointerEvents: leftBoxVisible ? 'auto' : 'none'
             }}
           >
-            <div className="nav_left_box">
+            <div className="nav_left_box_simplified">
               <div className="nav_logo-parent">
                 <span className="nav-brand-dhandha">DHANDHA</span>
                 <span className="nav-brand-school">school</span>
               </div>
               
-              <div className="nav_rectangles">
-                <div className="nav_rectangles-item"></div>
-                <div className="nav_rectangles-item is-yellow"></div>
-                <div className="nav_rectangles-item col-3"></div>
-                <div className="nav_rectangles-item row-2"></div>
-                <div className="nav_rectangles-item is-orange row-2"></div>
-                <div className="nav_rectangles-item is-blue row-2 col-3"></div>
-              </div>
-
-              <div className={`nav_trigger ${menuOpen ? 'is-active' : ''}`} onClick={toggleMenu}>
+              <div className={`nav_trigger_simplified ${menuOpen ? 'is-active' : ''}`} onClick={toggleMenu}>
                 {menuOpen ? (
                   <svg className="close-x-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                     <path d="M18 6L6 18M6 6l12 12" strokeLinecap="round" strokeLinejoin="round" />
@@ -227,25 +218,23 @@ const Hero = () => {
         <div className="hero-text-content">
           <h1 className="hero-heading">
             <div className="hero-yellow-box">
-              <span className="hero-heading-text">The world</span>
-              <span className="hero-heading-text">taught you</span>
+              <span className="hero-heading-text">They taught you</span>
+              <span className="hero-heading-text">to crack exams.</span>
             </div>
-            <span className="hero-heading-text hero-heading-plain">how to get a job.</span>
+            <span className="hero-heading-text hero-heading-plain">Nobody taught you to build.</span>
           </h1>
 
           <div className="hero-subheading-capsule">
-            <span className="capsule-blue-text">...but not how to </span>
-            <span className="word-build" style={{ color: pastelColors[visibleItemsCount] }}>build</span>
-            <span className="capsule-blue-text"> one.</span>
+            <span className="capsule-blue-text">12 years of school. Zero lessons on how to earn, build, or create wealth.</span>
           </div>
 
-          <p key={visibleItemsCount} className="hero-description hero-subheading-fade" style={{ color: pastelColors[visibleItemsCount] }}>
-            {subheadings[visibleItemsCount]}
-          </p>
+          <button className="hero-cta-btn">
+            Join the Masterclass
+          </button>
         </div>
       </main>
 
-      {/* Fixed Bottom Container for Marquee & Appearing Images */}
+      {/* Fixed Bottom Container for Appearing Images */}
       <div className="fixed-bottom-bar-container">
         <div className="hero-images-overlay">
           {heroImages.map((img, index) => {
@@ -261,27 +250,6 @@ const Hero = () => {
             );
           })}
         </div>
-
-        {/* Marquee Banner at Very Bottom */}
-        <footer className="hero-bottom-marquee">
-          <div className="marquee-gradient-bg">
-            <div className="gradient-blobs-container">
-              <div className="hero-circ_blue2"></div>
-              <div className="hero-circ_pink2"></div>
-              <div className="hero-circ_blue"></div>
-              <div className="hero-circ_pink"></div>
-            </div>
-          </div>
-          <div className="marquee-track-container">
-            <div className="marquee-track">
-              {announcements.concat(announcements).concat(announcements).map((text, idx) => (
-                <div key={idx} className="marquee-capsule-item">
-                  <span className="announcement-text">{text}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </footer>
       </div>
 
       {/* Fullscreen Menu Overlay from react_copyover */}
