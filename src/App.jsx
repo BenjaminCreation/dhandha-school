@@ -765,12 +765,7 @@ function App() {
       </section>
 
       <section className="section-8-container" id="pricing">
-        <div className="sec8-right-buttons">
-          <a href="#signin" className="nav-link sign-in">
-            Sign in
-          </a>
-          <button className="primer-btn get-started-btn" onClick={openRazorpayCheckout}>Get started</button>
-        </div>
+
 
         <div className="sec8-faq-top" id="faq">
           <div className="sec8-faq-header story-panel">
