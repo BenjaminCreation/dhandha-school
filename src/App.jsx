@@ -205,8 +205,8 @@ function App() {
   const track3Ref = useRef(null);
 
   const openRazorpayCheckout = () => {
-    // Razorpay test key - replace with your live key in production
-    const key = "rzp_test_YourKeyHere";
+    // Razorpay live key
+    const key = "rzp_live_TC7SkkDsYqSrdp";
     
     const options = {
       key: key,
