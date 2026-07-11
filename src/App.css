@@ -4,6 +4,16 @@
   background-color: #fbf9f4;
 }
 
+#smooth-wrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
+#smooth-content {
+  width: 100%;
+  will-change: transform;
+}
+
 .horizontal-scroll-outer {
   width: 100vw;
   min-height: 100vh;

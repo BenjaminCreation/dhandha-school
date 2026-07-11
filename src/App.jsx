@@ -1,14 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Lenis from 'lenis';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import 'lenis/dist/lenis.css';
+import { ScrollSmoother } from 'gsap/ScrollSmoother';
 import Loader from './components/Loader';
 import Hero from './components/Hero';
 import InstructorSection from './components/InstructorSection';
 import './App.css';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
 const faqData = [
   {
@@ -258,31 +257,18 @@ function App() {
   };
 
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 2,
+    const smoother = ScrollSmoother.create({
+      smooth: 1.2,
+      ease: 'power3.out',
+      normalizeScroll: true,
       smoothTouch: false
     });
 
-    window.__lenis = lenis;
-    lenis.on('scroll', ScrollTrigger.update);
-
-    const updateRaf = (time) => {
-      lenis.raf(time * 1000);
-    };
-
-    gsap.ticker.add(updateRaf);
-    gsap.ticker.lagSmoothing(0);
+    window.__smoother = smoother;
 
     return () => {
-      gsap.ticker.remove(updateRaf);
-      lenis.destroy();
-      delete window.__lenis;
+      smoother.kill();
+      delete window.__smoother;
     };
   }, []);
 
@@ -498,11 +484,13 @@ function App() {
 
   return (
     <div className="app-shell">
-      <div className="iisc-bg-overlay" />
-      <div className="iim-bg-overlay" />
-      <div className="mckinsey-bg-overlay" />
+      <div id="smooth-wrapper">
+        <div id="smooth-content">
+          <div className="iisc-bg-overlay" />
+          <div className="iim-bg-overlay" />
+          <div className="mckinsey-bg-overlay" />
 
-      <Hero setShowPaymentModal={setShowPaymentModal} />
+          <Hero setShowPaymentModal={setShowPaymentModal} />
 
       <div className="horizontal-scroll-outer" id="why" ref={outer1Ref}>
         <div className="horizontal-scroll-track" ref={track1Ref}>
@@ -880,10 +868,10 @@ function App() {
               <button
                 className="scroll-to-top-btn"
                 onClick={() => {
-                  if (window.__lenis) {
-                    window.__lenis.scrollTo(0, {
+                  if (window.__smoother) {
+                    window.__smoother.scrollTo(0, {
                       duration: 3.8,
-                      easing: (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2)
+                      ease: "power3.out"
                     });
                   } else {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -916,6 +904,8 @@ function App() {
           </div>
         </footer>
       </section>
+        </div>
+      </div>
 
       {loading && <Loader onComplete={() => setLoading(false)} />}
 
