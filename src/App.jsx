@@ -197,6 +197,10 @@ const sectionAnnouncements = [
 function App() {
   const [loading, setLoading] = useState(true);
   const [openFaqIndex, setOpenFaqIndex] = useState(0);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [userPhone, setUserPhone] = useState("");
   const outer1Ref = useRef(null);
   const track1Ref = useRef(null);
   const outer2Ref = useRef(null);
@@ -204,39 +208,93 @@ function App() {
   const outer3Ref = useRef(null);
   const track3Ref = useRef(null);
 
-  const openRazorpayCheckout = () => {
-    // Razorpay live key
-    const key = "rzp_live_TC7SkkDsYqSrdp";
-    
-    const options = {
-      key: key,
-      amount: 99900, // Amount in paise (₹999)
-      currency: "INR",
-      name: "Dhandha School",
-      description: "Finance for Builders - Cohort 02",
-      image: "/favicon.svg",
-      handler: function (response) {
-        alert(`Payment Successful! Payment ID: ${response.razorpay_payment_id}`);
-        // Here you can send the payment details to your backend for verification
-      },
-      prefill: {
-        name: "",
-        email: "",
-        contact: ""
-      },
-      notes: {
-        "address": "Dhandha School Office"
-      },
-      theme: {
-        color: "#FFD93D"
-      }
-    };
+  const handleProceedToPayment = async () => {
+    if (!userName.trim() || !userEmail.trim() || !userPhone.trim()) {
+      alert("Please fill all fields!");
+      return;
+    }
+    await openRazorpayCheckout();
+    setShowPaymentModal(false);
+    setUserName("");
+    setUserEmail("");
+    setUserPhone("");
+  };
 
-    const rzp1 = new window.Razorpay(options);
-    rzp1.on('payment.failed', function (response){
-      alert(`Payment Failed! Reason: ${response.error.description}`);
-    });
-    rzp1.open();
+  const openRazorpayCheckout = async () => {
+    try {
+      // Step 1: Create order from backend
+      const orderResponse = await fetch("http://localhost:5000/api/create-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+      const orderData = await orderResponse.json();
+
+      if (!orderData.success) {
+        alert("Failed to create order. Please try again!");
+        return;
+      }
+
+      const { order } = orderData;
+      const key = "rzp_live_TC7SkkDsYqSrdp";
+
+      // Step 2: Open Razorpay checkout
+      const options = {
+        key: key,
+        amount: order.amount,
+        currency: order.currency,
+        name: "Dhandha School",
+        description: "Finance for Builders - Cohort 02",
+        image: "/favicon.svg",
+        order_id: order.id,
+        handler: async function (response) {
+          try {
+            // Step 3: Verify payment on backend
+            const verifyResponse = await fetch("http://localhost:5000/api/verify-payment", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_signature: response.razorpay_signature,
+                name: userName,
+                email: userEmail,
+                phone: userPhone,
+              }),
+            });
+            const verifyData = await verifyResponse.json();
+
+            if (verifyData.success) {
+              alert("Payment Successful! Welcome to Dhandha School!");
+            } else {
+              alert("Payment verification failed! Please contact support.");
+            }
+          } catch (error) {
+            console.error(error);
+            alert("Error verifying payment. Please contact support!");
+          }
+        },
+        prefill: {
+          name: userName,
+          email: userEmail,
+          contact: userPhone,
+        },
+        notes: {
+          address: "Dhandha School Office",
+        },
+        theme: {
+          color: "#FFD93D",
+        },
+      };
+
+      const rzp1 = new window.Razorpay(options);
+      rzp1.on("payment.failed", function (response) {
+        alert(`Payment Failed! Reason: ${response.error.description}`);
+      });
+      rzp1.open();
+    } catch (error) {
+      console.error(error);
+      alert("Failed to open checkout. Please try again!");
+    }
   };
 
   useEffect(() => {
@@ -606,7 +664,7 @@ function App() {
                       <li key={perk}>{perk}</li>
                     ))}
                   </ul>
-                  <button className="primer-btn get-started-btn pricing-primary-btn" onClick={openRazorpayCheckout}>Join</button>
+                  <button className="primer-btn get-started-btn pricing-primary-btn" onClick={() => setShowPaymentModal(true)}>Join</button>
                 </div>
               </div>
             </div>
@@ -732,7 +790,7 @@ function App() {
               One language every builder eventually has to learn.
             </p>
             <div className="cta-actions">
-              <button className="primer-btn get-started-btn" onClick={openRazorpayCheckout}>Join the masterclass</button>
+              <button className="primer-btn get-started-btn" onClick={() => setShowPaymentModal(true)}>Join the masterclass</button>
             </div>
           </div>
         </div>
@@ -899,6 +957,59 @@ function App() {
       </section>
 
       {loading && <Loader onComplete={() => setLoading(false)} />}
+
+      {/* Payment Modal */}
+      {showPaymentModal && (
+        <div className="payment-modal-overlay" onClick={() => setShowPaymentModal(false)}>
+          <div className="payment-modal" onClick={(e) => e.stopPropagation()}>
+            <button className="payment-modal-close" onClick={() => setShowPaymentModal(false)}>
+              ×
+            </button>
+            <div className="payment-modal-header">
+              <h2 className="payment-modal-title">Join the Masterclass</h2>
+              <p className="payment-modal-subtitle">Fill in your details to proceed with payment</p>
+            </div>
+            <div className="payment-form">
+              <div className="form-group">
+                <label className="form-label">Full Name</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                  placeholder="Your name"
+                />
+              </div>
+              <div className="form-group">
+                <label className="form-label">Email Address</label>
+                <input
+                  type="email"
+                  className="form-input"
+                  value={userEmail}
+                  onChange={(e) => setUserEmail(e.target.value)}
+                  placeholder="your@email.com"
+                />
+              </div>
+              <div className="form-group">
+                <label className="form-label">Phone Number</label>
+                <input
+                  type="tel"
+                  className="form-input"
+                  value={userPhone}
+                  onChange={(e) => setUserPhone(e.target.value)}
+                  placeholder="+91 98765 43210"
+                />
+              </div>
+              <div className="payment-modal-footer">
+                <div className="payment-price">₹999</div>
+                <button className="primer-btn" onClick={handleProceedToPayment}>
+                  Proceed to Payment
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
