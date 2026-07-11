@@ -214,64 +214,24 @@ function App() {
       return;
     }
     await openRazorpayCheckout();
-    setShowPaymentModal(false);
-    setUserName("");
-    setUserEmail("");
-    setUserPhone("");
   };
 
   const openRazorpayCheckout = async () => {
     try {
-      // Step 1: Create order from backend
-      const orderResponse = await fetch("http://localhost:5000/api/create-order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-      });
-      const orderData = await orderResponse.json();
-
-      if (!orderData.success) {
-        alert("Failed to create order. Please try again!");
-        return;
-      }
-
-      const { order } = orderData;
       const key = "rzp_live_TC7SkkDsYqSrdp";
-
-      // Step 2: Open Razorpay checkout
       const options = {
         key: key,
-        amount: order.amount,
-        currency: order.currency,
+        amount: 99900,
+        currency: "INR",
         name: "Dhandha School",
         description: "Finance for Builders - Cohort 02",
         image: "/favicon.svg",
-        order_id: order.id,
         handler: async function (response) {
-          try {
-            // Step 3: Verify payment on backend
-            const verifyResponse = await fetch("http://localhost:5000/api/verify-payment", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_order_id: response.razorpay_order_id,
-                razorpay_signature: response.razorpay_signature,
-                name: userName,
-                email: userEmail,
-                phone: userPhone,
-              }),
-            });
-            const verifyData = await verifyResponse.json();
-
-            if (verifyData.success) {
-              alert("Payment Successful! Welcome to Dhandha School!");
-            } else {
-              alert("Payment verification failed! Please contact support.");
-            }
-          } catch (error) {
-            console.error(error);
-            alert("Error verifying payment. Please contact support!");
-          }
+          alert("Payment Successful! Welcome to Dhandha School!");
+          setShowPaymentModal(false);
+          setUserName("");
+          setUserEmail("");
+          setUserPhone("");
         },
         prefill: {
           name: userName,
@@ -951,7 +911,7 @@ function App() {
 
           <div className="sec8-footer-bottom-bar">
             <span>© 2026 Dhandha School · Made in India · All rights reserved</span>
-            <a href="https://www.upforgeconsulting.com" target="_blank" rel="noopener noreferrer" className="footer-upforge-link">— made by UpForge —</a>
+            <a href="https://www.upforgeconsulting.com" target="_blank" rel="noopener noreferrer" className="footer-upforge-link">Made by UpForge</a>
             <span>Cohort 02 · 2026</span>
           </div>
         </footer>
