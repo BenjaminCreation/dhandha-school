@@ -17,11 +17,11 @@ const Hero = ({ setShowPaymentModal }) => {
   const handleMenuScroll = (e, href) => {
     e.preventDefault();
     setMenuOpen(false);
-    const target = document.querySelector(href);
-    if (target) {
-      if (window.__lenis) {
-        window.__lenis.scrollTo(target, { duration: 2.0 });
-      } else {
+    if (window.__smoother) {
+      window.__smoother.scrollTo(href, { duration: 1.5, ease: 'power3.out' });
+    } else {
+      const target = document.querySelector(href);
+      if (target) {
         target.scrollIntoView({ behavior: 'smooth' });
       }
     }
@@ -31,13 +31,10 @@ const Hero = ({ setShowPaymentModal }) => {
     setMenuOpen(!menuOpen);
   };
 
-  // Control Lenis scrolling state based on sticker completion
+  // Control scrolling state based on sticker completion
   useEffect(() => {
-    if (visibleItemsCount < 6) {
-      window.__lenis?.stop();
-    } else {
-      window.__lenis?.start();
-    }
+    // We're using ScrollSmoother now, no need for Lenis-specific logic here
+    // But we can still keep the scroll lock behavior
   }, [visibleItemsCount]);
 
   // Virtual scroll listener: Strictly locks scroll until all 6 stickers are popped up
@@ -49,7 +46,9 @@ const Hero = ({ setShowPaymentModal }) => {
       if (visibleItemsCount < 6) {
         if (window.scrollY > 0) {
           window.scrollTo(0, 0);
-          window.__lenis?.scrollTo(0, { immediate: true });
+          if (window.__smoother) {
+            window.__smoother.scrollTo(0, { immediate: true });
+          }
         }
         e.preventDefault();
 
@@ -185,8 +184,9 @@ const Hero = ({ setShowPaymentModal }) => {
             }}
           >
             <div className="nav_left_box_simplified">
-              <div className="nav_logo-parent">
-                <img src="/Logo.png" alt="Dhandha School Logo" className="nav-logo-image" />
+              <div className="nav_logo_parent">
+                <span className="nav-brand-dhandha">DHANDHA</span>
+                <span className="nav-brand-school">school</span>
               </div>
               
               <div className={`nav_trigger_simplified ${menuOpen ? 'is-active' : ''}`} onClick={toggleMenu}>

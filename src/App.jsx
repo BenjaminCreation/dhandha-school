@@ -1021,7 +1021,8 @@ function App() {
           <div className="sec8-footer-grid">
             <div className="sec8-col sec8-col-brand">
               <div className="sec8-brand-logo">
-                <img src="/Logo.png" alt="Dhandha School Logo" className="footer-logo-image" />
+                <span className="brand-dhandha">DHANDHA</span>
+                <span className="brand-school">school</span>
               </div>
               <p className="sec8-brand-desc">
                 A new kind of business school for India. Practical, affordable, and built for the people actually building things.
