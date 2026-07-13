@@ -186,8 +186,7 @@ const Hero = ({ setShowPaymentModal }) => {
           >
             <div className="nav_left_box_simplified">
               <div className="nav_logo-parent">
-                <span className="nav-brand-dhandha">DHANDHA</span>
-                <span className="nav-brand-school">school</span>
+                <img src="/Logo.png" alt="Dhandha School Logo" className="nav-logo-image" />
               </div>
               
               <div className={`nav_trigger_simplified ${menuOpen ? 'is-active' : ''}`} onClick={toggleMenu}>

@@ -76,6 +76,11 @@
   box-sizing: border-box;
 }
 
+.nav-logo-image {
+  height: 40px;
+  object-fit: contain;
+}
+
 .nav-brand-dhandha {
   font-family: 'Poppins', sans-serif;
   font-weight: 800;

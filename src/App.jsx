@@ -155,34 +155,34 @@ const differenceItems = [
 ];
 
 const testimonials = [
-  { name: 'Mridul gehlot', rating: 5, review: 'It was worth it.' },
-  { name: 'Tejas Rajguru', rating: 4, review: 'Good session overall.' },
-  { name: 'Ritesh Beuria', rating: 4, review: 'Very insightful, fast-paced session.' },
-  { name: 'Sneha Kurcheeti', rating: 5, review: 'Great session!' },
-  { name: 'Shreya Singh', rating: 5, review: 'Loved how you broke down intimidating concepts like financial statements and VC so simply.' },
-  { name: 'Raghavendra Acharya', rating: 5, review: 'Amazing session — no BS, just straight to the point useful information.' },
-  { name: 'Ansh Sambhariya', rating: 5, review: 'Loved the session, content, and delivery! This info isn\'t easily available anywhere.' },
-  { name: 'Aryan Singh', rating: 4, review: 'Great session! Not a business master yet, but it set a solid base and curiosity for finance.' },
-  { name: 'Viraj Joshi', rating: 5, review: 'Literally great! Topics like P/E ratio are now crystal clear.' },
-  { name: 'Jyoti Bhandari', rating: 5, review: 'Simplified a lot for someone from a non-financial background.' },
-  { name: 'Prajwal', rating: 5, review: 'Highly insightful and practical! Explained balance sheet, P&L, cash flow, stocks, and VC simply.' },
-  { name: 'Gurtej Singh', rating: 5, review: 'First finance class as a 12th grader — learned a ton about stocks, VC pitch, and balance sheet.' },
-  { name: 'Geetha', rating: 5, review: 'No prior finance exposure — this session was so helpful and engaging!' },
-  { name: 'Yajnesh Amuru', rating: 5, review: 'Covered financial statements, stock market, and VC in depth — extremely useful!' },
-  { name: 'Savar Jaiswal', rating: 5, review: 'One of the most insightful finance sessions — complex concepts broken into simple, practical lessons.' },
-  { name: 'Moksh Kumar', rating: 5, review: 'Best cohort I\'ve done. Learned a lot quickly — kaafi cool session!' },
-  { name: 'Devesh Gupta', rating: 5, review: 'Great session! Takeaways: balance sheet analysis and VC pitching. Now more confident analyzing companies.' },
-  { name: 'Harsh Mishra', rating: 5, review: 'Content and delivery were excellent. Non-finance background but understood almost everything.' },
-  { name: 'Thanushree N', rating: 5, review: 'Very informative — starting with real numbers was a great approach!' },
-  { name: 'Soham waradkar', rating: 5, review: 'First time seeing a balance sheet and understood it easily. From medical background, learned a lot about VC and pitch decks. Worth the money!' },
-  { name: 'Umar Fareed', rating: 5, review: 'Really enjoyed the session! Concepts explained simply and relatable. Great practical approach and vibe.' },
-  { name: 'Prajjwal Adarkar', rating: 5, review: 'From humanities background, always struggled with finance — this session made it easier!' },
-  { name: 'Vartika Yadav', rating: 5, review: 'Best finance class! Heard terms before but now financial statements feel simple. Looking forward to more!' },
-  { name: 'Sarthak Goswami', rating: 4, review: 'All modules gave a fundamental understanding of finance. Vibhanshu\'s insights maximized learning.' },
-  { name: 'Annangi Hruday', rating: 4, review: 'Really great, content-packed session — completely worth it!' },
-  { name: 'Aditi', rating: 5, review: 'Great session! Everything you\'d want in a basic course covered in one session.' },
-  { name: 'Gagan Deep Kardam', rating: 5, review: 'Understood finance like never before — hooked for 3 straight hours!' },
-  { name: 'Pooja Kewat', rating: 5, review: 'Best class, learned a lot, built new perspective. Appreciate the priceless content!' }
+  { name: 'Mridul gehlot', rating: 5, review: 'It was worth it.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Mridul' },
+  { name: 'Tejas Rajguru', rating: 4, review: 'Good session overall.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Tejas' },
+  { name: 'Ritesh Beuria', rating: 4, review: 'Very insightful, fast-paced session.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Ritesh' },
+  { name: 'Sneha Kurcheeti', rating: 5, review: 'Great session!', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Sneha' },
+  { name: 'Shreya Singh', rating: 5, review: 'Loved how you broke down intimidating concepts like financial statements and VC so simply.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Shreya' },
+  { name: 'Raghavendra Acharya', rating: 5, review: 'Amazing session — no BS, just straight to the point useful information.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Raghavendra' },
+  { name: 'Ansh Sambhariya', rating: 5, review: 'Loved the session, content, and delivery! This info isn\'t easily available anywhere.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Ansh' },
+  { name: 'Aryan Singh', rating: 4, review: 'Great session! Not a business master yet, but it set a solid base and curiosity for finance.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Aryan' },
+  { name: 'Viraj Joshi', rating: 5, review: 'Literally great! Topics like P/E ratio are now crystal clear.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Viraj' },
+  { name: 'Jyoti Bhandari', rating: 5, review: 'Simplified a lot for someone from a non-financial background.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Jyoti' },
+  { name: 'Prajwal', rating: 5, review: 'Highly insightful and practical! Explained balance sheet, P&L, cash flow, stocks, and VC simply.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Prajwal' },
+  { name: 'Gurtej Singh', rating: 5, review: 'First finance class as a 12th grader — learned a ton about stocks, VC pitch, and balance sheet.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Gurtej' },
+  { name: 'Geetha', rating: 5, review: 'No prior finance exposure — this session was so helpful and engaging!', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Geetha' },
+  { name: 'Yajnesh Amuru', rating: 5, review: 'Covered financial statements, stock market, and VC in depth — extremely useful!', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Yajnesh' },
+  { name: 'Savar Jaiswal', rating: 5, review: 'One of the most insightful finance sessions — complex concepts broken into simple, practical lessons.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Savar' },
+  { name: 'Moksh Kumar', rating: 5, review: 'Best cohort I\'ve done. Learned a lot quickly — kaafi cool session!', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Moksh' },
+  { name: 'Devesh Gupta', rating: 5, review: 'Great session! Takeaways: balance sheet analysis and VC pitching. Now more confident analyzing companies.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Devesh' },
+  { name: 'Harsh Mishra', rating: 5, review: 'Content and delivery were excellent. Non-finance background but understood almost everything.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Harsh' },
+  { name: 'Thanushree N', rating: 5, review: 'Very informative — starting with real numbers was a great approach!', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Thanushree' },
+  { name: 'Soham waradkar', rating: 5, review: 'First time seeing a balance sheet and understood it easily. From medical background, learned a lot about VC and pitch decks. Worth the money!', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Soham' },
+  { name: 'Umar Fareed', rating: 5, review: 'Really enjoyed the session! Concepts explained simply and relatable. Great practical approach and vibe.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Umar' },
+  { name: 'Prajjwal Adarkar', rating: 5, review: 'From humanities background, always struggled with finance — this session made it easier!', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Prajjwal' },
+  { name: 'Vartika Yadav', rating: 5, review: 'Best finance class! Heard terms before but now financial statements feel simple. Looking forward to more!', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Vartika' },
+  { name: 'Sarthak Goswami', rating: 4, review: 'All modules gave a fundamental understanding of finance. Vibhanshu\'s insights maximized learning.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Sarthak' },
+  { name: 'Annangi Hruday', rating: 4, review: 'Really great, content-packed session — completely worth it!', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Annangi' },
+  { name: 'Aditi', rating: 5, review: 'Great session! Everything you\'d want in a basic course covered in one session.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Aditi' },
+  { name: 'Gagan Deep Kardam', rating: 5, review: 'Understood finance like never before — hooked for 3 straight hours!', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Gagan' },
+  { name: 'Pooja Kewat', rating: 5, review: 'Best class, learned a lot, built new perspective. Appreciate the priceless content!', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Pooja' }
 ];
 
 const sectionAnnouncements = [
@@ -969,7 +969,10 @@ function App() {
                     ))}
                   </div>
                   <p className="testimonial-review">{testimonial.review}</p>
-                  <span className="testimonial-name">— {testimonial.name}</span>
+                  <div className="testimonial-footer">
+                    <span className="testimonial-name">— {testimonial.name}</span>
+                    <img src={testimonial.profilePhoto} alt={testimonial.name} className="testimonial-profile-photo" />
+                  </div>
                 </article>
               ))}
             </div>
@@ -1018,8 +1021,7 @@ function App() {
           <div className="sec8-footer-grid">
             <div className="sec8-col sec8-col-brand">
               <div className="sec8-brand-logo">
-                <span className="brand-dhandha">DHANDHA</span>
-                <span className="brand-school">school</span>
+                <img src="/Logo.png" alt="Dhandha School Logo" className="footer-logo-image" />
               </div>
               <p className="sec8-brand-desc">
                 A new kind of business school for India. Practical, affordable, and built for the people actually building things.
@@ -1030,13 +1032,34 @@ function App() {
               <h4 className="sec8-col-title">MASTERCLASS</h4>
               <ul className="sec8-col-links">
                 <li>
-                  <a href="#curriculum">Curriculum</a>
+                  <a href="#curriculum" onClick={(e) => {
+                    e.preventDefault();
+                    if (window.__smoother) {
+                      window.__smoother.scrollTo('#curriculum', { duration: 1.5, ease: 'power3.out' });
+                    } else {
+                      document.querySelector('#curriculum')?.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}>Curriculum</a>
                 </li>
                 <li>
-                  <a href="#pricing">Pricing</a>
+                  <a href="#pricing" onClick={(e) => {
+                    e.preventDefault();
+                    if (window.__smoother) {
+                      window.__smoother.scrollTo('#pricing', { duration: 1.5, ease: 'power3.out' });
+                    } else {
+                      document.querySelector('#pricing')?.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}>Pricing</a>
                 </li>
                 <li>
-                  <a href="#faq">FAQ</a>
+                  <a href="#faq" onClick={(e) => {
+                    e.preventDefault();
+                    if (window.__smoother) {
+                      window.__smoother.scrollTo('#faq', { duration: 1.5, ease: 'power3.out' });
+                    } else {
+                      document.querySelector('#faq')?.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}>FAQ</a>
                 </li>
               </ul>
             </div>
@@ -1045,13 +1068,34 @@ function App() {
               <h4 className="sec8-col-title">ABOUT</h4>
               <ul className="sec8-col-links">
                 <li>
-                  <a href="#instructor">Instructor</a>
+                  <a href="#instructor" onClick={(e) => {
+                    e.preventDefault();
+                    if (window.__smoother) {
+                      window.__smoother.scrollTo('#instructor', { duration: 1.5, ease: 'power3.out' });
+                    } else {
+                      document.querySelector('#instructor')?.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}>Instructor</a>
                 </li>
                 <li>
-                  <a href="#why">Why we exist</a>
+                  <a href="#why" onClick={(e) => {
+                    e.preventDefault();
+                    if (window.__smoother) {
+                      window.__smoother.scrollTo('#why', { duration: 1.5, ease: 'power3.out' });
+                    } else {
+                      document.querySelector('#why')?.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}>Why we exist</a>
                 </li>
                 <li>
-                  <a href="#masterclass">Masterclass</a>
+                  <a href="#masterclass" onClick={(e) => {
+                    e.preventDefault();
+                    if (window.__smoother) {
+                      window.__smoother.scrollTo('#masterclass', { duration: 1.5, ease: 'power3.out' });
+                    } else {
+                      document.querySelector('#masterclass')?.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}>Masterclass</a>
                 </li>
               </ul>
             </div>
@@ -1060,13 +1104,16 @@ function App() {
               <h4 className="sec8-col-title">FOLLOW</h4>
               <ul className="sec8-col-links">
                 <li>
-                  <a href="#instagram">Instagram</a>
+                  <a href="https://www.instagram.com/whybhanshu?igsh=NDBqajI0ZTFpOGxz" target="_blank" rel="noopener noreferrer">Instagram</a>
                 </li>
                 <li>
-                  <a href="#youtube">YouTube</a>
+                  <a href="https://youtube.com/@whybhanshu?si=Pe16UZHShdl5GCx-" target="_blank" rel="noopener noreferrer">YouTube</a>
                 </li>
                 <li>
-                  <a href="#linkedin">LinkedIn</a>
+                  <a href="https://www.linkedin.com/in/vibhanshu-golia-298a3019a" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                </li>
+                <li>
+                  <a href="https://discord.com/invite/FxDpfHG3Cc" target="_blank" rel="noopener noreferrer">Discord</a>
                 </li>
               </ul>
             </div>

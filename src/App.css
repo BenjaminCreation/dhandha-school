@@ -841,8 +841,8 @@
 
 .cutout-graduation {
   width: 150px;
-  right: 100px;
-  top: 86px;
+  right: 10px;
+  top: 110px;
 }
 
 .cutout-job {
@@ -865,19 +865,19 @@
 
 .cutout-credit {
   width: 160px;
-  left: -30px;
-  bottom: -40px;
+  left: -80px;
+  bottom: 110px;
 }
 
 .cutout-laptop {
   width: 160px;
   right: 52px;
-  top: 94px;
+  top: 60px;
 }
 
 .cutout-trophy {
   width: 124px;
-  left: -30px;
+  left: -50px;
   top: 112px;
 }
 
@@ -1018,9 +1018,14 @@
 
 .sec8-brand-logo {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 4px;
   margin-bottom: 10px;
+}
+
+.footer-logo-image {
+  height: 50px;
+  object-fit: contain;
 }
 
 .brand-dhandha {
@@ -1343,7 +1348,21 @@
   font-weight: 700;
   font-size: 0.9rem;
   color: #111;
-  margin-top: 8px;
+}
+
+.testimonial-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+}
+
+.testimonial-profile-photo {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid #000;
+  object-fit: cover;
 }
 
 /* Payment Modal Styles */
