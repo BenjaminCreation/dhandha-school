@@ -68,7 +68,7 @@ const whyCards = [
   },
   {
     index: 'ii.',
-    title: 'AI will take your job.',
+    title: 'AI will take your job',
     body: 'Automation is rising, but building with leverage has never been easier. That makes business literacy more urgent, not less.'
   },
   {
@@ -302,7 +302,7 @@ function App() {
       const outer2 = outer2Ref.current;
       if (track2 && outer2) {
         const shiftAmount = window.innerWidth;
-        const verticalScrollAmount = window.innerHeight * 1.2; // Allow scrolling down section4 first with some extra space
+        const verticalScrollAmount = window.innerHeight * 0.3; // Short pause before horizontal shift
         
         gsap.set(track2, { x: 0 }); // Start with section4 visible
         
@@ -317,7 +317,7 @@ function App() {
           }
         });
         
-        timeline2.to({}, { duration: verticalScrollAmount / 1000 }); // First: vertical scroll to see all of section4
+        timeline2.to({}, { duration: verticalScrollAmount / 1000 }); // Brief pause
         timeline2.to(track2, {
           x: () => -shiftAmount,
           ease: 'none'
@@ -334,7 +334,7 @@ function App() {
             pin: true,
             scrub: 1,
             start: 'top top',
-            end: () => `+=${getScrollAmount3() + window.innerHeight * 1.5}`,
+            end: () => `+=${getScrollAmount3() + window.innerHeight * 0.4}`,
             invalidateOnRefresh: true,
             onUpdate: (self) => {
               const event = new CustomEvent('instructor-scroll', {
@@ -355,7 +355,7 @@ function App() {
           x: () => -getScrollAmount3(),
           ease: 'none'
         });
-        timeline3.to({}, { duration: 1.5 });
+        timeline3.to({}, { duration: 0.3 });
       }
     });
 
@@ -369,8 +369,12 @@ function App() {
     if (loading) return;
 
     const ctx = gsap.context(() => {
+      // Helper: only animate elements NOT inside horizontal scroll sections
+      const outsideHScroll = (selector) =>
+        gsap.utils.toArray(selector).filter(el => !el.closest('.horizontal-scroll-outer'));
+
       // Premium Apple-style entrance animations with scroll triggers
-      gsap.utils.toArray('.story-stage').forEach((stage, index) => {
+      outsideHScroll('.story-stage').forEach((stage, index) => {
         gsap.fromTo(
           stage,
           { autoAlpha: 0, y: 80 },
@@ -430,8 +434,8 @@ function App() {
         }
       });
 
-      // Enhanced sticker/card animations
-      gsap.utils.toArray('.sticker-card, .manifesto-card, .module-card, .difference-note, .pricing-poster').forEach((card, index) => {
+      // Enhanced sticker/card animations (non-horizontal sections only)
+      outsideHScroll('.sticker-card, .manifesto-card, .module-card, .difference-note, .pricing-poster').forEach((card, index) => {
         gsap.fromTo(
           card,
           { autoAlpha: 0, y: 50, rotate: index % 2 === 0 ? 2 : -2, scale: 0.97 },
@@ -474,6 +478,204 @@ function App() {
           repeat: -1,
           ease: 'none'
         });
+      });
+
+      // ── CTA section inner elements ──
+      const ctaShell = document.querySelector('.cta-shell');
+      if (ctaShell) {
+        gsap.utils.toArray([
+          ctaShell.querySelector('.story-badge'),
+          ctaShell.querySelector('.story-heading'),
+          ctaShell.querySelector('.story-slant-capsule'),
+          ctaShell.querySelector('.story-black-strip'),
+          ctaShell.querySelector('.cta-actions')
+        ].filter(Boolean)).forEach((el, i) => {
+          gsap.fromTo(el,
+            { autoAlpha: 0, y: 40 },
+            {
+              autoAlpha: 1, y: 0,
+              duration: 0.9,
+              delay: i * 0.12,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: ctaShell,
+                start: 'top 80%',
+                toggleActions: 'play none none reverse'
+              }
+            }
+          );
+        });
+      }
+
+      // ── Testimonials section ──
+      const testimonialsStage = document.querySelector('.story-stage-testimonials');
+      if (testimonialsStage) {
+        const testBadge = testimonialsStage.querySelector('.story-badge');
+        const testHeading = testimonialsStage.querySelector('.story-heading');
+        const testMarquee = testimonialsStage.querySelector('.testimonials-marquee-container');
+        
+        [testBadge, testHeading, testMarquee].filter(Boolean).forEach((el, i) => {
+          gsap.fromTo(el,
+            { autoAlpha: 0, y: 50 },
+            {
+              autoAlpha: 1, y: 0,
+              duration: 1,
+              delay: i * 0.15,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: testimonialsStage,
+                start: 'top 80%',
+                toggleActions: 'play none none reverse'
+              }
+            }
+          );
+        });
+      }
+
+      // ── FAQ section ──
+      const faqHeader = document.querySelector('.sec8-faq-header');
+      if (faqHeader) {
+        gsap.fromTo(faqHeader,
+          { autoAlpha: 0, y: 50 },
+          {
+            autoAlpha: 1, y: 0,
+            duration: 1,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: faqHeader,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      }
+
+      gsap.utils.toArray('.sec8-faq-item').forEach((item, i) => {
+        gsap.fromTo(item,
+          { autoAlpha: 0, y: 30 },
+          {
+            autoAlpha: 1, y: 0,
+            duration: 0.8,
+            delay: i * 0.08,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: item,
+              start: 'top 92%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      });
+
+      // ── Footer ──
+      const footerGrid = document.querySelector('.sec8-footer-grid');
+      if (footerGrid) {
+        gsap.utils.toArray(footerGrid.querySelectorAll('.sec8-col')).forEach((col, i) => {
+          gsap.fromTo(col,
+            { autoAlpha: 0, y: 40 },
+            {
+              autoAlpha: 1, y: 0,
+              duration: 0.9,
+              delay: i * 0.1,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: footerGrid,
+                start: 'top 85%',
+                toggleActions: 'play none none reverse'
+              }
+            }
+          );
+        });
+      }
+
+      // Helper: only animate elements NOT inside horizontal scroll sections
+      // (horizontal scroll content is already animated by the .story-stage entrance)
+      const outsideHorizontal = (selector) =>
+        gsap.utils.toArray(selector).filter(el => !el.closest('.horizontal-scroll-outer'));
+
+      // ── Story badges, capsules, and black strips (non-horizontal sections only) ──
+      outsideHorizontal('.story-badge').forEach((badge) => {
+        gsap.fromTo(badge,
+          { autoAlpha: 0, scale: 0.9, y: 20 },
+          {
+            autoAlpha: 1, scale: 1, y: 0,
+            duration: 0.7,
+            ease: 'back.out(1.7)',
+            scrollTrigger: {
+              trigger: badge,
+              start: 'top 90%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      });
+
+      outsideHorizontal('.story-slant-capsule').forEach((capsule) => {
+        gsap.fromTo(capsule,
+          { autoAlpha: 0, x: -40, rotate: -6 },
+          {
+            autoAlpha: 1, x: 0, rotate: -2,
+            duration: 0.9,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: capsule,
+              start: 'top 88%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      });
+
+      outsideHorizontal('.story-black-strip').forEach((strip) => {
+        gsap.fromTo(strip,
+          { autoAlpha: 0, x: -30 },
+          {
+            autoAlpha: 1, x: 0,
+            duration: 0.8,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: strip,
+              start: 'top 88%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      });
+
+      // ── Story chip rows (non-horizontal sections only) ──
+      outsideHorizontal('.story-chip').forEach((chip, i) => {
+        gsap.fromTo(chip,
+          { autoAlpha: 0, y: 15, scale: 0.95 },
+          {
+            autoAlpha: 1, y: 0, scale: 1,
+            duration: 0.5,
+            delay: (i % 5) * 0.06,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: chip,
+              start: 'top 92%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      });
+
+      // ── Pricing list items (non-horizontal sections only) ──
+      outsideHorizontal('.pricing-list li').forEach((li, i) => {
+        gsap.fromTo(li,
+          { autoAlpha: 0, x: -20 },
+          {
+            autoAlpha: 1, x: 0,
+            duration: 0.6,
+            delay: i * 0.08,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: li,
+              start: 'top 92%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
       });
     });
 
@@ -563,7 +765,12 @@ function App() {
                 {whyCards.map((item, index) => (
                   <article key={item.title} className={`manifesto-card manifesto-card-${index + 1} story-panel`}>
                     <span className="manifesto-index">{item.index}</span>
-                    <h3 className="manifesto-title">{item.title}</h3>
+                    <h3 className="manifesto-title">
+                      {item.title}
+                      {item.title === 'AI will take your job' && (
+                        <img src="/toon_exclamation.png" alt="!!" className="toon-exclamation" />
+                      )}
+                    </h3>
                     <p className="manifesto-body">{item.body}</p>
                   </article>
                 ))}
