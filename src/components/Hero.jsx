@@ -10,7 +10,7 @@ const Hero = ({ setShowPaymentModal }) => {
   const menuItems = [
     { num: '01', label: 'THE PREMISE', href: '#why', color: '#F94125' },
     { num: '02', label: 'MASTERCLASS', href: '#masterclass', color: '#3E82F7' },
-    { num: '03', label: 'ROADMAP', href: '#whatsnext', color: '#000000' },
+    { num: '03', label: 'WHY US', href: '#whatsnext', color: '#000000' },
     { num: '04', label: 'PRICING', href: '#pricing', color: '#6B4EE6' }
   ];
 
