@@ -17,11 +17,11 @@ const Hero = ({ setShowPaymentModal }) => {
   const handleMenuScroll = (e, href) => {
     e.preventDefault();
     setMenuOpen(false);
-    if (window.__smoother) {
-      window.__smoother.scrollTo(href, { duration: 1.5, ease: 'power3.out' });
-    } else {
-      const target = document.querySelector(href);
-      if (target) {
+    const target = document.querySelector(href);
+    if (target) {
+      if (window.__smoother) {
+        window.__smoother.scrollTo(target, { duration: 1.5, ease: 'power3.out' });
+      } else {
         target.scrollIntoView({ behavior: 'smooth' });
       }
     }
