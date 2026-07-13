@@ -217,7 +217,7 @@ function App() {
 
   const openRazorpayCheckout = async () => {
     try {
-      const key = "rzp_live_TC7SkkDsYqSrdp";
+      const key = import.meta.env.VITE_RAZORPAY_KEY_ID;
       const options = {
         key: key,
         amount: 99900,
