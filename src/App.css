@@ -84,7 +84,8 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
+  gap: 24px;
   will-change: transform, opacity;
   box-sizing: border-box;
 }
@@ -260,7 +261,7 @@
 .story-slant-capsule {
   display: inline-flex;
   width: fit-content;
-  padding: 11px 20px 14px;
+  padding: 14px 24px 16px;
   border: 1px solid #000;
   background: #e0e7ff;
   transform: rotate(-2deg);
@@ -273,7 +274,7 @@
 
 .story-capsule-text {
   font-family: 'Inter', sans-serif;
-  font-size: 1.15rem;
+  font-size: 1.35rem;
   font-weight: 900;
   font-style: italic;
   color: #2563eb;
@@ -289,8 +290,8 @@
   margin: 0;
   background: #000;
   color: #fff;
-  padding: 13px 18px;
-  font-size: 1rem;
+  padding: 16px 22px;
+  font-size: 1.15rem;
   font-weight: 600;
   line-height: 1.6;
   box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
@@ -321,7 +322,7 @@
 
 .premise-stack {
   display: grid;
-  gap: 18px;
+  gap: 14px;
   align-content: center;
 }
 
@@ -346,8 +347,17 @@
 }
 
 .sticker-card {
-  padding: 20px;
+  padding: 26px 28px;
   transform-origin: center;
+}
+
+.sticker-title {
+  font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+}
+
+.sticker-body {
+  font-size: 1.05rem;
+  line-height: 1.7;
 }
 
 .sticker-yellow {
@@ -387,6 +397,15 @@
   font-size: clamp(1.3rem, 2vw, 1.8rem);
   line-height: 1.15;
   color: #111;
+  display: flex;
+  align-items: center;
+}
+
+.toon-exclamation {
+  height: 1.5em;
+  margin-left: 0.2rem;
+  margin-top: -0.2rem;
+  display: inline-block;
 }
 
 .manifesto-header,
@@ -394,8 +413,8 @@
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 24px;
-  margin-bottom: 26px;
+  gap: 16px;
+  margin-bottom: 18px;
 }
 
 .manifesto-header .story-body,
@@ -467,15 +486,33 @@
 
 .story-stage-why .manifesto-header,
 .story-stage-curriculum .curriculum-header {
-  margin-bottom: 18px;
+  margin-bottom: 12px;
+}
+
+.story-stage-why .manifesto-header {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.story-stage-why .manifesto-header .story-heading {
+  font-size: clamp(2rem, 3.8vw, 3.6rem);
+}
+
+.story-stage-why .manifesto-header .story-highlight {
+  padding: 10px 18px 12px;
+}
+
+.story-stage-why .manifesto-header .story-body {
+  max-width: 680px;
 }
 
 .story-stage-why .manifesto-grid {
-  gap: 16px;
+  gap: 14px;
 }
 
 .story-stage-why .manifesto-card {
-  padding: 20px;
+  padding: 18px;
 }
 
 .story-stage-why .manifesto-body {
@@ -484,9 +521,10 @@
 }
 
 .story-stage-why {
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding-top: 30px;
+  padding-bottom: 30px;
   min-height: 100vh;
+  gap: 8px;
 }
 
 .story-stage-premise {
@@ -497,10 +535,23 @@
 
 .story-stage-pricing {
   padding-top: 20px;
-  padding-bottom: 60px;
+  padding-bottom: 30px;
   min-height: 100vh;
   height: auto;
   margin-top: -90px;
+}
+
+.story-stage-pricing .pricing-copy .story-body {
+  font-size: 1.15rem;
+  line-height: 1.7;
+}
+
+.story-stage-pricing .pricing-copy .story-slant-capsule {
+  margin-top: 4px;
+}
+
+.story-stage-pricing .pricing-layout {
+  align-items: center;
 }
 
 .section-4 {
@@ -508,15 +559,42 @@
 }
 
 .story-stage-curriculum {
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding-top: 24px;
+  padding-bottom: 24px;
   min-height: 100vh;
 }
 
+.story-stage-curriculum .curriculum-header {
+  margin-bottom: 10px;
+}
+
+.story-stage-curriculum .curriculum-header .story-heading {
+  font-size: clamp(2rem, 3.8vw, 3.6rem);
+}
+
+.story-stage-curriculum .curriculum-header .story-highlight {
+  padding: 10px 18px 12px;
+}
+
+.story-stage-curriculum .story-black-strip {
+  padding: 10px 16px;
+  font-size: 0.95rem;
+}
+
 .story-stage-difference {
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding-top: 30px;
+  padding-bottom: 30px;
   min-height: 100vh;
+}
+
+.story-stage-difference .difference-copy .story-body {
+  font-size: 1.2rem;
+  line-height: 1.72;
+  max-width: 520px;
+}
+
+.story-stage-difference .difference-layout {
+  align-items: center;
 }
 
 .section-3, .section-5 {
@@ -524,16 +602,16 @@
 }
 
 .story-stage-curriculum .curriculum-stack {
-  gap: 12px;
+  gap: 8px;
 }
 
 .story-stage-curriculum .module-ribbon {
-  padding: 10px 16px;
+  padding: 8px 14px;
 }
 
 .story-stage-curriculum .module-main {
-  gap: 16px;
-  padding: 16px;
+  gap: 12px;
+  padding: 12px 14px;
 }
 
 .story-stage-curriculum .module-title {
@@ -721,12 +799,11 @@
 }
 
 .cta-shell {
-  min-height: calc(100vh - 200px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 48px;
   text-align: center;
 }
 
@@ -761,13 +838,13 @@
 .cutout-job {
   width: 170px;
   right: -85px;
-  bottom: 10px;
+  bottom: -30px;
 }
 
 .cutout-book {
   width: 126px;
-  left: 36px;
-  bottom: 40px;
+  left: -20px;
+  bottom: -30px;
 }
 
 .cutout-bill {
@@ -778,8 +855,8 @@
 
 .cutout-credit {
   width: 160px;
-  left: 20px;
-  bottom: 10px;
+  left: -30px;
+  bottom: -40px;
 }
 
 .cutout-laptop {
@@ -802,8 +879,8 @@
 
 .cutout-book-cta {
   width: 140px;
-  left: 64px;
-  bottom: 42px;
+  left: -20px;
+  bottom: -30px;
 }
 
 .cutout-trophy-cta {
@@ -1164,6 +1241,7 @@
 .story-stage-testimonials {
   padding-top: 40px;
   padding-bottom: 60px;
+  min-height: fit-content;
 }
 
 .testimonials-marquee-container {
