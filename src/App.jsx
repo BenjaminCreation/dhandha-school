@@ -8,6 +8,9 @@ import InstructorSection from './components/InstructorSection';
 import './App.css';
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+if (typeof window !== 'undefined') {
+  window.ScrollTrigger = ScrollTrigger;
+}
 
 const faqData = [
   {
@@ -280,62 +283,100 @@ function App() {
     }, 150);
 
     const ctx = gsap.context(() => {
-      const track1 = track1Ref.current;
-      const outer1 = outer1Ref.current;
-      if (track1 && outer1) {
-        const getScrollAmount1 = () => track1.scrollWidth - window.innerWidth;
-        gsap.to(track1, {
-          x: () => -getScrollAmount1(),
-          ease: 'none',
-          scrollTrigger: {
-            trigger: outer1,
-            pin: true,
-            scrub: 1,
-            start: 'top top',
-            end: () => `+=${getScrollAmount1()}`,
-            invalidateOnRefresh: true
-          }
-        });
-      }
+      const mm = gsap.matchMedia();
 
-      const track2 = track2Ref.current;
-      const outer2 = outer2Ref.current;
-      if (track2 && outer2) {
-        const shiftAmount = window.innerWidth;
-        const verticalScrollAmount = window.innerHeight * 0.3; // Short pause before horizontal shift
-        
-        gsap.set(track2, { x: 0 }); // Start with section4 visible
-        
-        const timeline2 = gsap.timeline({
-          scrollTrigger: {
-            trigger: outer2,
-            pin: true,
-            scrub: 1,
-            start: 'top top',
-            end: () => `+=${verticalScrollAmount + shiftAmount}`,
-            invalidateOnRefresh: true
-          }
-        });
-        
-        timeline2.to({}, { duration: verticalScrollAmount / 1000 }); // Brief pause
-        timeline2.to(track2, {
-          x: () => -shiftAmount,
-          ease: 'none'
-        }); // Then: horizontal scroll to section3
-      }
+      // ── DESKTOP ANIMATIONS (>= 992px) ──
+      mm.add("(min-width: 992px)", () => {
+        const track1 = track1Ref.current;
+        const outer1 = outer1Ref.current;
+        if (track1 && outer1) {
+          const getScrollAmount1 = () => track1.scrollWidth - window.innerWidth;
+          gsap.to(track1, {
+            x: () => -getScrollAmount1(),
+            ease: 'none',
+            scrollTrigger: {
+              trigger: outer1,
+              pin: true,
+              scrub: 1,
+              start: 'top top',
+              end: () => `+=${getScrollAmount1()}`,
+              invalidateOnRefresh: true
+            }
+          });
+        }
 
-      const track3 = track3Ref.current;
-      const outer3 = outer3Ref.current;
-      if (track3 && outer3) {
-        const getScrollAmount3 = () => track3.scrollWidth - window.innerWidth;
-        const timeline3 = gsap.timeline({
-          scrollTrigger: {
-            trigger: outer3,
-            pin: true,
-            scrub: 1,
-            start: 'top top',
-            end: () => `+=${getScrollAmount3() + window.innerHeight * 0.4}`,
-            invalidateOnRefresh: true,
+        const track2 = track2Ref.current;
+        const outer2 = outer2Ref.current;
+        if (track2 && outer2) {
+          const verticalScrollAmount = window.innerHeight * 0.3; // Short pause before horizontal shift
+          
+          gsap.set(track2, { x: 0 }); // Start with section4 visible
+          
+          const timeline2 = gsap.timeline({
+            scrollTrigger: {
+              id: 'track2-trigger',
+              trigger: outer2,
+              pin: true,
+              scrub: 1,
+              start: 'top top',
+              end: () => `+=${verticalScrollAmount + (track2.children[0]?.offsetWidth || window.innerWidth)}`,
+              invalidateOnRefresh: true
+            }
+          });
+          
+          timeline2.to({}, { duration: verticalScrollAmount }); // Brief pause
+          timeline2.to(track2, {
+            x: () => -(track2.children[0]?.offsetWidth || window.innerWidth),
+            ease: 'none',
+            duration: (track2.children[0]?.offsetWidth || window.innerWidth)
+          }); // Then: horizontal scroll to section3
+        }
+
+        const track3 = track3Ref.current;
+        const outer3 = outer3Ref.current;
+        if (track3 && outer3) {
+          const getScrollAmount3 = () => track3.scrollWidth - window.innerWidth;
+          const timeline3 = gsap.timeline({
+            scrollTrigger: {
+              trigger: outer3,
+              pin: true,
+              scrub: 1,
+              start: 'top top',
+              end: () => `+=${getScrollAmount3() + window.innerHeight * 0.4}`,
+              invalidateOnRefresh: true,
+              onUpdate: (self) => {
+                const event = new CustomEvent('instructor-scroll', {
+                  detail: { progress: self.progress, isActive: self.isActive }
+                });
+                window.dispatchEvent(event);
+              },
+              onToggle: (self) => {
+                const event = new CustomEvent('instructor-scroll', {
+                  detail: { progress: self.progress, isActive: self.isActive }
+                });
+                window.dispatchEvent(event);
+              }
+            }
+          });
+
+          timeline3.to(track3, {
+            x: () => -getScrollAmount3(),
+            ease: 'none'
+          });
+          timeline3.to({}, { duration: 0.3 });
+        }
+      });
+
+      // ── MOBILE ANIMATIONS (< 992px) ──
+      mm.add("(max-width: 991px)", () => {
+        // Trigger vertical highlights in Section 6 (Instructor)
+        const instructorEl = document.getElementById('instructor');
+        if (instructorEl) {
+          ScrollTrigger.create({
+            trigger: instructorEl,
+            start: 'top center',
+            end: 'bottom center',
+            scrub: true,
             onUpdate: (self) => {
               const event = new CustomEvent('instructor-scroll', {
                 detail: { progress: self.progress, isActive: self.isActive }
@@ -348,15 +389,9 @@ function App() {
               });
               window.dispatchEvent(event);
             }
-          }
-        });
-
-        timeline3.to(track3, {
-          x: () => -getScrollAmount3(),
-          ease: 'none'
-        });
-        timeline3.to({}, { duration: 0.3 });
-      }
+          });
+        }
+      });
     });
 
     return () => {
@@ -747,7 +782,6 @@ function App() {
 
           <section className="placeholder-section section-2">
             <div className="story-stage story-stage-why story-panel">
-              <img src="/book.png" alt="" aria-hidden="true" className="floating-cutout cutout-book" />
               <img src="/bill.png" alt="" aria-hidden="true" className="floating-cutout cutout-bill" />
               <div className="story-topbar">
                 <span className="story-badge">02 / WHY WE EXIST</span>
@@ -782,11 +816,10 @@ function App() {
 
       <div className="horizontal-scroll-outer" id="masterclass" ref={outer2Ref}>
         <div className="horizontal-scroll-track" ref={track2Ref}>
-          <section className="placeholder-section section-4">
+          <section className="placeholder-section section-4" id="second-cohort">
             <div className="story-stage story-stage-pricing story-panel">
-              <img src="/credit.png" alt="" aria-hidden="true" className="floating-cutout cutout-credit" />
               <div className="story-topbar">
-                <span className="story-badge">04 / Second Cohort</span>
+                <span className="story-badge">03 / Second Cohort</span>
                 <div className="story-chip-row">
                   <span className="story-chip">Online session</span>
                   <span className="story-chip">Lifetime recording access</span>
@@ -828,9 +861,8 @@ function App() {
           <section className="placeholder-section section-3" id="curriculum">
             <div className="story-stage story-stage-curriculum story-panel">
               <img src="/laptop.png" alt="" aria-hidden="true" className="floating-cutout cutout-laptop" />
-              <img src="/trophy.png" alt="" aria-hidden="true" className="floating-cutout cutout-trophy" />
               <div className="story-topbar">
-                <span className="story-badge">03 / MASTERCLASS </span>
+                <span className="story-badge">04 / MASTERCLASS </span>
                 <div className="story-marquee-inline">
                   <div className="story-marquee-track">
                     {sectionAnnouncements.concat(sectionAnnouncements).map((item, index) => (

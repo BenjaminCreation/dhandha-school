@@ -9,14 +9,25 @@ const Hero = ({ setShowPaymentModal }) => {
 
   const menuItems = [
     { num: '01', label: 'THE PREMISE', href: '#why', color: '#F94125' },
-    { num: '02', label: 'MASTERCLASS', href: '#masterclass', color: '#3E82F7' },
+    { num: '02', label: 'MASTERCLASS', href: '#curriculum', color: '#3E82F7' },
     { num: '03', label: 'WHY US', href: '#whatsnext', color: '#000000' },
-    { num: '04', label: 'PRICING', href: '#pricing', color: '#6B4EE6' }
+    { num: '04', label: 'PRICING', href: '#second-cohort', color: '#6B4EE6' }
   ];
 
   const handleMenuScroll = (e, href) => {
     e.preventDefault();
     setMenuOpen(false);
+
+    // Custom scroll calculations for pinned horizontal sections
+    if (href === '#curriculum' || href === '#second-cohort') {
+      const trigger = window.ScrollTrigger?.getAll().find(st => st.trigger?.id === 'masterclass');
+      if (trigger && window.__smoother) {
+        const scrollTarget = href === '#curriculum' ? trigger.end : trigger.start;
+        window.__smoother.scrollTo(scrollTarget, { duration: 1.5, ease: 'power3.out' });
+        return;
+      }
+    }
+
     const target = document.querySelector(href);
     if (target) {
       if (window.__smoother) {
@@ -227,7 +238,7 @@ const Hero = ({ setShowPaymentModal }) => {
           </div>
 
           <button className="hero-cta-btn" onClick={() => setShowPaymentModal(true)}>
-            Join the Masterclass
+            Join the Masterclass <span className="cta-arrow">➔</span>
           </button>
         </div>
       </main>
@@ -240,7 +251,7 @@ const Hero = ({ setShowPaymentModal }) => {
             return (
               <div
                 key={img.id}
-                className={`scroll-image-item ${isVisible ? 'is-visible' : ''}`}
+                className={`scroll-image-item ${isVisible ? 'is-visible' : ''} hero-sticker-${img.name.replace('.png', '')}`}
                 style={{ left: img.left }}
               >
                 <img src={`/${img.name}`} alt={img.name.replace('.png', '')} className="pop-image" />

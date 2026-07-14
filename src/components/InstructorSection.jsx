@@ -207,9 +207,9 @@ const InstructorSection = () => {
   }, []);
 
   return (
-    <section className="placeholder-section section-6 instructor-section-container" id="instructor">
-      <div className="instructor-content">
-        <h3 className="font-hakobi" id="instructor-name">VIBHANSHU GOLIA</h3>
+    <section className="placeholder-section section-6" id="instructor">
+      <div className="story-stage story-stage-instructor story-panel instructor-content">
+        <h3 className="font-geist" id="instructor-name">Vibhanshu Golia (WhyBhanshu)</h3>
         <div className="instructor-split">
           <div className="instructor-image">
             <img src="/founder.jpeg" alt="Vibhanshu Golia" />

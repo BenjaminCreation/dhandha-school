@@ -15,27 +15,39 @@
 }
 
 .horizontal-scroll-outer {
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
   height: auto;
-  overflow: visible;
+  overflow: hidden;
   position: relative;
 }
 
 .horizontal-scroll-track {
   display: flex;
-  width: 200vw;
+  width: 200%;
   min-height: 100vh;
   height: auto;
   will-change: transform;
 }
 
 .horizontal-scroll-track .placeholder-section {
-  width: 100vw;
+  width: 50%;
   height: auto;
   min-height: 100vh;
   flex-shrink: 0;
   overflow: visible;
+}
+
+.horizontal-scroll-track .placeholder-section:not(.instructor-section-container) {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 32px;
+  box-sizing: border-box;
+}
+
+.horizontal-scroll-track .story-stage {
+  min-height: calc(100vh - 80px);
 }
 
 .placeholder-section {
@@ -65,10 +77,13 @@
 .section-3 {
   background: linear-gradient(180deg, #fbf9f4 0%, #e5f3ff 100%);
   border-left: 1px solid #000;
+  padding-top: 0px;
+  margin-top: 0px;
 }
 
 .section-4 {
   background: linear-gradient(180deg, #fff6ec 0%, #fbe1d8 100%);
+  padding-top: 0px;
 }
 
 .section-5 {
@@ -90,12 +105,12 @@
   -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.14);
   overflow: visible;
-  padding: 60px 32px 40px;
+  padding: 40px 32px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  gap: 32px;
+  justify-content: center;
+  gap: 24px;
   will-change: transform, opacity;
   box-sizing: border-box;
 }
@@ -313,23 +328,11 @@
 
 .premise-layout,
 .pricing-layout,
-.difference-layout,
-.manifesto-header,
-.modules-grid,
-.difference-copy {
+.difference-layout {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: 28px;
-  align-items: center;
-  flex-grow: 1;
-}
-
-.manifesto-header,
-.modules-grid {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
+  align-items: stretch;
 }
 
 .premise-copy,
@@ -545,22 +548,21 @@
 .story-stage-why {
   padding-top: 30px;
   padding-bottom: 30px;
-  min-height: 100vh;
-  gap: 8px;
+  justify-content: flex-start;
 }
 
 .story-stage-premise {
-  padding-top: 10px;
-  padding-bottom: 40px;
-  min-height: 100vh;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  justify-content: flex-start;
 }
 
 .story-stage-pricing {
-  padding-top: 20px;
+  padding-top: 30px;
   padding-bottom: 30px;
-  min-height: 100vh;
+  min-height: auto !important;
   height: auto;
-  margin-top: -90px;
+  justify-content: flex-start;
 }
 
 .story-stage-pricing .pricing-copy .story-body {
@@ -573,17 +575,17 @@
 }
 
 .story-stage-pricing .pricing-layout {
-  align-items: center;
+  align-items: flex-start;
 }
 
 .section-4 {
-  padding-top: 0px;
+  /* padding-top: 100px; (Aligned to top in horizontal-scroll-track) */
 }
 
 .story-stage-curriculum {
-  padding-top: 24px;
-  padding-bottom: 24px;
-  min-height: 100vh;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  justify-content: flex-start;
 }
 
 .story-stage-curriculum .curriculum-header {
@@ -606,7 +608,7 @@
 .story-stage-difference {
   padding-top: 30px;
   padding-bottom: 30px;
-  min-height: 100vh;
+  justify-content: flex-start;
 }
 
 .story-stage-difference .difference-copy .story-body {
@@ -616,11 +618,24 @@
 }
 
 .story-stage-difference .difference-layout {
-  align-items: center;
+  align-items: flex-start;
 }
 
-.section-3, .section-5 {
-  padding-top: 20px;
+.section-1, .section-3, .section-5 {
+  /* padding-top: 100px; (Aligned to top in horizontal-scroll-track) */
+}
+
+.story-stage-cta {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  min-height: auto;
+  justify-content: flex-start;
+}
+
+.section-7-cta {
+  min-height: auto !important;
+  padding-top: 60px !important;
+  padding-bottom: 60px !important;
 }
 
 .story-stage-curriculum .curriculum-stack {
@@ -877,7 +892,7 @@
 
 .cutout-credit {
   width: 160px;
-  left: -80px;
+  left: -128px;
   bottom: 110px;
 }
 
@@ -889,7 +904,7 @@
 
 .cutout-trophy {
   width: 124px;
-  left: -50px;
+  left: -92px;
   top: 112px;
 }
 
@@ -1163,6 +1178,37 @@
 }
 
 @media (max-width: 992px) {
+  .horizontal-scroll-outer {
+    width: 100% !important;
+    min-height: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .horizontal-scroll-track {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+    transform: none !important;
+  }
+
+  .horizontal-scroll-track .placeholder-section {
+    width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+    flex-shrink: 1 !important;
+    padding-top: 60px !important;
+    padding-bottom: 20px !important;
+  }
+
+  .horizontal-scroll-track .story-stage {
+    min-height: auto !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+  }
+
   .story-stage {
     min-height: auto;
     padding: 22px;
@@ -1199,10 +1245,18 @@
   }
 
   .story-topbar,
-  .story-chip-row,
   .cta-actions {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .story-chip-row {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    align-items: center !important;
+    width: 100% !important;
   }
 
   .cta-shell,
@@ -1215,8 +1269,67 @@
     padding-left: 0;
   }
 
-  .floating-cutout {
-    display: none;
+  .floating-cutout:not(.cutout-bill):not(.cutout-graduation):not(.cutout-job):not(.cutout-laptop) {
+    display: none !important;
+  }
+
+  .cutout-bill {
+    display: block !important;
+    width: 72px !important;
+    position: absolute !important;
+    right: 16px !important;
+    top: 250px !important;
+    z-index: 10 !important;
+    transform: rotate(15deg) !important;
+  }
+
+  .cutout-graduation {
+    display: block !important;
+    width: 68px !important;
+    position: absolute !important;
+    right: 12px !important;
+    top: 505px !important;
+    z-index: 10 !important;
+    transform: rotate(-10deg) !important;
+  }
+
+  .cutout-job {
+    display: block !important;
+    width: 60px !important;
+    position: absolute !important;
+    right: 20px !important;
+    top: 655px !important;
+    z-index: 10 !important;
+    transform: rotate(5deg) !important;
+  }
+
+  .cutout-laptop {
+    display: block !important;
+    width: 90px !important;
+    position: absolute !important;
+    right: 16px !important;
+    top: 110px !important;
+    z-index: 10 !important;
+  }
+
+  .pricing-primary-btn {
+    width: 100% !important;
+    text-align: center !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  .story-marquee-inline {
+    overflow: visible !important;
+  }
+
+  .story-marquee-track {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    animation: none !important;
+    gap: 8px !important;
+    width: 100% !important;
   }
 
   .sec8-right-buttons {
