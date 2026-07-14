@@ -395,24 +395,38 @@
     bottom: 2px !important;
   }
   .hero-sticker-book {
-    left: 12% !important;
-    transform: translateX(-50%) rotate(-12deg) scale(1) !important;
+    left: 50% !important;
+    margin-left: -110px !important;
+    bottom: -10px !important;
+    z-index: 1 !important;
+    transform: rotate(-15deg) scale(0.9) !important;
   }
   .hero-sticker-trophy {
-    left: 32% !important;
-    transform: translateX(-50%) rotate(-8deg) scale(1) !important;
+    left: 50% !important;
+    margin-left: -55px !important;
+    bottom: 0px !important;
+    z-index: 2 !important;
+    transform: rotate(-8deg) scale(0.95) !important;
   }
   .hero-sticker-graduation {
-    left: 52% !important;
-    transform: translateX(-50%) rotate(5deg) scale(1) !important;
+    left: 50% !important;
+    transform: translateX(-50%) rotate(0deg) scale(1) !important;
+    bottom: 5px !important;
+    z-index: 3 !important;
   }
   .hero-sticker-job {
-    left: 70% !important;
-    transform: translateX(-50%) rotate(8deg) scale(1) !important;
+    left: 50% !important;
+    margin-left: 55px !important;
+    bottom: 0px !important;
+    z-index: 2 !important;
+    transform: rotate(8deg) scale(0.95) !important;
   }
   .hero-sticker-laptop {
-    left: 88% !important;
-    transform: translateX(-50%) rotate(12deg) scale(1) !important;
+    left: 50% !important;
+    margin-left: 110px !important;
+    bottom: -10px !important;
+    z-index: 1 !important;
+    transform: rotate(15deg) scale(0.9) !important;
   }
 }
 

@@ -336,12 +336,19 @@
 }
 
 .premise-copy,
-.pricing-copy,
 .difference-copy {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 22px;
+  justify-content: center;
+}
+
+.pricing-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
   justify-content: center;
 }
 
@@ -504,9 +511,12 @@
   gap: 18px;
 }
 
-.story-stage-why .story-topbar,
-.story-stage-curriculum .story-topbar {
+.story-stage-why .story-topbar {
   margin-bottom: 20px;
+}
+
+.story-stage-curriculum .story-topbar {
+  margin-bottom: 8px;
 }
 
 .story-stage-why .manifesto-header,
@@ -558,16 +568,21 @@
 }
 
 .story-stage-pricing {
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: 40px;
+  padding-bottom: 40px;
   min-height: auto !important;
   height: auto;
-  justify-content: flex-start;
+  justify-content: center;
+  gap: 28px;
+}
+
+.story-stage-pricing .pricing-copy .story-heading {
+  font-size: clamp(3rem, 6vw, 5.5rem);
 }
 
 .story-stage-pricing .pricing-copy .story-body {
-  font-size: 1.15rem;
-  line-height: 1.7;
+  font-size: 1.35rem;
+  line-height: 1.8;
 }
 
 .story-stage-pricing .pricing-copy .story-slant-capsule {
@@ -575,7 +590,8 @@
 }
 
 .story-stage-pricing .pricing-layout {
-  align-items: flex-start;
+  align-items: stretch;
+  gap: 32px;
 }
 
 .section-4 {
@@ -583,26 +599,27 @@
 }
 
 .story-stage-curriculum {
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: 20px;
+  padding-bottom: 16px;
   justify-content: flex-start;
+  gap: 12px;
 }
 
 .story-stage-curriculum .curriculum-header {
-  margin-bottom: 10px;
+  margin-bottom: 4px;
 }
 
 .story-stage-curriculum .curriculum-header .story-heading {
-  font-size: clamp(2rem, 3.8vw, 3.6rem);
+  font-size: clamp(1.6rem, 3vw, 2.6rem);
 }
 
 .story-stage-curriculum .curriculum-header .story-highlight {
-  padding: 10px 18px 12px;
+  padding: 6px 14px 8px;
 }
 
 .story-stage-curriculum .story-black-strip {
-  padding: 10px 16px;
-  font-size: 0.95rem;
+  padding: 7px 14px;
+  font-size: 0.85rem;
 }
 
 .story-stage-difference {
@@ -639,30 +656,32 @@
 }
 
 .story-stage-curriculum .curriculum-stack {
-  gap: 8px;
+  gap: 5px;
 }
 
 .story-stage-curriculum .module-ribbon {
-  padding: 8px 14px;
+  padding: 5px 14px;
+  font-size: 0.78rem;
 }
 
 .story-stage-curriculum .module-main {
-  gap: 12px;
-  padding: 12px 14px;
+  gap: 10px;
+  padding: 8px 14px;
 }
 
 .story-stage-curriculum .module-title {
-  margin-bottom: 6px;
+  margin-bottom: 2px;
+  font-size: clamp(1.1rem, 1.6vw, 1.4rem);
 }
 
 .story-stage-curriculum .module-body {
-  font-size: 0.95rem;
-  line-height: 1.58;
+  font-size: 0.85rem;
+  line-height: 1.45;
 }
 
 .story-stage-curriculum .module-tag {
-  padding: 7px 13px;
-  font-size: 0.78rem;
+  padding: 4px 10px;
+  font-size: 0.72rem;
 }
 
 .module-card {
@@ -724,18 +743,18 @@
 }
 
 .pricing-poster {
-  padding: 24px;
+  padding: 28px;
   background: #fffef8;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 20px;
   justify-content: center;
 }
 
 .pricing-poster-top {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 }
 
 .pricing-eyebrow {
@@ -766,7 +785,7 @@
 
 .pricing-new {
   font-family: 'Geist', 'Inter', sans-serif;
-  font-size: clamp(3rem, 6vw, 5.5rem);
+  font-size: clamp(4.5rem, 9vw, 7.5rem);
   font-weight: 900;
   line-height: 1;
   letter-spacing: -0.05em;
@@ -778,14 +797,14 @@
   padding: 0;
   margin: 0;
   display: grid;
-  gap: 10px;
+  gap: 12px;
 }
 
 .pricing-list li {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  font-size: 0.98rem;
+  font-size: 1.05rem;
   font-weight: 700;
   line-height: 1.55;
   color: #374151;
@@ -801,7 +820,105 @@
 
 .pricing-primary-btn {
   width: fit-content;
-  padding-inline: 2rem;
+  padding: 1rem 2.8rem !important;
+  font-size: 1.15rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.04em;
+  background: #f5c518 !important;
+  color: #000 !important;
+  border: 2px solid #000 !important;
+  box-shadow: 4px 4px 0 #000;
+  animation: btn-pulse 2s ease-in-out infinite;
+  position: relative;
+  z-index: 2;
+}
+
+.pricing-primary-btn:hover {
+  background: #ffd43b !important;
+  transform: translateY(-3px) scale(1.05) !important;
+  box-shadow: 6px 6px 0 #000, 0 0 25px rgba(245, 197, 24, 0.5) !important;
+}
+
+.pricing-primary-btn:active {
+  transform: translateY(0) scale(0.98) !important;
+  box-shadow: 2px 2px 0 #000 !important;
+}
+
+@keyframes btn-pulse {
+  0%, 100% {
+    box-shadow: 4px 4px 0 #000, 0 0 0 0 rgba(245, 197, 24, 0.4);
+  }
+  50% {
+    box-shadow: 4px 4px 0 #000, 0 0 20px 6px rgba(245, 197, 24, 0.35);
+  }
+}
+
+.pricing-btn-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.pricing-arrow {
+  position: absolute;
+  width: 50px;
+  height: auto;
+  opacity: 0.85;
+}
+
+.pricing-arrow-left {
+  left: -60px;
+  top: -8px;
+  animation: arrow-bounce-left 1.5s ease-in-out infinite;
+}
+
+.pricing-arrow-right {
+  right: -60px;
+  top: -8px;
+  animation: arrow-bounce-right 1.5s ease-in-out infinite;
+}
+
+@keyframes arrow-bounce-left {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-6px, -4px); }
+}
+
+@keyframes arrow-bounce-right {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(6px, -4px); }
+}
+
+.pricing-sparkle {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  animation: sparkle-pop 2s ease-in-out infinite;
+}
+
+.pricing-sparkle-1 {
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation-delay: 0s;
+}
+
+.pricing-sparkle-2 {
+  top: -6px;
+  right: -28px;
+  animation-delay: 0.6s;
+}
+
+.pricing-sparkle-3 {
+  bottom: -10px;
+  left: -24px;
+  animation-delay: 1.2s;
+}
+
+@keyframes sparkle-pop {
+  0%, 100% { opacity: 0.3; transform: scale(0.6) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1.1) rotate(20deg); }
 }
 
 .difference-board {
@@ -897,9 +1014,9 @@
 }
 
 .cutout-laptop {
-  width: 160px;
+  width: 130px;
   right: 52px;
-  top: 60px;
+  top: -80px;
 }
 
 .cutout-trophy {
@@ -1278,7 +1395,8 @@
     width: 72px !important;
     position: absolute !important;
     right: 16px !important;
-    top: 250px !important;
+    top: auto !important;
+    bottom: 60px !important;
     z-index: 10 !important;
     transform: rotate(15deg) !important;
   }
@@ -1288,7 +1406,8 @@
     width: 68px !important;
     position: absolute !important;
     right: 12px !important;
-    top: 505px !important;
+    top: auto !important;
+    bottom: 350px !important;
     z-index: 10 !important;
     transform: rotate(-10deg) !important;
   }
@@ -1298,7 +1417,8 @@
     width: 60px !important;
     position: absolute !important;
     right: 20px !important;
-    top: 655px !important;
+    top: auto !important;
+    bottom: 210px !important;
     z-index: 10 !important;
     transform: rotate(5deg) !important;
   }
@@ -1331,6 +1451,61 @@
     gap: 8px !important;
     width: 100% !important;
   }
+
+  /* --- Curriculum / Masterclass Updates --- */
+  .story-stage-curriculum .curriculum-header {
+    position: relative;
+    z-index: 2;
+  }
+  .cutout-laptop {
+    display: block !important;
+    width: 140px !important;
+    position: absolute !important;
+    right: 0px !important;
+    top: 40px !important;
+    z-index: 10 !important;
+  }
+  .story-stage-curriculum .module-ribbon {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 10px 14px !important;
+  }
+  .story-stage-curriculum .module-ribbon span:nth-child(1) {
+    margin-right: 4px;
+  }
+  .story-stage-curriculum .module-ribbon span:nth-child(2) {
+    flex-grow: 1;
+    text-align: left;
+  }
+  .story-stage-curriculum .module-ribbon span:nth-child(2)::before {
+    content: '•';
+    margin-right: 8px;
+    font-weight: 800;
+  }
+  .story-stage-curriculum .module-main {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+
+  /* --- Pricing Updates --- */
+  .story-stage-pricing .story-topbar {
+    margin-bottom: 24px;
+  }
+  .story-stage-pricing .story-heading {
+    font-size: 3.5rem !important;
+  }
+  .story-stage-pricing .story-heading-line {
+    font-size: 1.8rem !important;
+  }
+  .story-stage-pricing .story-slant-capsule {
+    margin-bottom: 24px;
+  }
+  .story-stage-pricing .pricing-poster {
+    padding: 24px 20px !important;
+  }
+
 
   .sec8-right-buttons {
     right: 16px;
@@ -1410,16 +1585,14 @@
   border: 2px solid #000;
   background: #fff;
   box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.1);
-  padding: 24px;
+  padding: 28px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  min-width: 350px;
-  max-width: 350px;
+  gap: 16px;
+  width: 420px;
   flex-shrink: 0;
-  min-height: 300px;
-  max-height: 300px;
-  overflow: hidden;
+  min-height: 320px;
+  height: auto;
 }
 
 .testimonial-card-1 {
@@ -1457,15 +1630,10 @@
 }
 
 .testimonial-review {
-  font-size: 0.95rem;
+  font-size: 1rem;
   line-height: 1.6;
   color: #374151;
   flex-grow: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 8;
-  -webkit-box-orient: vertical;
 }
 
 .testimonial-name {

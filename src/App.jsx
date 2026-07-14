@@ -158,34 +158,29 @@ const differenceItems = [
 ];
 
 const testimonials = [
-  { name: 'Mridul gehlot', rating: 5, review: 'It was worth it.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Mridul' },
+  { name: 'Mridul Gehlot', rating: 5, review: "It's was worth it.", profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Mridul' },
   { name: 'Tejas Rajguru', rating: 4, review: 'Good session overall.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Tejas' },
-  { name: 'Ritesh Beuria', rating: 4, review: 'Very insightful, fast-paced session.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Ritesh' },
+  { name: 'Ritesh Beuria', rating: 4, review: 'It was very insightful, fast-paced and long.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Ritesh' },
   { name: 'Sneha Kurcheeti', rating: 5, review: 'Great session!', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Sneha' },
-  { name: 'Shreya Singh', rating: 5, review: 'Loved how you broke down intimidating concepts like financial statements and VC so simply.', profilePhoto: '/Testmonials/Shreya Singh.jpeg' },
-  { name: 'Raghavendra Acharya', rating: 5, review: 'Amazing session — no BS, just straight to the point useful information.', profilePhoto: '/Testmonials/Raghavendra Acharya.jpeg' },
-  { name: 'Ansh Sambhariya', rating: 5, review: 'Loved the session, content, and delivery! This info isn\'t easily available anywhere.', profilePhoto: '/Testmonials/Ansh Sambhariya.png' },
-  { name: 'Aryan Singh', rating: 4, review: 'Great session! Not a business master yet, but it set a solid base and curiosity for finance.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Aryan' },
-  { name: 'Viraj Joshi', rating: 5, review: 'Literally great! Topics like P/E ratio are now crystal clear.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Viraj' },
-  { name: 'Jyoti Bhandari', rating: 5, review: 'Simplified a lot for someone from a non-financial background.', profilePhoto: '/Testmonials/photo-output - Jiya Bhandari.jpeg' },
-  { name: 'Prajwal', rating: 5, review: 'Highly insightful and practical! Explained balance sheet, P&L, cash flow, stocks, and VC simply.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Prajwal' },
-  { name: 'Gurtej Singh', rating: 5, review: 'First finance class as a 12th grader — learned a ton about stocks, VC pitch, and balance sheet.', profilePhoto: '/Testmonials/Gurtej_Passport_Photo - Gurtej Singh.jpeg' },
-  { name: 'Geetha', rating: 5, review: 'No prior finance exposure — this session was so helpful and engaging!', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Geetha' },
-  { name: 'Yajnesh Amuru', rating: 5, review: 'Covered financial statements, stock market, and VC in depth — extremely useful!', profilePhoto: '/Testmonials/PXL_20250701_220621067 - Yajnesh Amuru.jpg' },
-  { name: 'Savar Jaiswal', rating: 5, review: 'One of the most insightful finance sessions — complex concepts broken into simple, practical lessons.', profilePhoto: '/Testmonials/a5682ea0-b65f-449b-a7a2-41a0bc044655(1) - Savar Jaiswal.png' },
-  { name: 'Moksh Kumar', rating: 5, review: 'Best cohort I\'ve done. Learned a lot quickly — kaafi cool session!', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Moksh' },
-  { name: 'Devesh Gupta', rating: 5, review: 'Great session! Takeaways: balance sheet analysis and VC pitching. Now more confident analyzing companies.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Devesh' },
-  { name: 'Harsh Mishra', rating: 5, review: 'Content and delivery were excellent. Non-finance background but understood almost everything.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Harsh' },
-  { name: 'Thanushree N', rating: 5, review: 'Very informative — starting with real numbers was a great approach!', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Thanushree' },
-  { name: 'Soham waradkar', rating: 5, review: 'First time seeing a balance sheet and understood it easily. From medical background, learned a lot about VC and pitch decks. Worth the money!', profilePhoto: '/Testmonials/1759850728997 - Soham Waradkar.jpg' },
-  { name: 'Umar Fareed', rating: 5, review: 'Really enjoyed the session! Concepts explained simply and relatable. Great practical approach and vibe.', profilePhoto: '/Testmonials/umar_fareed - Mohammad Umar Fareed.png' },
-  { name: 'Prajjwal Adarkar', rating: 5, review: 'From humanities background, always struggled with finance — this session made it easier!', profilePhoto: '/Testmonials/1729054472298 - Prajwal Adarkar.jfif' },
-  { name: 'Vartika Yadav', rating: 5, review: 'Best finance class! Heard terms before but now financial statements feel simple. Looking forward to more!', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Vartika' },
-  { name: 'Sarthak Goswami', rating: 4, review: 'All modules gave a fundamental understanding of finance. Vibhanshu\'s insights maximized learning.', profilePhoto: '/Testmonials/Scanned_20260621-1834 - Sarthak Goswami.jpg' },
-  { name: 'Annangi Hruday', rating: 4, review: 'Really great, content-packed session — completely worth it!', profilePhoto: '/Testmonials/IMG_0040 - Annangi Hruday.jpg' },
-  { name: 'Aditi', rating: 5, review: 'Great session! Everything you\'d want in a basic course covered in one session.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Aditi' },
-  { name: 'Gagan Deep Kardam', rating: 5, review: 'Understood finance like never before — hooked for 3 straight hours!', profilePhoto: '/Testmonials/IMG_0961 copy (1) 1 - Gagan Deep Kardam.png' },
-  { name: 'Pooja Kewat', rating: 5, review: 'Best class, learned a lot, built new perspective. Appreciate the priceless content!', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Pooja' }
+  { name: 'Shreya Singh', rating: 5, review: 'I loved how simply you broke down concepts that usually feel intimidating, like financial statements and VC, and made them so easy to understand.', profilePhoto: '/Testmonials/Shreya Singh.jpeg' },
+  { name: 'Raghavendra Acharya', rating: 5, review: 'Amazing session. No BS, just straight-to-the-point useful information.', profilePhoto: '/Testmonials/Raghavendra Acharya.jpeg' },
+  { name: 'Ansh Sambhariya', rating: 5, review: "I loved the session, the content, and the delivery! This information isn't easily available anywhere.", profilePhoto: '/Testmonials/Ansh Sambhariya.png' },
+  { name: 'Aryan Singh', rating: 4, review: "Great session. I wouldn't say I'm a business master now, but it has really set up a base of context and curiosity for finance. Thanks!", profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Aryan' },
+  { name: 'Viraj Joshi', rating: 5, review: 'It was literally great. Topics like P/E ratio that I had heard before are now crystal clear.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Viraj' },
+  { name: 'Jyoti Bhandari', rating: 5, review: 'You simplified a lot of things for somebody from a non-finance background.', profilePhoto: '/Testmonials/photo-output - Jiya Bhandari.jpeg' },
+  { name: 'Amogh Sridhar', rating: 4, review: 'The content was nice but felt a little basic. I understand it had to cater to a larger audience. Also, you could improve your speaking and presentation skills - no offense.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Amogh' },
+  { name: 'Prajwal', rating: 5, review: 'The session explained Balance Sheets, P&L, Cash Flow, investing, stocks, and VC in a simple and practical way. It was engaging and provided a strong foundation for finance and entrepreneurship.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Prajwal' },
+  { name: 'Gurtej Singh', rating: 5, review: 'It was my first finance class as a 12th grader. Learned a ton about stocks, VC pitching, and balance sheets.', profilePhoto: '/Testmonials/Gurtej_Passport_Photo - Gurtej Singh.jpeg' },
+  { name: 'Geetha', rating: 5, review: "With no finance background, this session was extremely helpful. I've followed you since your IIM days and it was a pleasure to attend. Looking forward to future sessions.", profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Geetha' },
+  { name: 'Yajnesh Amuru', rating: 5, review: 'The three modules on financial statements, stock investing, and venture capital were all valuable, even with my accounting background.', profilePhoto: '/Testmonials/PXL_20250701_220621067 - Yajnesh Amuru.jpg' },
+  { name: 'Savar Jaiswal', rating: 5, review: "One of the most insightful finance sessions I've attended. Practical, engaging, and highly valuable.", profilePhoto: '/Testmonials/a5682ea0-b65f-449b-a7a2-41a0bc044655(1) - Savar Jaiswal.png' },
+  { name: 'Moksh Kumar', rating: 5, review: "Best cohort I've done. Learned a lot in a short span. Kaafi cool session!", profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Moksh' },
+  { name: 'Devesh Gupta', rating: 5, review: 'Great session. Biggest takeaways were balance sheet analysis and VC pitching. I now feel more confident analyzing companies.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Devesh' },
+  { name: 'Harsh Mishra', rating: 5, review: 'Excellent content and delivery. Coming from a non-finance background, I understood almost everything in one go.', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Harsh' },
+  { name: 'Thanushree N', rating: 5, review: 'Very informative. Starting with real numbers was a great approach. Loved it!', profilePhoto: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Thanushree' },
+  { name: 'Soham Waradkar', rating: 5, review: 'Saw a balance sheet for the first time and understood it easily despite coming from a medical background. The session was completely worth the money.', profilePhoto: '/Testmonials/1759850728997 - Soham Waradkar.jpg' },
+  { name: 'Umar Fareed', rating: 5, review: 'Concepts were explained simply and practically. It felt like a meaningful conversation rather than a lecture. Highly recommended.', profilePhoto: '/Testmonials/umar_fareed - Mohammad Umar Fareed.png' },
+  { name: 'Prajjwal Adarkar', rating: 5, review: "Coming from a humanities and marketing background, this session made finance accessible and enjoyable. I've followed your journey since your first video and loved every part of the workshop.", profilePhoto: '/Testmonials/1729054472298 - Prajwal Adarkar.jfif' }
 ];
 
 const sectionAnnouncements = [
@@ -816,53 +811,11 @@ function App() {
 
       <div className="horizontal-scroll-outer" id="masterclass" ref={outer2Ref}>
         <div className="horizontal-scroll-track" ref={track2Ref}>
-          <section className="placeholder-section section-4" id="second-cohort">
-            <div className="story-stage story-stage-pricing story-panel">
-              <div className="story-topbar">
-                <span className="story-badge">03 / Second Cohort</span>
-                <div className="story-chip-row">
-                  <span className="story-chip">Online session</span>
-                  <span className="story-chip">Lifetime recording access</span>
-                  <span className="story-chip">Weekend</span>
-                </div>
-              </div>
-              <div className="pricing-layout">
-                <div className="pricing-copy story-panel">
-                  <h2 className="story-heading">
-                    <span className="story-highlight story-highlight-blue">₹999</span>
-                    <span className="story-heading-line">for the second leap.</span>
-                  </h2>
-                  <div className="story-slant-capsule story-slant-capsule-dark">
-                    <span className="story-capsule-text story-capsule-text-dark">Early member pricing for the second cohort only.</span>
-                  </div>
-                  <p className="story-body">
-                    Tight, dense, live, and useful the same day. The offer is small on price so the ambition can be big on access.
-                  </p>
-                </div>
-                <div className="pricing-poster story-panel">
-                  <div className="pricing-poster-top">
-                    <span className="pricing-eyebrow">Finance for Builders</span>
-                    <div className="pricing-amounts">
-                      <span className="pricing-old">₹1,999</span>
-                      <span className="pricing-new">₹999</span>
-                    </div>
-                  </div>
-                  <ul className="pricing-list">
-                    {pricingPerks.map((perk) => (
-                      <li key={perk}>{perk}</li>
-                    ))}
-                  </ul>
-                  <button className="primer-btn get-started-btn pricing-primary-btn" onClick={() => setShowPaymentModal(true)}>Join</button>
-                </div>
-              </div>
-            </div>
-          </section>
-
           <section className="placeholder-section section-3" id="curriculum">
             <div className="story-stage story-stage-curriculum story-panel">
               <img src="/laptop.png" alt="" aria-hidden="true" className="floating-cutout cutout-laptop" />
               <div className="story-topbar">
-                <span className="story-badge">04 / MASTERCLASS </span>
+                <span className="story-badge">03 / MASTERCLASS </span>
                 <div className="story-marquee-inline">
                   <div className="story-marquee-track">
                     {sectionAnnouncements.concat(sectionAnnouncements).map((item, index) => (
@@ -905,6 +858,67 @@ function App() {
                     </div>
                   </article>
                 ))}
+              </div>
+            </div>
+          </section>
+
+          <section className="placeholder-section section-4" id="second-cohort">
+            <div className="story-stage story-stage-pricing story-panel">
+              <div className="story-topbar">
+                <span className="story-badge">04 / Second Cohort</span>
+                <div className="story-chip-row">
+                  <span className="story-chip">Online session</span>
+                  <span className="story-chip">Lifetime recording access</span>
+                  <span className="story-chip">Weekend</span>
+                </div>
+              </div>
+              <div className="pricing-layout">
+                <div className="pricing-copy story-panel">
+                  <h2 className="story-heading">
+                    <span className="story-highlight story-highlight-blue">₹999</span>
+                    <span className="story-heading-line">for the second leap.</span>
+                  </h2>
+                  <div className="story-slant-capsule story-slant-capsule-dark">
+                    <span className="story-capsule-text story-capsule-text-dark">Early member pricing for the second cohort only.</span>
+                  </div>
+                  <p className="story-body">
+                    Tight, dense, live, and useful the same day. The offer is small on price so the ambition can be big on access.
+                  </p>
+                </div>
+                <div className="pricing-poster story-panel">
+                  <div className="pricing-poster-top">
+                    <span className="pricing-eyebrow">Finance for Builders</span>
+                    <div className="pricing-amounts">
+                      <span className="pricing-old">₹1,999</span>
+                      <span className="pricing-new">₹999</span>
+                    </div>
+                  </div>
+                  <ul className="pricing-list">
+                    {pricingPerks.map((perk) => (
+                      <li key={perk}>{perk}</li>
+                    ))}
+                  </ul>
+                  <div className="pricing-btn-wrapper">
+                    <svg className="pricing-arrow pricing-arrow-left" viewBox="0 0 60 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M2 38C12 28 28 8 58 4" stroke="#000" strokeWidth="2.5" strokeLinecap="round"/>
+                      <path d="M48 2L58 4L52 12" stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                    <svg className="pricing-arrow pricing-arrow-right" viewBox="0 0 60 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M58 38C48 28 32 8 2 4" stroke="#000" strokeWidth="2.5" strokeLinecap="round"/>
+                      <path d="M12 2L2 4L8 12" stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                    <svg className="pricing-sparkle pricing-sparkle-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 2L14 10L22 12L14 14L12 22L10 14L2 12L10 10L12 2Z" fill="#f59e0b"/>
+                    </svg>
+                    <svg className="pricing-sparkle pricing-sparkle-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 2L14 10L22 12L14 14L12 22L10 14L2 12L10 10L12 2Z" fill="#f59e0b"/>
+                    </svg>
+                    <svg className="pricing-sparkle pricing-sparkle-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 2L14 10L22 12L14 14L12 22L10 14L2 12L10 10L12 2Z" fill="#f59e0b"/>
+                    </svg>
+                    <button className="primer-btn get-started-btn pricing-primary-btn" onClick={() => setShowPaymentModal(true)}>Join</button>
+                  </div>
+                </div>
               </div>
             </div>
           </section>
