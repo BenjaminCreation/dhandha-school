@@ -991,6 +991,8 @@
   justify-content: center;
   gap: 48px;
   text-align: center;
+  position: relative;
+  z-index: 10;
 }
 
 .cta-actions {
