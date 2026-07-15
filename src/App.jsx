@@ -191,10 +191,13 @@ const sectionAnnouncements = [
   'Lifetime recordings'
 ];
 
+const whatsappGroupLink = import.meta.env.VITE_WHATSAPP_GROUP_LINK;
+
 function App() {
   const [loading, setLoading] = useState(true);
   const [openFaqIndex, setOpenFaqIndex] = useState(0);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPhone, setUserPhone] = useState("");
@@ -234,8 +237,8 @@ function App() {
         description: "Finance for Builders - Cohort 02",
         image: "/favicon.svg",
         handler: async function (response) {
-          alert("Payment Successful! Welcome to Dhandha School!");
           setShowPaymentModal(false);
+          setPaymentSuccess(true);
           setUserName("");
           setUserEmail("");
           setUserPhone("");
@@ -1356,6 +1359,36 @@ function App() {
                   Proceed to Payment
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Payment Success Modal */}
+      {paymentSuccess && (
+        <div className="payment-modal-overlay" onClick={() => setPaymentSuccess(false)}>
+          <div className="payment-modal success-modal" onClick={(e) => e.stopPropagation()}>
+            <button className="payment-modal-close" onClick={() => setPaymentSuccess(false)}>
+              ×
+            </button>
+            <div className="payment-modal-header">
+              <h2 className="payment-modal-title">You're in! 🎉</h2>
+              <p className="payment-modal-subtitle">
+                Your seat is confirmed! Join the WhatsApp group to connect with fellow builders and get all updates.
+              </p>
+            </div>
+            <div className="payment-modal-footer">
+              <a
+                href={whatsappGroupLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="primer-btn whatsapp-btn"
+              >
+                Join WhatsApp Group →
+              </a>
+              <button className="primer-btn secondary-btn" onClick={() => setPaymentSuccess(false)}>
+                Back to Home
+              </button>
             </div>
           </div>
         </div>

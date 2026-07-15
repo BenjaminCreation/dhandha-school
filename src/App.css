@@ -1851,6 +1851,18 @@
   text-align: center;
 }
 
+.whatsapp-btn {
+  background: #25d366;
+  color: #000;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+}
+
+.secondary-btn {
+  background: #fff;
+}
+
 @media (max-width: 1024px) {
   .testimonial-card {
     min-width: 300px;
