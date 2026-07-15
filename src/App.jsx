@@ -229,6 +229,9 @@ function App() {
     try {
       setPaymentLoading(true);
       const key = import.meta.env.VITE_RAZORPAY_KEY_ID;
+      
+      console.log("Razorpay Key:", key ? "Loaded" : "Missing");
+      console.log("window.Razorpay available:", typeof window.Razorpay !== "undefined");
 
       // Step 1: Try to create a Razorpay order via our backend
       let orderId = null;
@@ -303,6 +306,12 @@ function App() {
       };
 
       setPaymentLoading(false);
+      
+      if (typeof window.Razorpay === "undefined") {
+        alert("Razorpay checkout failed to load. Please refresh the page and try again.");
+        return;
+      }
+      
       const rzp1 = new window.Razorpay(options);
       rzp1.on("payment.failed", function (response) {
         alert(`Payment Failed! Reason: ${response.error.description}`);
@@ -310,8 +319,8 @@ function App() {
       rzp1.open();
     } catch (error) {
       setPaymentLoading(false);
-      console.error(error);
-      alert("Failed to open checkout. Please try again!");
+      console.error("Razorpay Checkout Error:", error);
+      alert("Failed to open checkout. Please check the console for details and try again!");
     }
   };
 
