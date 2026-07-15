@@ -94,7 +94,8 @@
 .nav-brand-school {
   font-family: 'Caveat', cursive;
   font-size: 1.4rem;
-  color: #d97706 !important; /* Golden amber */
+  color: #d97706 !important;
+  /* Golden amber */
   transform: rotate(-6deg) translateY(-1px);
   display: inline-block;
   line-height: 1;
@@ -117,10 +118,29 @@
   box-sizing: border-box;
 }
 
-.nav_trigger_simplified:hover { background-color: #f4f4f4; }
-.nav_trigger_simplified.is-active { background-color: #3b82f6; }
-.nav_trigger-line { width: 24px; height: 1.5px; background-color: #000000; }
-.close-x-icon { width: 22px; height: 22px; stroke: #000000; }
+.nav_trigger_simplified:hover {
+  background-color: #f4f4f4;
+}
+
+.nav_trigger_simplified.is-active {
+  background-color: #3b82f6;
+}
+
+.nav_trigger-line {
+  width: 24px;
+  height: 1.5px;
+  background-color: #000000;
+}
+
+.nav_trigger-line-3 {
+  display: none;
+}
+
+.close-x-icon {
+  width: 22px;
+  height: 22px;
+  stroke: #000000;
+}
 
 /* CTA Button */
 .hero-cta-btn {
@@ -160,39 +180,142 @@
 }
 
 @keyframes dropdown-slide-down {
-  from { opacity: 0; transform: translateY(-8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.dropdown-list { display: flex; flex-direction: column; margin-bottom: 2rem; }
+.dropdown-list {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+}
+
 .dropdown-item {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 12px 16px; font-size: 1.05rem; font-weight: 500; color: #111;
-  cursor: pointer; border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #111;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   transition: background-color 0.3s ease, color 0.2s ease, padding-left 0.3s ease;
   border-radius: 4px;
 }
-.dropdown-item:last-child { border-bottom: none; }
-.dropdown-item:hover { background-color: #3572ef; color: #ffffff; padding-left: 20px; }
-.plus-icon { font-size: 1.2rem; font-weight: 300; color: #666; transition: color 0.2s ease; }
-.dropdown-item:hover .plus-icon { color: #ffffff; }
 
-.dropdown-bottom-actions { display: flex; flex-direction: column; gap: 12px; }
-.dropdown-btn {
-  width: 100%; padding: 0.9rem; border-radius: 100px; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease;
+.dropdown-item:last-child {
+  border-bottom: none;
 }
-.dropdown-btn.is-black { background-color: #000000; color: #ffffff; border: none; }
-.dropdown-btn.is-black:hover { background-color: #222222; }
-.dropdown-btn.is-white-outlined { background-color: #ffffff; color: #000000; border: 1px solid #000000; }
-.dropdown-btn.is-white-outlined:hover { background-color: #f4f4f4; }
+
+.dropdown-item:hover {
+  background-color: #3572ef;
+  color: #ffffff;
+  padding-left: 20px;
+}
+
+.plus-icon {
+  font-size: 1.2rem;
+  font-weight: 300;
+  color: #666;
+  transition: color 0.2s ease;
+}
+
+.dropdown-item:hover .plus-icon {
+  color: #ffffff;
+}
+
+.dropdown-bottom-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dropdown-btn {
+  width: 100%;
+  padding: 0.9rem;
+  border-radius: 100px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dropdown-btn.is-black {
+  background-color: #000000;
+  color: #ffffff;
+  border: none;
+}
+
+.dropdown-btn.is-black:hover {
+  background-color: #222222;
+}
+
+.dropdown-btn.is-white-outlined {
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #000000;
+}
+
+.dropdown-btn.is-white-outlined:hover {
+  background-color: #f4f4f4;
+}
 
 /* Right Box Group */
-.nav_right_box { position: absolute; top: 20px; right: 32px; z-index: 40; display: flex; align-items: center; gap: 2rem; transition: filter 0.3s ease, opacity 0.3s ease; pointer-events: auto; }
-.primer-hero-wrapper.menu-is-open .nav_right_box { filter: blur(3.5px); -webkit-filter: blur(3.5px); opacity: 0.7; pointer-events: none; }
-.nav-link.sign-in { text-decoration: none; color: #000000; font-size: 0.95rem; font-weight: 500; transition: opacity 0.2s ease; }
-.nav-link.sign-in:hover { opacity: 0.7; }
-.get-started-btn { background-color: #000000; color: #ffffff; font-size: 0.95rem; font-weight: 600; padding: 0.8rem 1.8rem; border-radius: 100px; border: none; cursor: pointer; transition: transform 0.2s ease, background-color 0.2s ease; }
-.get-started-btn:hover { background-color: #222222; transform: translateY(-1px); }
+.nav_right_box {
+  position: absolute;
+  top: 20px;
+  right: 32px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  transition: filter 0.3s ease, opacity 0.3s ease;
+  pointer-events: auto;
+}
+
+.primer-hero-wrapper.menu-is-open .nav_right_box {
+  filter: blur(3.5px);
+  -webkit-filter: blur(3.5px);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.nav-link.sign-in {
+  text-decoration: none;
+  color: #000000;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: opacity 0.2s ease;
+}
+
+.nav-link.sign-in:hover {
+  opacity: 0.7;
+}
+
+.get-started-btn {
+  background-color: #000000;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.8rem 1.8rem;
+  border-radius: 100px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.get-started-btn:hover {
+  background-color: #222222;
+  transform: translateY(-1px);
+}
 
 /* Main Body Below Navbar */
 .primer-hero-main {
@@ -280,6 +403,11 @@
   letter-spacing: -0.03em;
 }
 
+.hero-mobile-br,
+.hero-blue-br {
+  display: none;
+}
+
 .capsule-teal-text {
   font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
   font-weight: 800;
@@ -324,111 +452,348 @@
     opacity: 0;
     transform: translateY(6px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-@media (max-width: 992px) {
-  .hero-heading {
-    font-size: 2.5rem;
-  }
-  .heading-line-1, .heading-line-2, .hero-subheading {
-    white-space: normal;
-  }
-}
-
 @media (max-width: 768px) {
-  .hero-heading {
-    font-size: 2.2rem;
+
+  /* ─────────────────────────────────────────
+     HERO WRAPPER
+     Use Mobile_bg.png on mobile instead of the
+     desktop hero_bg.png.
+  ───────────────────────────────────────── */
+  .primer-hero-wrapper {
+    height: auto !important;
+    min-height: 100svh !important;
+    overflow: visible !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding-bottom: 0 !important;
+    position: relative !important;
+    background-image: url('/Mobile_bg.png') !important;
+    background-size: cover !important;
+    background-position: center top !important;
+    background-repeat: no-repeat !important;
+  }
+
+  /* ─────────────────────────────────────────
+     NAVIGATION
+  ───────────────────────────────────────── */
+  .nav_right_box {
+    display: none !important;
+  }
+
+  .nav_trigger-line-3 {
+    display: block !important;
+  }
+
+  /* Fixed, full-width, 24px horizontal padding */
+  .nav_left_box_wrapper {
+    position: fixed !important;
+    top: 24px !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    padding: 0 16px !important;
+    box-sizing: border-box !important;
+    z-index: 1000 !important;
+    transform: none !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  .nav_left_box_simplified {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 0 !important;
+  }
+
+  /* 48×48 rounded square, white bg, soft shadow, no hard border */
+  .nav_trigger_simplified {
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    border-radius: 12px !important;
+    background-color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12) !important;
+    gap: 5px !important;
+  }
+
+  .nav_trigger-line {
+    width: 22px !important;
+    height: 2px !important;
+  }
+
+  /* ─────────────────────────────────────────
+     HERO MAIN CONTAINER
+     Nav: 24px top + 48px height + 32px gap = 104px
+  ───────────────────────────────────────── */
+  .primer-hero-main {
+    flex: 1 !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: flex-start !important;
+    justify-content: flex-start !important;
+    padding-top: 130px !important;
+    padding-bottom: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    text-align: left !important;
   }
-  .hero-subheading {
-    font-size: 1.1rem;
-  }
-  .primer-hero-main {
-    padding-top: 120px;
-    padding-bottom: 240px;
-  }
+
+  /* ─────────────────────────────────────────
+     HERO TEXT BLOCK
+     16px padding on left/right.
+     Yellow box will break out of this via
+     negative margin to bleed to left edge.
+  ───────────────────────────────────────── */
   .hero-text-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 0 16px !important;
     align-items: flex-start !important;
     text-align: left !important;
-    padding-inline: 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0 !important;
   }
+
+  /* ─────────────────────────────────────────
+     HERO HEADING
+     Large bold, ~40–44px, left-aligned.
+  ───────────────────────────────────────── */
+  .hero-heading {
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    inline-size: auto !important;
+    font-size: 40px !important;
+    line-height: 1 !important;
+    letter-spacing: -0.06em !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+  }
+
+  /* ─────────────────────────────────────────
+     YELLOW HIGHLIGHT BOX
+     Bleeds to LEFT EDGE of screen (breaks out
+     of the 16px content padding via -16px margin).
+     Right side has 16px inner padding so text
+     doesn't touch the right edge.
+  ───────────────────────────────────────── */
   .hero-yellow-box {
     display: flex !important;
     flex-direction: column !important;
     align-items: flex-start !important;
-    padding: 8px 12px !important;
-  }
-  .hero-heading-plain {
-    padding-left: 0 !important;
-    text-align: left !important;
-  }
-  .hero-subheading-capsule {
-    padding: 6px 12px !important;
-    margin-top: 10px !important;
-  }
-  .capsule-blue-text {
-    font-size: 1.1rem !important;
-    line-height: 1.4 !important;
-  }
-  .hero-cta-btn {
+    background-color: #fde047 !important;
+    margin-left: 20px !important;
+    padding-left: 16px !important;
+    padding-right: 10px !important;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
     width: 100% !important;
-    max-width: 290px !important;
-    padding: 0.9rem 2rem !important;
-    font-size: 1.1rem !important;
-    margin-top: 1.5rem !important;
+    box-sizing: border-box !important;
+    margin-bottom: 8px !important;
+    margin-top: 8px !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
   }
-  .nav_trigger_simplified {
-    border-radius: 12px !important;
+
+  /* Kill white-space:nowrap so text wraps inside viewport */
+  .hero-heading-text {
+    white-space: normal !important;
+    word-break: break-word !important;
+    display: block !important;
   }
+
+  /* "Nobody taught you to build." — plain black */
+  .hero-heading-plain {
+    margin-left: 20px;
+    text-align: left !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* ─────────────────────────────────────────
+     BLUE INFO CARD
+     Design: light blue bg, thick 4px solid
+     BLACK LEFT BORDER (blockquote style),
+     NO rounded corners, NO all-around border.
+  ───────────────────────────────────────── */
+  .hero-subheading-capsule {
+    display: block !important;
+    width: auto !important;
+    align-self: center !important;
+    box-sizing: border-box !important;
+    background-color: #dbeafe !important;
+    border-radius: 0px !important;
+    border: none !important;
+    padding: 10px 14px !important;
+    margin-top: 10px !important;
+    box-shadow: none !important;
+    transform: none !important;
+    text-align: center !important;
+  }
+
+  .capsule-blue-text {
+    display: block !important;
+    white-space: normal !important;
+    font-size: 1.10rem !important;
+    line-height: 1.4 !important;
+    color: #1d4ed8 !important;
+    font-weight: 700 !important;
+    font-style: italic !important;
+  }
+
+  .hero-mobile-br,
+  .hero-blue-br {
+    display: block !important;
+  }
+
+  /* ─────────────────────────────────────────
+     CTA BUTTON
+     Auto-width pill, left-aligned.
+     Black bg, white text, 56px tall.
+  ───────────────────────────────────────── */
+  .hero-cta-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    align-self: center !important;
+    gap: 8px !important;
+    width: auto !important;
+    max-width: 100% !important;
+    height: 50px !important;
+    padding: 0 32px !important;
+    margin-top: 16px !important;
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    font-size: 1.05rem !important;
+    font-weight: 600 !important;
+    border-radius: 999px !important;
+    border: none !important;
+    box-shadow: none !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
+  }
+
+  /* ─────────────────────────────────────────
+     BOTTOM ILLUSTRATION COLLAGE
+     Figma: hands spread full width, slightly
+     bleeding off edges. Larger than before.
+     Laptop extends to right edge.
+  ───────────────────────────────────────── */
+  .fixed-bottom-bar-container {
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    height: 200px !important;
+    margin-top: 40px !important;
+    margin-bottom: 0 !important;
+    z-index: 5 !important;
+    pointer-events: none !important;
+    overflow: visible !important;
+  }
+
+  .hero-images-overlay {
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+    bottom: auto !important;
+    left: auto !important;
+    overflow: visible !important;
+  }
+
+  /* All sticker images: always visible, larger size */
+  .scroll-image-item {
+    opacity: 1 !important;
+    visibility: visible !important;
+    position: absolute !important;
+    display: flex !important;
+    align-items: flex-end !important;
+    justify-content: center !important;
+    width: 120px !important;
+    height: 170px !important;
+    bottom: 0 !important;
+  }
+
+  .pop-image {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.20)) !important;
+  }
+
+  /*
+    5 hands L→R: book, trophy, graduation, ID card, laptop
+    Figma: book bleeds off left, laptop bleeds off right.
+    Using negative left for book and >80% for laptop.
+  */
+  .hero-sticker-book {
+    left: -2% !important;
+    bottom: 0 !important;
+    z-index: 1 !important;
+    transform: rotate(-10deg) !important;
+  }
+
+  .hero-sticker-trophy {
+    left: 18% !important;
+    bottom: 24px !important;
+    z-index: 2 !important;
+    transform: rotate(6deg) !important;
+  }
+
+  .hero-sticker-graduation {
+    left: 36% !important;
+    bottom: 6px !important;
+    z-index: 3 !important;
+    transform: rotate(-5deg) !important;
+  }
+
+  .hero-sticker-job {
+    left: 54% !important;
+    bottom: 20px !important;
+    z-index: 2 !important;
+    transform: rotate(-8deg) !important;
+  }
+
   .hero-sticker-credit {
     display: none !important;
   }
-  .scroll-image-item {
-    width: 76px !important;
-    height: 76px !important;
-    bottom: 2px !important;
-  }
-  .hero-sticker-book {
-    left: 50% !important;
-    margin-left: -110px !important;
-    bottom: -10px !important;
-    z-index: 1 !important;
-    transform: rotate(-15deg) scale(0.9) !important;
-  }
-  .hero-sticker-trophy {
-    left: 50% !important;
-    margin-left: -55px !important;
-    bottom: 0px !important;
-    z-index: 2 !important;
-    transform: rotate(-8deg) scale(0.95) !important;
-  }
-  .hero-sticker-graduation {
-    left: 50% !important;
-    transform: translateX(-50%) rotate(0deg) scale(1) !important;
-    bottom: 5px !important;
-    z-index: 3 !important;
-  }
-  .hero-sticker-job {
-    left: 50% !important;
-    margin-left: 55px !important;
-    bottom: 0px !important;
-    z-index: 2 !important;
-    transform: rotate(8deg) scale(0.95) !important;
-  }
+
   .hero-sticker-laptop {
-    left: 50% !important;
-    margin-left: 110px !important;
+    left: 72% !important;
     bottom: -10px !important;
     z-index: 1 !important;
-    transform: rotate(15deg) scale(0.9) !important;
+    transform: rotate(12deg) !important;
   }
 }
+
+/* Mobile-only scroll down chevron */
+.hero-scroll-indicator {
+  display: none;
+  text-align: center;
+  font-size: 2rem;
+  color: #111;
+  padding: 12px 0 20px;
+  letter-spacing: 0;
+  line-height: 1;
+  opacity: 0.7;
+}
+
+
 
 .cta-arrow {
   margin-left: 8px;
@@ -455,15 +820,17 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 230px;
+  height: 280px;
   pointer-events: auto;
   z-index: 5;
 }
 
 .scroll-image-item {
   position: absolute;
-  bottom: 28px; /* Base tucked cleanly behind marquee top edge */
-  width: 180px; /* Larger high-impact images */
+  bottom: 28px;
+  /* Base tucked cleanly behind marquee top edge */
+  width: 180px;
+  /* Larger high-impact images */
   height: 180px;
   transform: translateX(-50%) translateY(110px) scale(0.6);
   opacity: 0;
@@ -514,23 +881,63 @@
   pointer-events: none;
 }
 
-.marquee-track-container { position: relative; z-index: 2; width: 100%; overflow: hidden; white-space: nowrap; }
-.marquee-track { display: inline-flex; align-items: center; gap: 16px; padding: 0 8px; animation: marquee-scroll 35s linear infinite; }
-.marquee-track:hover { animation-play-state: paused; }
+.marquee-track-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 8px;
+  animation: marquee-scroll 35s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
 
 @keyframes marquee-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-33.333%); }
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-33.333%);
+  }
 }
 
 .marquee-capsule-item {
-  display: inline-flex; align-items: center; padding: 8px 20px; background-color: #fbf9f4; border: 1px solid #000000; border-radius: 100px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04); cursor: default;
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 20px;
+  background-color: #fbf9f4;
+  border: 1px solid #000000;
+  border-radius: 100px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+  cursor: default;
 }
-.announcement-text { font-size: 0.9rem; font-weight: 500; color: #111827; white-space: nowrap; }
+
+.announcement-text {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #111827;
+  white-space: nowrap;
+}
 
 @media (max-width: 992px) {
-  .primer-nav { padding: 16px 16px 0 16px; }
-  .scroll-image-item { width: 120px; height: 120px; }
+  .primer-nav {
+    padding: 16px 16px 0 16px;
+  }
+
+  .scroll-image-item {
+    width: 120px;
+    height: 120px;
+  }
 }
 
 /* ─── FULLSCREEN MENU OVERLAY FROM REACT_COPYOVER ─── */

@@ -66,6 +66,18 @@ const InstructorSection = () => {
   const logoMckinseyRef = useRef(null);
 
   useEffect(() => {
+    if (window.innerWidth <= 768) {
+      setStatic(iiscRef.current, '#125c99');
+      setStatic(iimRef.current, '#b52c31');
+      setStatic(mckinseyRef.current, '#2c457d');
+      const nameEl = document.getElementById('instructor-name');
+      if (nameEl) nameEl.style.color = '#2c457d';
+      logoIiscRef.current?.classList.add('active');
+      logoIimRef.current?.classList.add('active');
+      logoMckinseyRef.current?.classList.add('active');
+      return;
+    }
+
     let currentZone = -1;
 
     // Initialize/Reset

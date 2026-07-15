@@ -270,6 +270,10 @@
   background: #fdba74;
 }
 
+.manifesto-mobile-br {
+  display: none;
+}
+
 .story-body,
 .manifesto-body,
 .module-body,
@@ -610,16 +614,36 @@
 }
 
 .story-stage-curriculum .curriculum-header .story-heading {
-  font-size: clamp(1.6rem, 3vw, 2.6rem);
+  font-size: clamp(2rem, 3.8vw, 3.6rem);
 }
 
 .story-stage-curriculum .curriculum-header .story-highlight {
-  padding: 6px 14px 8px;
+  padding: 10px 18px 12px;
 }
 
 .story-stage-curriculum .story-black-strip {
   padding: 7px 14px;
   font-size: 0.85rem;
+}
+
+/* Row that holds the heading block + laptop cutout side-by-side */
+.curriculum-header-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 24px;
+  width: 100%;
+}
+.curriculum-header-row .curriculum-header {
+  flex: 1 1 0;
+  min-width: 0;
+}
+.cutout-laptop-inline {
+  width: 160px;
+  flex-shrink: 0;
+  display: block;
+  object-fit: contain;
+  align-self: flex-end;
 }
 
 .story-stage-difference {
@@ -1013,10 +1037,9 @@
   bottom: 110px;
 }
 
+/* cutout-laptop is now inline (.cutout-laptop-inline); legacy rule kept minimal */
 .cutout-laptop {
-  width: 130px;
-  right: 52px;
-  top: -80px;
+  display: none;
 }
 
 .cutout-trophy {
@@ -1294,7 +1317,10 @@
   }
 }
 
-@media (max-width: 992px) {
+@media (max-width: 768px) {
+  #smooth-content {
+    will-change: auto !important;
+  }
   .horizontal-scroll-outer {
     width: 100% !important;
     min-height: auto !important;
@@ -1311,13 +1337,13 @@
     transform: none !important;
   }
 
-  .horizontal-scroll-track .placeholder-section {
+  .placeholder-section {
     width: 100% !important;
     height: auto !important;
     min-height: auto !important;
     flex-shrink: 1 !important;
-    padding-top: 60px !important;
-    padding-bottom: 20px !important;
+    padding: 0 !important;
+    border: none !important;
   }
 
   .horizontal-scroll-track .story-stage {
@@ -1327,8 +1353,8 @@
   }
 
   .story-stage {
-    min-height: auto;
-    padding: 22px;
+    min-height: auto !important;
+    padding: 24px 16px !important;
   }
 
   .manifesto-grid,
@@ -1337,16 +1363,18 @@
   }
 
   .sec8-footer-grid {
-    grid-template-columns: 1fr 1fr 1fr;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 24px !important;
+    text-align: left !important;
   }
-
-  .sec8-col-brand,
-  .sec8-col-backtop {
-    grid-column: span 3;
+  .sec8-col-brand {
+    max-width: 100% !important;
+    margin-bottom: 12px !important;
   }
-
   .sec8-col-backtop {
-    justify-content: flex-start;
+    justify-content: flex-start !important;
+    margin-top: 12px !important;
   }
 
   .floating-cutout {
@@ -1356,9 +1384,12 @@
 
 @media (max-width: 768px) {
   .placeholder-section {
-    padding-inline: 16px;
-    padding-top: 96px;
-    padding-bottom: 16px;
+    width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+    flex-shrink: 1 !important;
+    padding: 0 !important;
+    border: none !important;
   }
 
   .story-topbar,
@@ -1392,13 +1423,14 @@
 
   .cutout-bill {
     display: block !important;
-    width: 72px !important;
+    width: clamp(130px, 24vw, 110px) !important;
     position: absolute !important;
-    right: 16px !important;
-    top: auto !important;
-    bottom: 60px !important;
-    z-index: 10 !important;
-    transform: rotate(15deg) !important;
+    right: 6px !important;
+    top: 240px !important;
+    bottom: auto !important;
+    z-index: 15 !important;
+    opacity: 1 !important;
+    transform: rotate(6deg) !important;
   }
 
   .cutout-graduation {
@@ -1423,13 +1455,14 @@
     transform: rotate(5deg) !important;
   }
 
+  /* cutout-laptop is now inline via .cutout-laptop-inline */
   .cutout-laptop {
-    display: block !important;
-    width: 90px !important;
-    position: absolute !important;
-    right: 16px !important;
-    top: 110px !important;
-    z-index: 10 !important;
+    display: none !important;
+  }
+  .cutout-laptop-inline {
+    width: 110px !important;
+    align-self: flex-end !important;
+    flex-shrink: 0 !important;
   }
 
   .pricing-primary-btn {
@@ -1442,28 +1475,53 @@
 
   .story-marquee-inline {
     overflow: visible !important;
+    border: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
   }
 
   .story-marquee-track {
     display: flex !important;
     flex-wrap: wrap !important;
     animation: none !important;
+    transform: none !important;
     gap: 8px !important;
     width: 100% !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+  }
+  /* Hide the duplicated marquee chips (list is concatenated twice for desktop scroll) */
+  .story-marquee-track .story-chip:nth-child(n + 6) {
+    display: none !important;
   }
 
   /* --- Curriculum / Masterclass Updates --- */
   .story-stage-curriculum .curriculum-header {
-    position: relative;
-    z-index: 2;
+    position: relative !important;
+    z-index: 2 !important;
+    padding-right: 0 !important;
   }
-  .cutout-laptop {
+  .story-stage-curriculum .curriculum-header .story-heading {
+    padding-right: 125px !important;
+    font-size: clamp(2.3rem, 10vw, 2.9rem) !important;
+    line-height: 0.9 !important;
+    letter-spacing: -0.05em !important;
+  }
+  .story-stage-curriculum .story-black-strip {
     display: block !important;
-    width: 140px !important;
-    position: absolute !important;
-    right: 0px !important;
-    top: 40px !important;
-    z-index: 10 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 12px 14px !important;
+    font-size: 0.82rem !important;
+    line-height: 1.4 !important;
+    margin-top: 16px !important;
+  }
+  /* curriculum-header-row controls laptop placement; no absolute override needed */
+  .story-stage-curriculum .curriculum-header-row {
+    align-items: flex-end !important;
+    gap: 12px !important;
   }
   .story-stage-curriculum .module-ribbon {
     display: flex !important;
@@ -1497,7 +1555,8 @@
     font-size: 3.5rem !important;
   }
   .story-stage-pricing .story-heading-line {
-    font-size: 1.8rem !important;
+    font-size: clamp(2.2rem, 10vw, 2.9rem) !important;
+    line-height: 1.02 !important;
   }
   .story-stage-pricing .story-slant-capsule {
     margin-bottom: 24px;
@@ -1818,3 +1877,493 @@
     padding: 24px;
   }
 }
+
+/* --- Mobile Layout Custom Realignment overrides --- */
+.mobile-only-inline,
+.mobile-only-collage,
+.card-cutout {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-only-inline {
+    display: inline-block !important;
+  }
+  .mobile-only-collage {
+    display: flex !important;
+    position: relative !important;
+    width: 100% !important;
+    height: 120px !important;
+    margin-top: 36px !important;
+    justify-content: center !important;
+    align-items: flex-end !important;
+    overflow: visible !important;
+  }
+  .mobile-only-collage img, .collage-hand {
+    position: absolute !important;
+    width: 92px !important;
+    height: 92px !important;
+    object-fit: contain !important;
+    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.15)) !important;
+  }
+  .hand-book {
+    left: 50% !important;
+    margin-left: -191px !important;
+    bottom: -22px !important;
+    transform: rotate(-22deg) scale(0.9) !important;
+  }
+  .hand-trophy {
+    left: 50% !important;
+    margin-left: -134px !important;
+    bottom: -3px !important;
+    transform: rotate(-12deg) scale(0.98) !important;
+  }
+  .hand-graduation {
+    left: 50% !important;
+    margin-left: -74px !important;
+    bottom: 14px !important;
+    transform: rotate(-3deg) scale(1.05) !important;
+  }
+  .hand-job {
+    left: 50% !important;
+    margin-left: -18px !important;
+    bottom: 14px !important;
+    transform: rotate(3deg) scale(1.05) !important;
+  }
+  .hand-credit {
+    left: 50% !important;
+    margin-left: 42px !important;
+    bottom: -3px !important;
+    transform: rotate(12deg) scale(0.98) !important;
+  }
+  .hand-laptop {
+    left: 50% !important;
+    margin-left: 99px !important;
+    bottom: -22px !important;
+    transform: rotate(22deg) scale(0.9) !important;
+  }
+
+  .card-cutout {
+    display: block !important;
+    position: absolute !important;
+    object-fit: contain !important;
+    z-index: 10 !important;
+    pointer-events: none !important;
+  }
+
+  /* Shared soft-card design style (matches Section 2 + design refs) */
+  .sticker-card,
+  .module-card,
+  .difference-note,
+  .testimonial-card {
+    border: none !important;
+    border-radius: 14px !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06) !important;
+  }
+
+  /* Section 1 (Premise) — match design ref */
+  .story-stage-premise .story-badge {
+    display: inline-flex !important;
+    margin-bottom: 14px !important;
+  }
+  .story-stage-premise .story-topbar {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    width: 100% !important;
+    margin-bottom: 24px !important;
+  }
+  .story-stage-premise .story-chip-row {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    width: 100% !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    margin-top: 0 !important;
+  }
+  .story-stage-premise .story-chip {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    white-space: normal !important;
+    text-align: center !important;
+    justify-content: center !important;
+    font-size: 0.65rem !important;
+    letter-spacing: 0 !important;
+    padding: 10px 6px !important;
+    line-height: 1.2 !important;
+    border: 1px solid #000000 !important;
+    border-radius: 999px !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+    color: #111827 !important;
+    font-weight: 700 !important;
+  }
+  .story-stage-premise .floating-cutout {
+    display: none !important;
+  }
+  .story-stage-premise .story-gradient-left {
+    width: 250px !important;
+    height: 250px !important;
+    top: -60px !important;
+    left: -60px !important;
+  }
+  .story-stage-premise .premise-copy .story-heading {
+    font-size: clamp(2.1rem, 9vw, 2.85rem) !important;
+    line-height: 1.0 !important;
+  }
+  .story-stage-premise .story-highlight-yellow {
+    display: block !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 12px 16px 14px !important;
+  }
+  .story-stage-premise .story-slant-capsule {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 10px 16px !important;
+  }
+  .story-stage-premise .story-capsule-text {
+    font-size: clamp(0.78rem, 3.35vw, 0.9rem) !important;
+    line-height: 1.3 !important;
+  }
+  .story-stage-premise .story-black-strip {
+    width: 100% !important;
+    font-size: clamp(0.74rem, 3.15vw, 0.86rem) !important;
+    line-height: 1.4 !important;
+    padding: 14px 16px !important;
+  }
+
+  /* Section 1 cards */
+  .sticker-card {
+    position: relative !important;
+    overflow: visible !important;
+    transform: none !important; /* Flat cards, no rotation on mobile */
+    border: 1px solid rgba(0, 0, 0, 0.15) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06) !important;
+    padding: 24px 110px 24px 20px !important; /* Extra padding on the right for cutout */
+    min-height: 140px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+  }
+  .sticker-card .mobile-only-cutout {
+    display: block !important;
+    position: absolute !important;
+    right: 5px !important;
+    bottom: -8px !important;
+    width: auto !important;
+    height: 125px !important;
+    object-fit: contain !important;
+    z-index: 10 !important;
+    pointer-events: none !important;
+    transform-origin: bottom right !important;
+  }
+  /* Card 1 specific rotation */
+  .sticker-card:nth-child(1) .mobile-only-cutout {
+    transform: rotate(-5deg) !important;
+    bottom: -10px !important;
+    right: 5px !important;
+  }
+  /* Card 2 specific rotation */
+  .sticker-card:nth-child(2) .mobile-only-cutout {
+    transform: rotate(-2deg) !important;
+    bottom: -2px !important;
+    right: 15px !important;
+    height: 120px !important;
+  }
+  /* Card 3 specific rotation */
+  .sticker-card:nth-child(3) .mobile-only-cutout {
+    transform: rotate(-8deg) !important;
+    bottom: -10px !important;
+    right: 5px !important;
+  }
+  .sticker-eyebrow {
+    font-size: 0.75rem !important;
+    font-weight: 800 !important;
+    color: #111827 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    margin-bottom: 8px !important;
+  }
+  .sticker-title {
+    font-size: 1.7rem !important;
+    font-weight: 900 !important;
+    line-height: 1.1 !important;
+    color: #111827 !important;
+    margin: 0 0 10px 0 !important;
+  }
+  .sticker-body {
+    font-size: 0.95rem !important;
+    line-height: 1.45 !important;
+    color: #4b5563 !important;
+    margin: 0 !important;
+  }
+
+  /* Section 2 cards and top bar custom overrides */
+  .manifesto-mobile-br {
+    display: block !important;
+  }
+  .story-stage-why .story-topbar {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    gap: 12px !important;
+    margin-bottom: 16px !important;
+  }
+  .story-stage-why .story-badge {
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+    font-size: clamp(0.68rem, 3vw, 0.8rem) !important;
+    letter-spacing: 0.09em !important;
+    padding: 8px 16px !important;
+  }
+  .story-stage-why .story-top-copy {
+    display: block !important;
+    font-size: clamp(0.8rem, 3.4vw, 0.92rem) !important;
+    color: #4b5563 !important;
+    text-align: right !important;
+    max-width: 210px !important;
+    margin: 0 !important;
+    line-height: 1.3 !important;
+    font-weight: 600 !important;
+  }
+  .story-stage-why .manifesto-header .story-heading {
+    font-size: clamp(1.75rem, 7.6vw, 2.2rem) !important;
+    line-height: 0.98 !important;
+    width: 100% !important;
+  }
+  .story-stage-why .story-highlight-lavender {
+    display: block !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    background-color: #ddd6fe !important;
+    border: 1.5px solid #000 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 16px 16px 18px !important;
+  }
+  .story-stage-why .manifesto-header {
+    margin-bottom: 0 !important;
+  }
+  .story-stage-why .story-body {
+    font-size: clamp(0.84rem, 3.6vw, 0.95rem) !important;
+    line-height: 1.55 !important;
+    color: #4b5563 !important;
+    margin-top: 14px !important;
+    margin-bottom: 0 !important;
+    max-width: 100% !important;
+  }
+  .story-stage-why .manifesto-grid {
+    gap: 16px !important;
+  }
+  .manifesto-card {
+    position: relative !important;
+    overflow: visible !important;
+    padding: clamp(22px, 6vw, 28px) !important;
+    border-radius: 12px !important;
+    border: 1px solid rgba(0, 0, 0, 0.15) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05) !important;
+  }
+  .story-stage-why .manifesto-card-1 {
+    background: #fde68a !important;
+  }
+  .story-stage-why .manifesto-card-2 {
+    background: #bfdbfe !important;
+  }
+  .story-stage-why .manifesto-card-3 {
+    background: #ddd6fe !important;
+  }
+  .story-stage-why .manifesto-card-4 {
+    background: #fecdd3 !important;
+  }
+  .manifesto-index {
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    color: #4b5563 !important;
+    margin-bottom: 10px !important;
+    font-family: 'Geist Mono', ui-monospace, monospace !important;
+  }
+  .manifesto-title {
+    font-size: clamp(1.3rem, 5.6vw, 1.55rem) !important;
+    font-weight: 900 !important;
+    line-height: 1.05 !important;
+    margin-bottom: 12px !important;
+  }
+  .manifesto-body {
+    font-size: clamp(0.9rem, 3.7vw, 1rem) !important;
+    line-height: 1.5 !important;
+    color: #4b5563 !important;
+  }
+  .manifesto-card .mobile-only-cutout {
+    display: none !important;
+  }
+
+  /* Section 3 Modules tag grid & chevron */
+  .module-main {
+    display: grid !important;
+    grid-template-columns: 1fr auto !important;
+    gap: 12px !important;
+    align-items: center !important;
+    padding: 12px 14px !important;
+  }
+  .module-copy {
+    grid-column: 1 !important;
+  }
+  .module-tags {
+    grid-column: 2 !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 6px !important;
+    align-items: start !important;
+    max-width: 130px !important;
+    margin-top: 0 !important;
+  }
+  .module-tag {
+    padding: 4px 8px !important;
+    font-size: 0.72rem !important;
+  }
+  .mobile-chevron {
+    display: inline-block !important;
+    margin-left: 8px !important;
+    color: #111 !important;
+    font-weight: 700 !important;
+  }
+
+  /* Section 4 custom layouts */
+  .chip-icon.mobile-only-inline {
+    display: inline-block !important;
+    vertical-align: middle !important;
+  }
+  /* Section 4 custom layouts & premium card styling */
+  .story-stage-pricing .story-highlight-blue {
+    display: block !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 12px 16px 14px !important;
+    background-color: #bfdbfe !important;
+  }
+  .story-stage-pricing .story-slant-capsule-dark {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 12px 16px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    transform: none !important;
+  }
+  .story-stage-pricing .story-capsule-text-dark {
+    font-size: clamp(0.78rem, 3.35vw, 0.9rem) !important;
+    line-height: 1.3 !important;
+  }
+  .story-stage-pricing .pricing-poster {
+    padding: 24px 20px !important;
+    border: 1px solid rgba(0, 0, 0, 0.15) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05) !important;
+    background: #ffffff !important;
+  }
+
+  /* Section 5 Difference note cards */
+  .difference-note {
+    position: relative !important;
+    overflow: visible !important;
+    transform: none !important; /* Flat cards, no rotation */
+    border: 1px solid rgba(0, 0, 0, 0.15) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06) !important;
+    padding: 22px !important;
+    box-sizing: border-box !important;
+  }
+  .story-stage-difference .story-highlight-peach {
+    display: block !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 12px 16px 14px !important;
+    background-color: #ffd2c9 !important;
+  }
+  .story-stage-difference .difference-note-1 {
+    background: #fde68a !important; /* warm yellow */
+  }
+  .story-stage-difference .difference-note-2 {
+    background: #bfdbfe !important; /* soft blue */
+  }
+  .story-stage-difference .difference-note-3 {
+    background: #fecdd3 !important; /* soft pink */
+  }
+  .story-stage-difference .difference-note-4 {
+    background: #ddd6fe !important; /* lavender */
+  }
+
+  /* Section 6 CTA / Your Move */
+  .story-stage-cta .story-highlight-yellow {
+    display: block !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 12px 16px 14px !important;
+    background-color: #fde047 !important;
+  }
+  .story-stage-cta .story-black-strip {
+    display: block !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 12px 14px !important;
+    font-size: 0.82rem !important;
+    line-height: 1.4 !important;
+    margin-top: 16px !important;
+  }
+  .story-stage-cta .story-gradient-right {
+    width: 250px !important;
+    height: 250px !important;
+    bottom: -60px !important;
+    right: -60px !important;
+  }
+
+  /* Section 7 Testimonials */
+  .testimonial-card {
+    transform: none !important;
+    border: 1px solid rgba(0, 0, 0, 0.15) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05) !important;
+    width: 290px !important;
+    min-height: auto !important;
+    padding: 20px !important;
+  }
+  .story-stage-testimonials .testimonial-card-1 {
+    background: #fde68a !important;
+  }
+  .story-stage-testimonials .testimonial-card-2 {
+    background: #bfdbfe !important;
+  }
+  .story-stage-testimonials .testimonial-card-3 {
+    background: #fecdd3 !important;
+  }
+  .story-stage-testimonials .testimonial-card-4 {
+    background: #ddd6fe !important;
+  }
+
+  /* Section 8 & Footer */
+  .sec8-faq-item {
+    border: 1px solid rgba(0, 0, 0, 0.15) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+    margin-bottom: 12px !important;
+  }
+  .sec8-footer-bottom .footer-gradient-bg {
+    width: 100% !important;
+    height: 100% !important;
+    top: 0 !important;
+    left: 0 !important;
+  }
+
+  /* Section 3 module cards: keep ribbon corners inside the rounded card and add borders matching Section 1 */
+  .module-card {
+    overflow: hidden !important;
+    border: 1px solid rgba(0, 0, 0, 0.15) !important;
+    border-radius: 12px !important;
+  }
+}
+

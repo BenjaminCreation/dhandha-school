@@ -173,5 +173,89 @@ body.inverted-theme.show-mckinsey-bg .mckinsey-bg-overlay {
 }
 
 @media (max-width: 768px) {
-  .instructor-content { padding: 2rem; }
+  .section-6 {
+    background-color: #fbf9f4 !important;
+    border: none !important;
+  }
+
+  .instructor-content {
+    padding: 24px 20px !important;
+    border: 1px solid rgba(0, 0, 0, 0.15) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05) !important;
+    background: #ffffff !important;
+    margin: 24px 16px !important;
+    width: calc(100% - 32px) !important;
+    box-sizing: border-box !important;
+  }
+
+  .instructor-content h3 {
+    font-size: clamp(1.8rem, 7.5vw, 2.2rem) !important;
+    line-height: 1.1 !important;
+    margin-bottom: 8px !important;
+  }
+
+  .instructor-split {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+    width: 100% !important;
+  }
+
+  .instructor-image {
+    width: 100% !important;
+    max-height: 240px !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+  }
+
+  .instructor-image img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  .instructor-text {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+
+  .instructor-text p {
+    font-size: clamp(0.92rem, 3.8vw, 1.02rem) !important;
+    line-height: 1.55 !important;
+    margin: 0 !important;
+  }
+
+  #vcard-iisc, #vcard-iim, #vcard-mckinsey {
+    opacity: 1 !important;
+  }
+
+  #vcard-iisc {
+    color: #125c99 !important;
+  }
+
+  #vcard-iim {
+    color: #b52c31 !important;
+  }
+
+  #vcard-mckinsey {
+    color: #2c457d !important;
+  }
+
+  .inst-logos {
+    flex-wrap: nowrap !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    width: 100% !important;
+    margin-top: 12px !important;
+  }
+
+  .inst-logo {
+    opacity: 1 !important;
+    transform: none !important;
+    height: 32px !important;
+    width: auto !important;
+  }
 }

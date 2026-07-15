@@ -132,10 +132,26 @@ const Hero = ({ setShowPaymentModal }) => {
 
   const [leftBoxOffsetY, setLeftBoxOffsetY] = useState(0);
   const [leftBoxVisible, setLeftBoxVisible] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Dynamic tracking for left box group: follow in Hero, appear in Section 8, hide in middle
   useEffect(() => {
     const handleScroll = () => {
+      if (window.innerWidth <= 768) {
+        setLeftBoxOffsetY(0);
+        setLeftBoxVisible(true);
+        return;
+      }
+
       const vh = window.innerHeight;
       const currentScroll = window.scrollY;
       const docHeight = document.documentElement.scrollHeight;
@@ -189,9 +205,9 @@ const Hero = ({ setShowPaymentModal }) => {
           <div
             className="nav_left_box_wrapper"
             style={{
-              transform: `translateY(${leftBoxOffsetY}px)`,
-              opacity: leftBoxVisible ? 1 : 0,
-              pointerEvents: leftBoxVisible ? 'auto' : 'none'
+              transform: isMobile ? 'none' : `translateY(${leftBoxOffsetY}px)`,
+              opacity: isMobile ? 1 : (leftBoxVisible ? 1 : 0),
+              pointerEvents: isMobile ? 'auto' : (leftBoxVisible ? 'auto' : 'none')
             }}
           >
             <div className="nav_left_box_simplified">
@@ -209,6 +225,7 @@ const Hero = ({ setShowPaymentModal }) => {
                   <>
                     <div className="nav_trigger-line"></div>
                     <div className="nav_trigger-line"></div>
+                    <div className="nav_trigger-line nav_trigger-line-3"></div>
                   </>
                 )}
               </div>
@@ -230,11 +247,16 @@ const Hero = ({ setShowPaymentModal }) => {
               <span className="hero-heading-text">They taught you</span>
               <span className="hero-heading-text">to crack exams.</span>
             </div>
-            <span className="hero-heading-text hero-heading-plain">Nobody taught you to build.</span>
+            <span className="hero-heading-text hero-heading-plain">
+              Nobody taught <br className="hero-mobile-br" />you to build.
+            </span>
           </h1>
 
           <div className="hero-subheading-capsule">
-            <span className="capsule-blue-text">12 years of school. Zero lessons on how to earn, build, or create wealth.</span>
+            <span className="capsule-blue-text">
+              12 years of school. Zero lessons on <br className="hero-blue-br" />
+              how to earn, build, or create wealth.
+            </span>
           </div>
 
           <button className="hero-cta-btn" onClick={() => setShowPaymentModal(true)}>
@@ -260,6 +282,9 @@ const Hero = ({ setShowPaymentModal }) => {
           })}
         </div>
       </div>
+
+      {/* Mobile-only scroll down chevron — matches Figma "v" at bottom */}
+      <div className="hero-scroll-indicator">&#8964;</div>
 
       {/* Fullscreen Menu Overlay from react_copyover */}
       <div className={`menu-overlay ${menuOpen ? 'active' : ''}`}>

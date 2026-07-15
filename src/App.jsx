@@ -198,6 +198,16 @@ function App() {
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPhone, setUserPhone] = useState("");
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
   const outer1Ref = useRef(null);
   const track1Ref = useRef(null);
   const outer2Ref = useRef(null);
@@ -255,6 +265,9 @@ function App() {
   };
 
   useEffect(() => {
+    if (window.innerWidth <= 768) {
+      return;
+    }
     const smoother = ScrollSmoother.create({
       smooth: 1.2,
       ease: 'power3.out',
@@ -280,8 +293,8 @@ function App() {
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
-      // ── DESKTOP ANIMATIONS (>= 992px) ──
-      mm.add("(min-width: 992px)", () => {
+      // ── DESKTOP ANIMATIONS (>= 769px) ──
+      mm.add("(min-width: 769px)", () => {
         const track1 = track1Ref.current;
         const outer1 = outer1Ref.current;
         if (track1 && outer1) {
@@ -304,9 +317,9 @@ function App() {
         const outer2 = outer2Ref.current;
         if (track2 && outer2) {
           const verticalScrollAmount = window.innerHeight * 0.3; // Short pause before horizontal shift
-          
+
           gsap.set(track2, { x: 0 }); // Start with section4 visible
-          
+
           const timeline2 = gsap.timeline({
             scrollTrigger: {
               id: 'track2-trigger',
@@ -318,7 +331,7 @@ function App() {
               invalidateOnRefresh: true
             }
           });
-          
+
           timeline2.to({}, { duration: verticalScrollAmount }); // Brief pause
           timeline2.to(track2, {
             x: () => -(track2.children[0]?.offsetWidth || window.innerWidth),
@@ -362,8 +375,8 @@ function App() {
         }
       });
 
-      // ── MOBILE ANIMATIONS (< 992px) ──
-      mm.add("(max-width: 991px)", () => {
+      // ── MOBILE ANIMATIONS (<= 768px) ──
+      mm.add("(max-width: 768px)", () => {
         // Trigger vertical highlights in Section 6 (Instructor)
         const instructorEl = document.getElementById('instructor');
         if (instructorEl) {
@@ -399,93 +412,333 @@ function App() {
     if (loading) return;
 
     const ctx = gsap.context(() => {
-      // Helper: only animate elements NOT inside horizontal scroll sections
-      const outsideHScroll = (selector) =>
-        gsap.utils.toArray(selector).filter(el => !el.closest('.horizontal-scroll-outer'));
+      const mm = gsap.matchMedia();
 
-      // Premium Apple-style entrance animations with scroll triggers
-      outsideHScroll('.story-stage').forEach((stage, index) => {
-        gsap.fromTo(
-          stage,
-          { autoAlpha: 0, y: 80 },
-          {
-            autoAlpha: 1,
-            y: 0,
-            duration: 1.4,
-            ease: 'power4.out',
-            scrollTrigger: {
-              trigger: stage,
-              start: 'top 85%',
-              toggleActions: 'play none none reverse'
-            }
-          }
-        );
+      // ── DESKTOP ANIMATIONS (min-width: 769px) ──
+      mm.add("(min-width: 769px)", () => {
+        // Helper: only animate elements NOT inside horizontal scroll sections
+        const outsideHScroll = (selector) =>
+          gsap.utils.toArray(selector).filter(el => !el.closest('.horizontal-scroll-outer'));
 
-        // Animate individual elements inside each story stage for narrative flow
-        const heading = stage.querySelector('.story-heading');
-        if (heading) {
+        // Premium Apple-style entrance animations with scroll triggers
+        outsideHScroll('.story-stage').forEach((stage, index) => {
           gsap.fromTo(
-            heading,
-            { autoAlpha: 0, y: 40, scale: 0.96 },
+            stage,
+            { autoAlpha: 0, y: 80 },
             {
               autoAlpha: 1,
               y: 0,
-              scale: 1,
-              duration: 1.1,
-              ease: 'power3.out',
+              duration: 1.4,
+              ease: 'power4.out',
               scrollTrigger: {
                 trigger: stage,
-                start: 'top 80%',
+                start: 'top 85%',
                 toggleActions: 'play none none reverse'
               }
             }
           );
-        }
 
-        const highlights = stage.querySelectorAll('.story-highlight');
-        if (highlights.length > 0) {
+          // Animate individual elements inside each story stage for narrative flow
+          const heading = stage.querySelector('.story-heading');
+          if (heading) {
+            gsap.fromTo(
+              heading,
+              { autoAlpha: 0, y: 40, scale: 0.96 },
+              {
+                autoAlpha: 1,
+                y: 0,
+                scale: 1,
+                duration: 1.1,
+                ease: 'power3.out',
+                scrollTrigger: {
+                  trigger: stage,
+                  start: 'top 80%',
+                  toggleActions: 'play none none reverse'
+                }
+              }
+            );
+          }
+
+          const highlights = stage.querySelectorAll('.story-highlight');
+          if (highlights.length > 0) {
+            gsap.fromTo(
+              highlights,
+              { autoAlpha: 0, x: -30, scale: 0.98 },
+              {
+                autoAlpha: 1,
+                x: 0,
+                scale: 1,
+                duration: 1,
+                stagger: 0.15,
+                ease: 'power3.out',
+                scrollTrigger: {
+                  trigger: stage,
+                  start: 'top 75%',
+                  toggleActions: 'play none none reverse'
+                }
+              }
+            );
+          }
+        });
+
+        // Enhanced sticker/card animations (non-horizontal sections only)
+        outsideHScroll('.sticker-card, .manifesto-card, .module-card, .difference-note, .pricing-poster').forEach((card, index) => {
           gsap.fromTo(
-            highlights,
-            { autoAlpha: 0, x: -30, scale: 0.98 },
+            card,
+            { autoAlpha: 0, y: 50, rotate: index % 2 === 0 ? 2 : -2, scale: 0.97 },
             {
               autoAlpha: 1,
-              x: 0,
+              y: 0,
+              rotate: 0,
               scale: 1,
               duration: 1,
-              stagger: 0.15,
+              stagger: 0.1,
               ease: 'power3.out',
               scrollTrigger: {
-                trigger: stage,
-                start: 'top 75%',
+                trigger: card,
+                start: 'top 90%',
+                toggleActions: 'play none none reverse'
+              }
+            }
+          );
+        });
+
+        // ── CTA section inner elements ──
+        const ctaShell = document.querySelector('.cta-shell');
+        if (ctaShell) {
+          gsap.utils.toArray([
+            ctaShell.querySelector('.story-badge'),
+            ctaShell.querySelector('.story-heading'),
+            ctaShell.querySelector('.story-slant-capsule'),
+            ctaShell.querySelector('.story-black-strip'),
+            ctaShell.querySelector('.cta-actions')
+          ].filter(Boolean)).forEach((el, i) => {
+            gsap.fromTo(el,
+              { autoAlpha: 0, y: 40 },
+              {
+                autoAlpha: 1, y: 0,
+                duration: 0.9,
+                delay: i * 0.12,
+                ease: 'power3.out',
+                scrollTrigger: {
+                  trigger: ctaShell,
+                  start: 'top 80%',
+                  toggleActions: 'play none none reverse'
+                }
+              }
+            );
+          });
+        }
+
+        // ── Testimonials section ──
+        const testimonialsStage = document.querySelector('.story-stage-testimonials');
+        if (testimonialsStage) {
+          const testBadge = testimonialsStage.querySelector('.story-badge');
+          const testHeading = testimonialsStage.querySelector('.story-heading');
+          const testMarquee = testimonialsStage.querySelector('.testimonials-marquee-container');
+
+          [testBadge, testHeading, testMarquee].filter(Boolean).forEach((el, i) => {
+            gsap.fromTo(el,
+              { autoAlpha: 0, y: 50 },
+              {
+                autoAlpha: 1, y: 0,
+                duration: 1,
+                delay: i * 0.15,
+                ease: 'power3.out',
+                scrollTrigger: {
+                  trigger: testimonialsStage,
+                  start: 'top 80%',
+                  toggleActions: 'play none none reverse'
+                }
+              }
+            );
+          });
+        }
+
+        // ── FAQ section ──
+        const faqHeader = document.querySelector('.sec8-faq-header');
+        if (faqHeader) {
+          gsap.fromTo(faqHeader,
+            { autoAlpha: 0, y: 50 },
+            {
+              autoAlpha: 1, y: 0,
+              duration: 1,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: faqHeader,
+                start: 'top 85%',
                 toggleActions: 'play none none reverse'
               }
             }
           );
         }
-      });
 
-      // Enhanced sticker/card animations (non-horizontal sections only)
-      outsideHScroll('.sticker-card, .manifesto-card, .module-card, .difference-note, .pricing-poster').forEach((card, index) => {
-        gsap.fromTo(
-          card,
-          { autoAlpha: 0, y: 50, rotate: index % 2 === 0 ? 2 : -2, scale: 0.97 },
-          {
-            autoAlpha: 1,
-            y: 0,
-            rotate: 0,
-            scale: 1,
-            duration: 1,
-            stagger: 0.1,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: card,
-              start: 'top 90%',
-              toggleActions: 'play none none reverse'
+        gsap.utils.toArray('.sec8-faq-item').forEach((item, i) => {
+          gsap.fromTo(item,
+            { autoAlpha: 0, y: 30 },
+            {
+              autoAlpha: 1, y: 0,
+              duration: 0.8,
+              delay: i * 0.08,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: item,
+                start: 'top 92%',
+                toggleActions: 'play none none reverse'
+              }
             }
-          }
-        );
+          );
+        });
+
+        // ── Footer ──
+        const footerGrid = document.querySelector('.sec8-footer-grid');
+        if (footerGrid) {
+          gsap.utils.toArray(footerGrid.querySelectorAll('.sec8-col')).forEach((col, i) => {
+            gsap.fromTo(col,
+              { autoAlpha: 0, y: 40 },
+              {
+                autoAlpha: 1, y: 0,
+                duration: 0.9,
+                delay: i * 0.1,
+                ease: 'power3.out',
+                scrollTrigger: {
+                  trigger: footerGrid,
+                  start: 'top 85%',
+                  toggleActions: 'play none none reverse'
+                }
+              }
+            );
+          });
+        }
+
+        // Helper: only animate elements NOT inside horizontal scroll sections
+        const outsideHorizontal = (selector) =>
+          gsap.utils.toArray(selector).filter(el => !el.closest('.horizontal-scroll-outer'));
+
+        // ── Story badges, capsules, and black strips (non-horizontal sections only) ──
+        outsideHorizontal('.story-badge').forEach((badge) => {
+          gsap.fromTo(badge,
+            { autoAlpha: 0, scale: 0.9, y: 20 },
+            {
+              autoAlpha: 1, scale: 1, y: 0,
+              duration: 0.7,
+              ease: 'back.out(1.7)',
+              scrollTrigger: {
+                trigger: badge,
+                start: 'top 90%',
+                toggleActions: 'play none none reverse'
+              }
+            }
+          );
+        });
+
+        outsideHorizontal('.story-slant-capsule').forEach((capsule) => {
+          gsap.fromTo(capsule,
+            { autoAlpha: 0, x: -40, rotate: -6 },
+            {
+              autoAlpha: 1, x: 0, rotate: -2,
+              duration: 0.9,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: capsule,
+                start: 'top 88%',
+                toggleActions: 'play none none reverse'
+              }
+            }
+          );
+        });
+
+        outsideHorizontal('.story-black-strip').forEach((strip) => {
+          gsap.fromTo(strip,
+            { autoAlpha: 0, x: -30 },
+            {
+              autoAlpha: 1, x: 0,
+              duration: 0.8,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: strip,
+                start: 'top 88%',
+                toggleActions: 'play none none reverse'
+              }
+            }
+          );
+        });
+
+        // ── Story chip rows (non-horizontal sections only) ──
+        outsideHorizontal('.story-chip').forEach((chip, i) => {
+          gsap.fromTo(chip,
+            { autoAlpha: 0, y: 15, scale: 0.95 },
+            {
+              autoAlpha: 1, y: 0, scale: 1,
+              duration: 0.5,
+              delay: (i % 5) * 0.06,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: chip,
+                start: 'top 92%',
+                toggleActions: 'play none none reverse'
+              }
+            }
+          );
+        });
+
+        // ── Pricing list items (non-horizontal sections only) ──
+        outsideHorizontal('.pricing-list li').forEach((li, i) => {
+          gsap.fromTo(li,
+            { autoAlpha: 0, x: -20 },
+            {
+              autoAlpha: 1, x: 0,
+              duration: 0.6,
+              delay: i * 0.08,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: li,
+                start: 'top 92%',
+                toggleActions: 'play none none reverse'
+              }
+            }
+          );
+        });
       });
 
+      // ── MOBILE ANIMATIONS (max-width: 768px) ──
+      mm.add("(max-width: 768px)", () => {
+        // One-time only reveal transitions on scroll (Lazy Loading)
+        const revealOnMobile = (elements, yOffset = 30, xOffset = 0, scaleStart = 1, delayTime = 0) => {
+          gsap.utils.toArray(elements).forEach((el) => {
+            gsap.fromTo(
+              el,
+              { autoAlpha: 0, y: yOffset, x: xOffset, scale: scaleStart },
+              {
+                autoAlpha: 1,
+                y: 0,
+                x: 0,
+                scale: 1,
+                duration: 0.8,
+                delay: delayTime,
+                ease: 'power2.out',
+                scrollTrigger: {
+                  trigger: el,
+                  start: 'top 92%',
+                  once: true // Runs ONLY ONCE when scroll from top to bottom
+                }
+              }
+            );
+          });
+        };
+
+        // Reveal entire stages, cards, and text layout components
+        revealOnMobile('.story-stage', 45);
+        revealOnMobile('.sticker-card, .manifesto-card, .module-card, .difference-note, .pricing-poster, .testimonial-card, .sec8-faq-item, .instructor-content', 25);
+        revealOnMobile('.story-heading', 20);
+        revealOnMobile('.story-badge', 15);
+        revealOnMobile('.story-slant-capsule', 15);
+        revealOnMobile('.story-black-strip', 15);
+        revealOnMobile('.story-chip', 10);
+        revealOnMobile('.pricing-list li', 8);
+      });
+
+      // ── GLOBAL FLOATING ANIMATIONS (Both Desktop & Mobile) ──
       // Elegant floating cutout animations with smoother timing
       gsap.utils.toArray('.floating-cutout').forEach((item, index) => {
         gsap.to(item, {
@@ -509,204 +762,6 @@ function App() {
           ease: 'none'
         });
       });
-
-      // ── CTA section inner elements ──
-      const ctaShell = document.querySelector('.cta-shell');
-      if (ctaShell) {
-        gsap.utils.toArray([
-          ctaShell.querySelector('.story-badge'),
-          ctaShell.querySelector('.story-heading'),
-          ctaShell.querySelector('.story-slant-capsule'),
-          ctaShell.querySelector('.story-black-strip'),
-          ctaShell.querySelector('.cta-actions')
-        ].filter(Boolean)).forEach((el, i) => {
-          gsap.fromTo(el,
-            { autoAlpha: 0, y: 40 },
-            {
-              autoAlpha: 1, y: 0,
-              duration: 0.9,
-              delay: i * 0.12,
-              ease: 'power3.out',
-              scrollTrigger: {
-                trigger: ctaShell,
-                start: 'top 80%',
-                toggleActions: 'play none none reverse'
-              }
-            }
-          );
-        });
-      }
-
-      // ── Testimonials section ──
-      const testimonialsStage = document.querySelector('.story-stage-testimonials');
-      if (testimonialsStage) {
-        const testBadge = testimonialsStage.querySelector('.story-badge');
-        const testHeading = testimonialsStage.querySelector('.story-heading');
-        const testMarquee = testimonialsStage.querySelector('.testimonials-marquee-container');
-        
-        [testBadge, testHeading, testMarquee].filter(Boolean).forEach((el, i) => {
-          gsap.fromTo(el,
-            { autoAlpha: 0, y: 50 },
-            {
-              autoAlpha: 1, y: 0,
-              duration: 1,
-              delay: i * 0.15,
-              ease: 'power3.out',
-              scrollTrigger: {
-                trigger: testimonialsStage,
-                start: 'top 80%',
-                toggleActions: 'play none none reverse'
-              }
-            }
-          );
-        });
-      }
-
-      // ── FAQ section ──
-      const faqHeader = document.querySelector('.sec8-faq-header');
-      if (faqHeader) {
-        gsap.fromTo(faqHeader,
-          { autoAlpha: 0, y: 50 },
-          {
-            autoAlpha: 1, y: 0,
-            duration: 1,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: faqHeader,
-              start: 'top 85%',
-              toggleActions: 'play none none reverse'
-            }
-          }
-        );
-      }
-
-      gsap.utils.toArray('.sec8-faq-item').forEach((item, i) => {
-        gsap.fromTo(item,
-          { autoAlpha: 0, y: 30 },
-          {
-            autoAlpha: 1, y: 0,
-            duration: 0.8,
-            delay: i * 0.08,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: item,
-              start: 'top 92%',
-              toggleActions: 'play none none reverse'
-            }
-          }
-        );
-      });
-
-      // ── Footer ──
-      const footerGrid = document.querySelector('.sec8-footer-grid');
-      if (footerGrid) {
-        gsap.utils.toArray(footerGrid.querySelectorAll('.sec8-col')).forEach((col, i) => {
-          gsap.fromTo(col,
-            { autoAlpha: 0, y: 40 },
-            {
-              autoAlpha: 1, y: 0,
-              duration: 0.9,
-              delay: i * 0.1,
-              ease: 'power3.out',
-              scrollTrigger: {
-                trigger: footerGrid,
-                start: 'top 85%',
-                toggleActions: 'play none none reverse'
-              }
-            }
-          );
-        });
-      }
-
-      // Helper: only animate elements NOT inside horizontal scroll sections
-      // (horizontal scroll content is already animated by the .story-stage entrance)
-      const outsideHorizontal = (selector) =>
-        gsap.utils.toArray(selector).filter(el => !el.closest('.horizontal-scroll-outer'));
-
-      // ── Story badges, capsules, and black strips (non-horizontal sections only) ──
-      outsideHorizontal('.story-badge').forEach((badge) => {
-        gsap.fromTo(badge,
-          { autoAlpha: 0, scale: 0.9, y: 20 },
-          {
-            autoAlpha: 1, scale: 1, y: 0,
-            duration: 0.7,
-            ease: 'back.out(1.7)',
-            scrollTrigger: {
-              trigger: badge,
-              start: 'top 90%',
-              toggleActions: 'play none none reverse'
-            }
-          }
-        );
-      });
-
-      outsideHorizontal('.story-slant-capsule').forEach((capsule) => {
-        gsap.fromTo(capsule,
-          { autoAlpha: 0, x: -40, rotate: -6 },
-          {
-            autoAlpha: 1, x: 0, rotate: -2,
-            duration: 0.9,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: capsule,
-              start: 'top 88%',
-              toggleActions: 'play none none reverse'
-            }
-          }
-        );
-      });
-
-      outsideHorizontal('.story-black-strip').forEach((strip) => {
-        gsap.fromTo(strip,
-          { autoAlpha: 0, x: -30 },
-          {
-            autoAlpha: 1, x: 0,
-            duration: 0.8,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: strip,
-              start: 'top 88%',
-              toggleActions: 'play none none reverse'
-            }
-          }
-        );
-      });
-
-      // ── Story chip rows (non-horizontal sections only) ──
-      outsideHorizontal('.story-chip').forEach((chip, i) => {
-        gsap.fromTo(chip,
-          { autoAlpha: 0, y: 15, scale: 0.95 },
-          {
-            autoAlpha: 1, y: 0, scale: 1,
-            duration: 0.5,
-            delay: (i % 5) * 0.06,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: chip,
-              start: 'top 92%',
-              toggleActions: 'play none none reverse'
-            }
-          }
-        );
-      });
-
-      // ── Pricing list items (non-horizontal sections only) ──
-      outsideHorizontal('.pricing-list li').forEach((li, i) => {
-        gsap.fromTo(li,
-          { autoAlpha: 0, x: -20 },
-          {
-            autoAlpha: 1, x: 0,
-            duration: 0.6,
-            delay: i * 0.08,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: li,
-              start: 'top 92%',
-              toggleActions: 'play none none reverse'
-            }
-          }
-        );
-      });
     });
 
     return () => {
@@ -724,11 +779,294 @@ function App() {
 
           <Hero setShowPaymentModal={setShowPaymentModal} />
 
-      <div className="horizontal-scroll-outer" id="why" ref={outer1Ref}>
-        <div className="horizontal-scroll-track" ref={track1Ref}>
-          <section className="placeholder-section section-1">
-            <div className="story-stage story-stage-premise story-panel">
-              <div className="story-gradient story-gradient-left">
+          <div className="horizontal-scroll-outer" id="why" ref={outer1Ref}>
+            <div className="horizontal-scroll-track" ref={track1Ref}>
+              <section className="placeholder-section section-1">
+                <div className="story-stage story-stage-premise story-panel">
+                  <div className="story-gradient story-gradient-left">
+                    <div className="gradient-blobs-container">
+                      <div className="hero-circ_blue2" />
+                      <div className="hero-circ_pink2" />
+                      <div className="hero-circ_blue" />
+                      <div className="hero-circ_pink" />
+                    </div>
+                  </div>
+                  <img src="/graduation.png" alt="" aria-hidden="true" className="floating-cutout cutout-graduation" />
+                  <img src="/job.png" alt="" aria-hidden="true" className="floating-cutout cutout-job" />
+                  <div className="story-topbar">
+                    <span className="story-badge">01 / THE PREMISE</span>
+                    <div className="story-chip-row">
+                      {premiseChips.map((chip) => (
+                        <span key={chip} className="story-chip">
+                          {chip}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="premise-layout">
+                    <div className="premise-copy story-panel">
+                      <h2 className="story-heading">
+                        <span className="story-highlight story-highlight-yellow">Indian education</span>
+                        <span className="story-heading-line">system is a scam.</span>
+                        <span className="story-heading-line story-heading-line-offset">We need an alternative.</span>
+                      </h2>
+                      <div className="story-slant-capsule">
+                        <span className="story-capsule-text">The current path teaches obedience, not ownership.</span>
+                      </div>
+                      <p className="story-black-strip">
+                        Real wealth is built by people who know how to build businesses, but the system rarely teaches that language.
+                      </p>
+                    </div>
+                    <div className="premise-stack">
+                      {premiseCards.map((card) => (
+                        <article key={card.title} className={`sticker-card sticker-${card.tone} story-panel`}>
+                          <span className="sticker-eyebrow">{card.eyebrow}</span>
+                          <h3 className="sticker-title">{card.title}</h3>
+                          <p className="sticker-body">{card.body}</p>
+                          {card.eyebrow === '01' && <img src="/graduation.png" className="card-cutout mobile-only-cutout" alt="" />}
+                          {card.eyebrow === '02' && <img src="/job.png" className="card-cutout mobile-only-cutout" alt="" />}
+                          {card.eyebrow === '03' && <img src="/credit.png" className="card-cutout mobile-only-cutout" alt="" />}
+                        </article>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="mobile-only-collage">
+                    <img src="/book.png" className="collage-hand hand-book" alt="" />
+                    <img src="/trophy.png" className="collage-hand hand-trophy" alt="" />
+                    <img src="/graduation.png" className="collage-hand hand-graduation" alt="" />
+                    <img src="/job.png" className="collage-hand hand-job" alt="" />
+                    <img src="/credit.png" className="collage-hand hand-credit" alt="" />
+                    <img src="/laptop.png" className="collage-hand hand-laptop" alt="" />
+                  </div>
+                </div>
+              </section>
+
+              <section className="placeholder-section section-2">
+                <div className="story-stage story-stage-why story-panel">
+                  <img src="/bill.png" alt="" aria-hidden="true" className="floating-cutout cutout-bill" />
+                  <div className="story-topbar">
+                    <span className="story-badge">02 / WHY WE EXIST</span>
+                    <p className="story-top-copy">Turning ambitious learners into confident builders.</p>
+                  </div>
+                  <div className="manifesto-header">
+                    <h2 className="story-heading">
+                      <span className="story-highlight story-highlight-lavender">
+                        Why Dhandha School <br className="manifesto-mobile-br" />needs to exist.
+                      </span>
+                    </h2>
+                    <p className="story-body">
+                      Business education in India is broken in two directions: <br className="manifesto-mobile-br" />
+                      an expensive gate on one side, <br className="manifesto-mobile-br" />
+                      chaos on the other.
+                    </p>
+                  </div>
+                  <div className="manifesto-grid">
+                    {whyCards.map((item, index) => (
+                      <article key={item.title} className={`manifesto-card manifesto-card-${index + 1} story-panel`}>
+                        <span className="manifesto-index">{item.index}</span>
+                        <h3 className="manifesto-title">
+                          {item.title}
+                          {item.title === 'AI will take your job' && (
+                            <img src="/toon_exclamation.png" alt="!!" className="toon-exclamation" />
+                          )}
+                        </h3>
+                        <p className="manifesto-body">{item.body}</p>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+
+          <div className="horizontal-scroll-outer" id="masterclass" ref={outer2Ref}>
+            <div className="horizontal-scroll-track" ref={track2Ref}>
+              <section className="placeholder-section section-3" id="curriculum">
+                <div className="story-stage story-stage-curriculum story-panel">
+                  <div className="story-topbar">
+                    <span className="story-badge">03 / MASTERCLASS </span>
+                    <div className="story-marquee-inline">
+                      <div className="story-marquee-track">
+                        {(isMobile
+                          ? sectionAnnouncements.filter(item => item !== 'Lifetime recordings')
+                          : sectionAnnouncements.concat(sectionAnnouncements)
+                        ).map((item, index) => (
+                          <span key={`${item}-${index}`} className="story-chip">
+                            {item}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="curriculum-header-row">
+                    <div className="curriculum-header">
+                      <h2 className="story-heading">
+                        <span className="story-highlight story-highlight-cyan">Finance,</span>
+                        <span className="story-heading-line">for the ones actually building.</span>
+                      </h2>
+                      <p className="story-black-strip story-black-strip-wide">
+                        Four modules. Three hours. No MBA theater. No jargon for jargon&apos;s sake.
+                      </p>
+                    </div>
+                    <img src="/laptop.png" alt="" aria-hidden="true" className="cutout-laptop-inline" />
+                  </div>
+                  <div className="curriculum-stack">
+                    {curriculumModules.map((module) => (
+                      <article key={module.title} className={`module-card module-card-${module.accent} story-panel`}>
+                        <div className="module-ribbon">
+                          <span>{module.index}</span>
+                          <span>{module.ribbon}</span>
+                          <span>{module.timing}</span>
+                        </div>
+                        <div className="module-main">
+                          <div className="module-copy">
+                            <h3 className="module-title">
+                              {module.title}
+                              <span className="mobile-chevron mobile-only-inline">&gt;</span>
+                            </h3>
+                            <p className="module-body">{module.body}</p>
+                          </div>
+                          <div className="module-tags">
+                            {module.tags.map((tag) => (
+                              <span key={tag} className="module-tag">
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+              </section>
+
+              <section className="placeholder-section section-4" id="second-cohort">
+                <div className="story-stage story-stage-pricing story-panel">
+                  <div className="story-topbar">
+                    <span className="story-badge">04 / SECOND COHORT</span>
+                    <div className="story-chip-row">
+                      <span className="story-chip">
+                        <svg className="chip-icon mobile-only-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: '13px', height: '13px', marginRight: '6px', display: 'none', verticalAlign: 'middle' }}>
+                          <path d="M23 7l-7 5 7 5V7z"></path>
+                          <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+                        </svg>
+                        Online session
+                      </span>
+                      <span className="story-chip">
+                        <svg className="chip-icon mobile-only-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: '13px', height: '13px', marginRight: '6px', display: 'none', verticalAlign: 'middle' }}>
+                          <circle cx="12" cy="12" r="10"></circle>
+                          <polygon points="10 8 16 12 10 16 10 8"></polygon>
+                        </svg>
+                        Lifetime recording access
+                      </span>
+                      <span className="story-chip">
+                        <svg className="chip-icon mobile-only-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: '13px', height: '13px', marginRight: '6px', display: 'none', verticalAlign: 'middle' }}>
+                          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                          <line x1="16" y1="2" x2="16" y2="6"></line>
+                          <line x1="8" y1="2" x2="8" y2="6"></line>
+                          <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                        Weekend
+                      </span>
+                    </div>
+                  </div>
+                  <div className="pricing-layout">
+                    <div className="pricing-copy story-panel">
+                      <h2 className="story-heading">
+                        <span className="story-highlight story-highlight-blue">₹999</span>
+                        <span className="story-heading-line">for the second leap.</span>
+                      </h2>
+                      <div className="story-slant-capsule story-slant-capsule-dark">
+                        <span className="story-capsule-text story-capsule-text-dark">Early member pricing for the second cohort only.</span>
+                      </div>
+                      <p className="story-body">
+                        Tight, dense, live, and useful the same day. The offer is small on price so the ambition can be big on access.
+                      </p>
+                    </div>
+                    <div className="pricing-poster story-panel">
+                      <div className="pricing-poster-top">
+                        <span className="pricing-eyebrow">Finance for Builders</span>
+                        <div className="pricing-amounts">
+                          <span className="pricing-old">₹1,999</span>
+                          <span className="pricing-new">₹999</span>
+                        </div>
+                      </div>
+                      <ul className="pricing-list">
+                        {pricingPerks.map((perk) => (
+                          <li key={perk}>{perk}</li>
+                        ))}
+                      </ul>
+                      <div className="pricing-btn-wrapper">
+                        <svg className="pricing-arrow pricing-arrow-left" viewBox="0 0 60 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M2 38C12 28 28 8 58 4" stroke="#000" strokeWidth="2.5" strokeLinecap="round" />
+                          <path d="M48 2L58 4L52 12" stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                        <svg className="pricing-arrow pricing-arrow-right" viewBox="0 0 60 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M58 38C48 28 32 8 2 4" stroke="#000" strokeWidth="2.5" strokeLinecap="round" />
+                          <path d="M12 2L2 4L8 12" stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                        <svg className="pricing-sparkle pricing-sparkle-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 2L14 10L22 12L14 14L12 22L10 14L2 12L10 10L12 2Z" fill="#f59e0b" />
+                        </svg>
+                        <svg className="pricing-sparkle pricing-sparkle-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 2L14 10L22 12L14 14L12 22L10 14L2 12L10 10L12 2Z" fill="#f59e0b" />
+                        </svg>
+                        <svg className="pricing-sparkle pricing-sparkle-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 2L14 10L22 12L14 14L12 22L10 14L2 12L10 10L12 2Z" fill="#f59e0b" />
+                        </svg>
+                        <button className="primer-btn get-started-btn pricing-primary-btn" onClick={() => setShowPaymentModal(true)}>Join &nbsp; ➔</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+
+          <div className="horizontal-scroll-outer" id="whatsnext" ref={outer3Ref}>
+            <div className="horizontal-scroll-track" ref={track3Ref}>
+              <section className="placeholder-section section-5">
+                <div className="story-stage story-stage-difference story-panel">
+                  <img src="/medal.png" alt="" aria-hidden="true" className="floating-cutout cutout-medal" />
+                  <div className="story-topbar">
+                    <span className="story-badge">05 / THE DIFFERENCE</span>
+                    <div className="story-chip-row">
+                      <span className="story-chip">Live</span>
+                      <span className="story-chip">Practical</span>
+                      <span className="story-chip">India-first</span>
+                      <span className="story-chip">Cohort-led</span>
+                    </div>
+                  </div>
+                  <div className="difference-layout">
+                    <div className="difference-copy story-panel">
+                      <h2 className="story-heading">
+                        <span className="story-highlight story-highlight-peach">Not another</span>
+                        <span className="story-heading-line">online course.</span>
+                      </h2>
+                      <p className="story-body">
+                        We do not believe in 40-hour content libraries you will never finish. We believe in one session dense enough to change how you think.
+                      </p>
+                    </div>
+                    <div className="difference-board">
+                      {differenceItems.map((item, index) => (
+                        <article key={item.title} className={`difference-note difference-note-${index + 1} story-panel`}>
+                          <span className="difference-index">{item.index}</span>
+                          <h3 className="difference-title">{item.title}</h3>
+                          <p className="difference-body">{item.body}</p>
+                        </article>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <InstructorSection />
+            </div>
+          </div>
+
+          <section className="placeholder-section section-7">
+            <div className="story-stage story-stage-cta story-panel">
+              <div className="story-gradient story-gradient-right">
                 <div className="gradient-blobs-container">
                   <div className="hero-circ_blue2" />
                   <div className="hero-circ_pink2" />
@@ -736,225 +1074,49 @@ function App() {
                   <div className="hero-circ_pink" />
                 </div>
               </div>
-              <img src="/graduation.png" alt="" aria-hidden="true" className="floating-cutout cutout-graduation" />
-              <img src="/job.png" alt="" aria-hidden="true" className="floating-cutout cutout-job" />
-              <div className="story-topbar">
-                <span className="story-badge">01 / THE PREMISE</span>
-                <div className="story-chip-row">
-                  {premiseChips.map((chip) => (
-                    <span key={chip} className="story-chip">
-                      {chip}
-                    </span>
-                  ))}
+              <img src="/book.png" alt="" aria-hidden="true" className="floating-cutout cutout-book-cta" />
+              <img src="/trophy.png" alt="" aria-hidden="true" className="floating-cutout cutout-trophy-cta" />
+              <div className="cta-shell">
+                <span className="story-badge">06 / YOUR MOVE</span>
+                <h2 className="story-heading story-heading-center">
+                  <span className="story-highlight story-highlight-yellow">Four hours</span>
+                  <span className="story-heading-line">can change how you read a business.</span>
+                </h2>
+                <div className="story-slant-capsule">
+                  <span className="story-capsule-text">Two masterclass . Only Leap</span>
                 </div>
-              </div>
-              <div className="premise-layout">
-                <div className="premise-copy story-panel">
-                  <h2 className="story-heading">
-                    <span className="story-highlight story-highlight-yellow">Indian education</span>
-                    <span className="story-heading-line">system is a scam.</span>
-                    <span className="story-heading-line story-heading-line-offset">We need an alternative.</span>
-                  </h2>
-                  <div className="story-slant-capsule">
-                    <span className="story-capsule-text">The current path teaches obedience, not ownership.</span>
-                  </div>
-                  <p className="story-black-strip">
-                    Real wealth is built by people who know how to build businesses, but the system rarely teaches that language.
-                  </p>
-                </div>
-                <div className="premise-stack">
-                  {premiseCards.map((card) => (
-                    <article key={card.title} className={`sticker-card sticker-${card.tone} story-panel`}>
-                      <span className="sticker-eyebrow">{card.eyebrow}</span>
-                      <h3 className="sticker-title">{card.title}</h3>
-                      <p className="sticker-body">{card.body}</p>
-                    </article>
-                  ))}
+                <p className="story-black-strip">
+                  One language every builder eventually has to learn.
+                </p>
+                <div className="cta-actions">
+                  <button className="primer-btn get-started-btn" onClick={() => setShowPaymentModal(true)}>Join the masterclass</button>
                 </div>
               </div>
             </div>
           </section>
 
-          <section className="placeholder-section section-2">
-            <div className="story-stage story-stage-why story-panel">
-              <img src="/bill.png" alt="" aria-hidden="true" className="floating-cutout cutout-bill" />
+          <section className="placeholder-section section-testimonials">
+            <div className="story-stage story-stage-testimonials story-panel">
               <div className="story-topbar">
-                <span className="story-badge">02 / WHY WE EXIST</span>
-                <p className="story-top-copy">Turning ambitious learners into confident builders.</p>
+                <span className="story-badge">07 / TESTIMONIALS</span>
               </div>
-              <div className="manifesto-header">
-                <h2 className="story-heading">
-                  <span className="story-highlight story-highlight-lavender">Why Dhandha School needs to exist.</span>
-                </h2>
-                <p className="story-body">
-                  Business education in India is broken in two directions: an expensive gate on one side, chaos on the other.
-                </p>
-              </div>
-              <div className="manifesto-grid">
-                {whyCards.map((item, index) => (
-                  <article key={item.title} className={`manifesto-card manifesto-card-${index + 1} story-panel`}>
-                    <span className="manifesto-index">{item.index}</span>
-                    <h3 className="manifesto-title">
-                      {item.title}
-                      {item.title === 'AI will take your job' && (
-                        <img src="/toon_exclamation.png" alt="!!" className="toon-exclamation" />
-                      )}
-                    </h3>
-                    <p className="manifesto-body">{item.body}</p>
-                  </article>
-                ))}
-              </div>
-            </div>
-          </section>
-        </div>
-      </div>
-
-      <div className="horizontal-scroll-outer" id="masterclass" ref={outer2Ref}>
-        <div className="horizontal-scroll-track" ref={track2Ref}>
-          <section className="placeholder-section section-3" id="curriculum">
-            <div className="story-stage story-stage-curriculum story-panel">
-              <img src="/laptop.png" alt="" aria-hidden="true" className="floating-cutout cutout-laptop" />
-              <div className="story-topbar">
-                <span className="story-badge">03 / MASTERCLASS </span>
-                <div className="story-marquee-inline">
-                  <div className="story-marquee-track">
-                    {sectionAnnouncements.concat(sectionAnnouncements).map((item, index) => (
-                      <span key={`${item}-${index}`} className="story-chip">
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              <div className="curriculum-header">
-                <h2 className="story-heading">
-                  <span className="story-highlight story-highlight-cyan">Finance,</span>
-                  <span className="story-heading-line">for the ones actually building.</span>
-                </h2>
-                <p className="story-black-strip story-black-strip-wide">
-                  Four modules. Three hours. No MBA theater. No jargon for jargon&apos;s sake.
-                </p>
-              </div>
-              <div className="curriculum-stack">
-                {curriculumModules.map((module) => (
-                  <article key={module.title} className={`module-card module-card-${module.accent} story-panel`}>
-                    <div className="module-ribbon">
-                      <span>{module.index}</span>
-                      <span>{module.ribbon}</span>
-                      <span>{module.timing}</span>
-                    </div>
-                    <div className="module-main">
-                      <div className="module-copy">
-                        <h3 className="module-title">{module.title}</h3>
-                        <p className="module-body">{module.body}</p>
-                      </div>
-                      <div className="module-tags">
-                        {module.tags.map((tag) => (
-                          <span key={tag} className="module-tag">
-                            {tag}
-                          </span>
+              <h2 className="story-heading">
+                <span className="story-highlight story-highlight-pink">What our students say</span>
+              </h2>
+              <div className="testimonials-marquee-container">
+                <div className="testimonials-marquee-track">
+                  {[...testimonials, ...testimonials].map((testimonial, index) => (
+                    <article key={index} className={`testimonial-card story-panel testimonial-card-${(index % 4) + 1}`}>
+                      <div className="testimonial-rating">
+                        {[...Array(5)].map((_, i) => (
+                          <span key={i} className={i < testimonial.rating ? 'star-filled' : 'star-empty'}>★</span>
                         ))}
                       </div>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          <section className="placeholder-section section-4" id="second-cohort">
-            <div className="story-stage story-stage-pricing story-panel">
-              <div className="story-topbar">
-                <span className="story-badge">04 / Second Cohort</span>
-                <div className="story-chip-row">
-                  <span className="story-chip">Online session</span>
-                  <span className="story-chip">Lifetime recording access</span>
-                  <span className="story-chip">Weekend</span>
-                </div>
-              </div>
-              <div className="pricing-layout">
-                <div className="pricing-copy story-panel">
-                  <h2 className="story-heading">
-                    <span className="story-highlight story-highlight-blue">₹999</span>
-                    <span className="story-heading-line">for the second leap.</span>
-                  </h2>
-                  <div className="story-slant-capsule story-slant-capsule-dark">
-                    <span className="story-capsule-text story-capsule-text-dark">Early member pricing for the second cohort only.</span>
-                  </div>
-                  <p className="story-body">
-                    Tight, dense, live, and useful the same day. The offer is small on price so the ambition can be big on access.
-                  </p>
-                </div>
-                <div className="pricing-poster story-panel">
-                  <div className="pricing-poster-top">
-                    <span className="pricing-eyebrow">Finance for Builders</span>
-                    <div className="pricing-amounts">
-                      <span className="pricing-old">₹1,999</span>
-                      <span className="pricing-new">₹999</span>
-                    </div>
-                  </div>
-                  <ul className="pricing-list">
-                    {pricingPerks.map((perk) => (
-                      <li key={perk}>{perk}</li>
-                    ))}
-                  </ul>
-                  <div className="pricing-btn-wrapper">
-                    <svg className="pricing-arrow pricing-arrow-left" viewBox="0 0 60 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M2 38C12 28 28 8 58 4" stroke="#000" strokeWidth="2.5" strokeLinecap="round"/>
-                      <path d="M48 2L58 4L52 12" stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                    <svg className="pricing-arrow pricing-arrow-right" viewBox="0 0 60 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M58 38C48 28 32 8 2 4" stroke="#000" strokeWidth="2.5" strokeLinecap="round"/>
-                      <path d="M12 2L2 4L8 12" stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                    <svg className="pricing-sparkle pricing-sparkle-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M12 2L14 10L22 12L14 14L12 22L10 14L2 12L10 10L12 2Z" fill="#f59e0b"/>
-                    </svg>
-                    <svg className="pricing-sparkle pricing-sparkle-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M12 2L14 10L22 12L14 14L12 22L10 14L2 12L10 10L12 2Z" fill="#f59e0b"/>
-                    </svg>
-                    <svg className="pricing-sparkle pricing-sparkle-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M12 2L14 10L22 12L14 14L12 22L10 14L2 12L10 10L12 2Z" fill="#f59e0b"/>
-                    </svg>
-                    <button className="primer-btn get-started-btn pricing-primary-btn" onClick={() => setShowPaymentModal(true)}>Join</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
-      </div>
-
-      <div className="horizontal-scroll-outer" id="whatsnext" ref={outer3Ref}>
-        <div className="horizontal-scroll-track" ref={track3Ref}>
-          <section className="placeholder-section section-5">
-            <div className="story-stage story-stage-difference story-panel">
-              <img src="/medal.png" alt="" aria-hidden="true" className="floating-cutout cutout-medal" />
-              <div className="story-topbar">
-                <span className="story-badge">05 / THE DIFFERENCE</span>
-                <div className="story-chip-row">
-                  <span className="story-chip">Live</span>
-                  <span className="story-chip">Practical</span>
-                  <span className="story-chip">India-first</span>
-                  <span className="story-chip">Cohort-led</span>
-                </div>
-              </div>
-              <div className="difference-layout">
-                <div className="difference-copy story-panel">
-                  <h2 className="story-heading">
-                    <span className="story-highlight story-highlight-peach">Not another</span>
-                    <span className="story-heading-line">online course.</span>
-                  </h2>
-                  <p className="story-body">
-                    We do not believe in 40-hour content libraries you will never finish. We believe in one session dense enough to change how you think.
-                  </p>
-                </div>
-                <div className="difference-board">
-                  {differenceItems.map((item, index) => (
-                    <article key={item.title} className={`difference-note difference-note-${index + 1} story-panel`}>
-                      <span className="difference-index">{item.index}</span>
-                      <h3 className="difference-title">{item.title}</h3>
-                      <p className="difference-body">{item.body}</p>
+                      <p className="testimonial-review">{testimonial.review}</p>
+                      <div className="testimonial-footer">
+                        <span className="testimonial-name">— {testimonial.name}</span>
+                        <img src={testimonial.profilePhoto} alt={testimonial.name} className="testimonial-profile-photo" />
+                      </div>
                     </article>
                   ))}
                 </div>
@@ -962,249 +1124,185 @@ function App() {
             </div>
           </section>
 
-          <InstructorSection />
-        </div>
-      </div>
-
-      <section className="placeholder-section section-7">
-        <div className="story-stage story-stage-cta story-panel">
-          <div className="story-gradient story-gradient-right">
-            <div className="gradient-blobs-container">
-              <div className="hero-circ_blue2" />
-              <div className="hero-circ_pink2" />
-              <div className="hero-circ_blue" />
-              <div className="hero-circ_pink" />
-            </div>
-          </div>
-          <img src="/book.png" alt="" aria-hidden="true" className="floating-cutout cutout-book-cta" />
-          <img src="/trophy.png" alt="" aria-hidden="true" className="floating-cutout cutout-trophy-cta" />
-          <div className="cta-shell">
-            <span className="story-badge">06 / YOUR MOVE</span>
-            <h2 className="story-heading story-heading-center">
-              <span className="story-highlight story-highlight-yellow">Four hours</span>
-              <span className="story-heading-line">can change how you read a business.</span>
-            </h2>
-            <div className="story-slant-capsule">
-              <span className="story-capsule-text">Two masterclass . Only Leap</span>
-            </div>
-            <p className="story-black-strip">
-              One language every builder eventually has to learn.
-            </p>
-            <div className="cta-actions">
-              <button className="primer-btn get-started-btn" onClick={() => setShowPaymentModal(true)}>Join the masterclass</button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="placeholder-section section-testimonials">
-        <div className="story-stage story-stage-testimonials story-panel">
-          <div className="story-topbar">
-            <span className="story-badge">07 / TESTIMONIALS</span>
-          </div>
-          <h2 className="story-heading">
-            <span className="story-highlight story-highlight-pink">What our students say</span>
-          </h2>
-          <div className="testimonials-marquee-container">
-            <div className="testimonials-marquee-track">
-              {[...testimonials, ...testimonials].map((testimonial, index) => (
-                <article key={index} className={`testimonial-card story-panel testimonial-card-${(index % 4) + 1}`}>
-                  <div className="testimonial-rating">
-                    {[...Array(5)].map((_, i) => (
-                      <span key={i} className={i < testimonial.rating ? 'star-filled' : 'star-empty'}>★</span>
-                    ))}
-                  </div>
-                  <p className="testimonial-review">{testimonial.review}</p>
-                  <div className="testimonial-footer">
-                    <span className="testimonial-name">— {testimonial.name}</span>
-                    <img src={testimonial.profilePhoto} alt={testimonial.name} className="testimonial-profile-photo" />
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="section-8-container" id="pricing">
+          <section className="section-8-container" id="pricing">
 
 
-        <div className="sec8-faq-top" id="faq">
-          <div className="sec8-faq-header story-panel">
-            <span className="sec8-faq-badge">FAQ</span>
-            <h2 className="sec8-faq-title">The honest answers to the obvious questions.</h2>
-          </div>
-          <div className="sec8-faq-list">
-            {faqData.map((item, index) => {
-              const isOpen = openFaqIndex === index;
-              return (
-                <div key={item.question} className={`sec8-faq-item story-panel ${isOpen ? 'is-open' : ''}`}>
-                  <div className="sec8-faq-question" onClick={() => setOpenFaqIndex(isOpen ? null : index)}>
-                    <span>{item.question}</span>
-                    <span className="sec8-faq-icon">{isOpen ? '−' : '+'}</span>
-                  </div>
-                  {isOpen && (
-                    <div className="sec8-faq-answer">
-                      <p>{item.answer}</p>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        <footer className="sec8-footer-bottom">
-          <div className="footer-gradient-bg">
-            <div className="gradient-blobs-container">
-              <div className="hero-circ_blue2" />
-              <div className="hero-circ_pink2" />
-              <div className="hero-circ_blue" />
-              <div className="hero-circ_pink" />
-            </div>
-          </div>
-
-          <div className="sec8-footer-grid">
-            <div className="sec8-col sec8-col-brand">
-              <div className="sec8-brand-logo">
-                <span className="brand-dhandha">DHANDHA</span>
-                <span className="brand-school">school</span>
+            <div className="sec8-faq-top" id="faq">
+              <div className="sec8-faq-header story-panel">
+                <span className="sec8-faq-badge">FAQ</span>
+                <h2 className="sec8-faq-title">The honest answers to the obvious questions.</h2>
               </div>
-              <p className="sec8-brand-desc">
-                A new kind of business school for India. Practical, affordable, and built for the people actually building things.
-              </p>
+              <div className="sec8-faq-list">
+                {faqData.map((item, index) => {
+                  const isOpen = openFaqIndex === index;
+                  return (
+                    <div key={item.question} className={`sec8-faq-item story-panel ${isOpen ? 'is-open' : ''}`}>
+                      <div className="sec8-faq-question" onClick={() => setOpenFaqIndex(isOpen ? null : index)}>
+                        <span>{item.question}</span>
+                        <span className="sec8-faq-icon">{isOpen ? '−' : '+'}</span>
+                      </div>
+                      {isOpen && (
+                        <div className="sec8-faq-answer">
+                          <p>{item.answer}</p>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
 
-            <div className="sec8-col">
-              <h4 className="sec8-col-title">MASTERCLASS</h4>
-              <ul className="sec8-col-links">
-                <li>
-                  <a href="#curriculum" onClick={(e) => {
-                    e.preventDefault();
-                    if (window.__smoother) {
-                      window.__smoother.scrollTo('#curriculum', { duration: 1.5, ease: 'power3.out' });
-                    } else {
-                      document.querySelector('#curriculum')?.scrollIntoView({ behavior: 'smooth' });
-                    }
-                  }}>Curriculum</a>
-                </li>
-                <li>
-                  <a href="#pricing" onClick={(e) => {
-                    e.preventDefault();
-                    if (window.__smoother) {
-                      window.__smoother.scrollTo('#pricing', { duration: 1.5, ease: 'power3.out' });
-                    } else {
-                      document.querySelector('#pricing')?.scrollIntoView({ behavior: 'smooth' });
-                    }
-                  }}>Pricing</a>
-                </li>
-                <li>
-                  <a href="#faq" onClick={(e) => {
-                    e.preventDefault();
-                    if (window.__smoother) {
-                      window.__smoother.scrollTo('#faq', { duration: 1.5, ease: 'power3.out' });
-                    } else {
-                      document.querySelector('#faq')?.scrollIntoView({ behavior: 'smooth' });
-                    }
-                  }}>FAQ</a>
-                </li>
-              </ul>
-            </div>
+            <footer className="sec8-footer-bottom">
+              <div className="footer-gradient-bg">
+                <div className="gradient-blobs-container">
+                  <div className="hero-circ_blue2" />
+                  <div className="hero-circ_pink2" />
+                  <div className="hero-circ_blue" />
+                  <div className="hero-circ_pink" />
+                </div>
+              </div>
 
-            <div className="sec8-col">
-              <h4 className="sec8-col-title">ABOUT</h4>
-              <ul className="sec8-col-links">
-                <li>
-                  <a href="#instructor" onClick={(e) => {
-                    e.preventDefault();
-                    if (window.__smoother) {
-                      window.__smoother.scrollTo('#instructor', { duration: 1.5, ease: 'power3.out' });
-                    } else {
-                      document.querySelector('#instructor')?.scrollIntoView({ behavior: 'smooth' });
-                    }
-                  }}>Instructor</a>
-                </li>
-                <li>
-                  <a href="#why" onClick={(e) => {
-                    e.preventDefault();
-                    if (window.__smoother) {
-                      window.__smoother.scrollTo('#why', { duration: 1.5, ease: 'power3.out' });
-                    } else {
-                      document.querySelector('#why')?.scrollIntoView({ behavior: 'smooth' });
-                    }
-                  }}>Why we exist</a>
-                </li>
-                <li>
-                  <a href="#masterclass" onClick={(e) => {
-                    e.preventDefault();
-                    if (window.__smoother) {
-                      window.__smoother.scrollTo('#masterclass', { duration: 1.5, ease: 'power3.out' });
-                    } else {
-                      document.querySelector('#masterclass')?.scrollIntoView({ behavior: 'smooth' });
-                    }
-                  }}>Masterclass</a>
-                </li>
-              </ul>
-            </div>
+              <div className="sec8-footer-grid">
+                <div className="sec8-col sec8-col-brand">
+                  <div className="sec8-brand-logo">
+                    <span className="brand-dhandha">DHANDHA</span>
+                    <span className="brand-school">school</span>
+                  </div>
+                  <p className="sec8-brand-desc">
+                    A new kind of business school for India. Practical, affordable, and built for the people actually building things.
+                  </p>
+                </div>
 
-            <div className="sec8-col">
-              <h4 className="sec8-col-title">FOLLOW</h4>
-              <ul className="sec8-col-links">
-                <li>
-                  <a href="https://www.instagram.com/whybhanshu?igsh=NDBqajI0ZTFpOGxz" target="_blank" rel="noopener noreferrer">Instagram</a>
-                </li>
-                <li>
-                  <a href="https://youtube.com/@whybhanshu?si=Pe16UZHShdl5GCx-" target="_blank" rel="noopener noreferrer">YouTube</a>
-                </li>
-                <li>
-                  <a href="https://www.linkedin.com/in/vibhanshu-golia-298a3019a" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-                </li>
-                <li>
-                  <a href="https://discord.com/invite/FxDpfHG3Cc" target="_blank" rel="noopener noreferrer">Discord</a>
-                </li>
-              </ul>
-            </div>
+                <div className="sec8-col">
+                  <h4 className="sec8-col-title">MASTERCLASS</h4>
+                  <ul className="sec8-col-links">
+                    <li>
+                      <a href="#curriculum" onClick={(e) => {
+                        e.preventDefault();
+                        if (window.__smoother) {
+                          window.__smoother.scrollTo('#curriculum', { duration: 1.5, ease: 'power3.out' });
+                        } else {
+                          document.querySelector('#curriculum')?.scrollIntoView({ behavior: 'smooth' });
+                        }
+                      }}>Curriculum</a>
+                    </li>
+                    <li>
+                      <a href="#pricing" onClick={(e) => {
+                        e.preventDefault();
+                        if (window.__smoother) {
+                          window.__smoother.scrollTo('#pricing', { duration: 1.5, ease: 'power3.out' });
+                        } else {
+                          document.querySelector('#pricing')?.scrollIntoView({ behavior: 'smooth' });
+                        }
+                      }}>Pricing</a>
+                    </li>
+                    <li>
+                      <a href="#faq" onClick={(e) => {
+                        e.preventDefault();
+                        if (window.__smoother) {
+                          window.__smoother.scrollTo('#faq', { duration: 1.5, ease: 'power3.out' });
+                        } else {
+                          document.querySelector('#faq')?.scrollIntoView({ behavior: 'smooth' });
+                        }
+                      }}>FAQ</a>
+                    </li>
+                  </ul>
+                </div>
 
-            <div className="sec8-col sec8-col-backtop">
-              <button
-                className="scroll-to-top-btn"
-                onClick={() => {
-                  if (window.__smoother) {
-                    window.__smoother.scrollTo(0, {
-                      duration: 3.8,
-                      ease: "power3.out"
-                    });
-                  } else {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }
-                }}
-                title="Scroll to top"
-                aria-label="Scroll to top"
-              >
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <line x1="12" y1="19" x2="12" y2="5" />
-                  <polyline points="5 12 12 5 19 12" />
-                </svg>
-              </button>
-            </div>
-          </div>
+                <div className="sec8-col">
+                  <h4 className="sec8-col-title">ABOUT</h4>
+                  <ul className="sec8-col-links">
+                    <li>
+                      <a href="#instructor" onClick={(e) => {
+                        e.preventDefault();
+                        if (window.__smoother) {
+                          window.__smoother.scrollTo('#instructor', { duration: 1.5, ease: 'power3.out' });
+                        } else {
+                          document.querySelector('#instructor')?.scrollIntoView({ behavior: 'smooth' });
+                        }
+                      }}>Instructor</a>
+                    </li>
+                    <li>
+                      <a href="#why" onClick={(e) => {
+                        e.preventDefault();
+                        if (window.__smoother) {
+                          window.__smoother.scrollTo('#why', { duration: 1.5, ease: 'power3.out' });
+                        } else {
+                          document.querySelector('#why')?.scrollIntoView({ behavior: 'smooth' });
+                        }
+                      }}>Why we exist</a>
+                    </li>
+                    <li>
+                      <a href="#masterclass" onClick={(e) => {
+                        e.preventDefault();
+                        if (window.__smoother) {
+                          window.__smoother.scrollTo('#masterclass', { duration: 1.5, ease: 'power3.out' });
+                        } else {
+                          document.querySelector('#masterclass')?.scrollIntoView({ behavior: 'smooth' });
+                        }
+                      }}>Masterclass</a>
+                    </li>
+                  </ul>
+                </div>
 
-          <div className="sec8-footer-bottom-bar">
-            <span>© 2026 Dhandha School · Made in India · All rights reserved</span>
-            <a href="https://www.upforgeconsulting.com" target="_blank" rel="noopener noreferrer" className="footer-upforge-link">Made by UpForge</a>
-            <span>Cohort 02 · 2026</span>
-          </div>
-        </footer>
-      </section>
+                <div className="sec8-col">
+                  <h4 className="sec8-col-title">FOLLOW</h4>
+                  <ul className="sec8-col-links">
+                    <li>
+                      <a href="https://www.instagram.com/whybhanshu?igsh=NDBqajI0ZTFpOGxz" target="_blank" rel="noopener noreferrer">Instagram</a>
+                    </li>
+                    <li>
+                      <a href="https://youtube.com/@whybhanshu?si=Pe16UZHShdl5GCx-" target="_blank" rel="noopener noreferrer">YouTube</a>
+                    </li>
+                    <li>
+                      <a href="https://www.linkedin.com/in/vibhanshu-golia-298a3019a" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                    </li>
+                    <li>
+                      <a href="https://discord.com/invite/FxDpfHG3Cc" target="_blank" rel="noopener noreferrer">Discord</a>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="sec8-col sec8-col-backtop">
+                  <button
+                    className="scroll-to-top-btn"
+                    onClick={() => {
+                      if (window.__smoother) {
+                        window.__smoother.scrollTo(0, {
+                          duration: 3.8,
+                          ease: "power3.out"
+                        });
+                      } else {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }
+                    }}
+                    title="Scroll to top"
+                    aria-label="Scroll to top"
+                  >
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <line x1="12" y1="19" x2="12" y2="5" />
+                      <polyline points="5 12 12 5 19 12" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <div className="sec8-footer-bottom-bar">
+                <span>© 2026 Dhandha School · Made in India · All rights reserved</span>
+                <a href="https://www.upforgeconsulting.com" target="_blank" rel="noopener noreferrer" className="footer-upforge-link">Made by UpForge</a>
+                <span>Cohort 02 · 2026</span>
+              </div>
+            </footer>
+          </section>
         </div>
       </div>
 
