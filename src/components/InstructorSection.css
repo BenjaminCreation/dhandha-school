@@ -81,7 +81,9 @@ body.inverted-theme .instructor-content {
   transition: color 0.4s ease;
 }
 
-#vcard-iisc, #vcard-iim, #vcard-mckinsey {
+#vcard-iisc,
+#vcard-iim,
+#vcard-mckinsey {
   opacity: 0;
 }
 
@@ -162,11 +164,13 @@ body.inverted-theme.show-mckinsey-bg .mckinsey-bg-overlay {
     align-items: flex-start;
     gap: 2rem;
   }
+
   .instructor-image {
     flex: 0 0 100%;
     max-width: 100%;
     width: 100%;
   }
+
   .instructor-content h3 {
     font-size: 3rem;
   }
@@ -204,7 +208,7 @@ body.inverted-theme.show-mckinsey-bg .mckinsey-bg-overlay {
 
   .instructor-image {
     width: 100% !important;
-    max-height: 240px !important;
+    max-height: 340px !important;
     border-radius: 12px !important;
     overflow: hidden !important;
   }
@@ -213,6 +217,7 @@ body.inverted-theme.show-mckinsey-bg .mckinsey-bg-overlay {
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
+    object-position: center 100% !important;
   }
 
   .instructor-text {
@@ -228,7 +233,9 @@ body.inverted-theme.show-mckinsey-bg .mckinsey-bg-overlay {
     margin: 0 !important;
   }
 
-  #vcard-iisc, #vcard-iim, #vcard-mckinsey {
+  #vcard-iisc,
+  #vcard-iim,
+  #vcard-mckinsey {
     opacity: 1 !important;
   }
 

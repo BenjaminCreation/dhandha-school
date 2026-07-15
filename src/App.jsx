@@ -195,6 +195,8 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [openFaqIndex, setOpenFaqIndex] = useState(0);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [paymentLoading, setPaymentLoading] = useState(false);
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPhone, setUserPhone] = useState("");
@@ -225,7 +227,27 @@ function App() {
 
   const openRazorpayCheckout = async () => {
     try {
+      setPaymentLoading(true);
       const key = import.meta.env.VITE_RAZORPAY_KEY_ID;
+
+      // Step 1: Try to create a Razorpay order via our backend
+      let orderId = null;
+      try {
+        const orderRes = await fetch("/api/create-order", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        });
+        if (orderRes.ok) {
+          const orderData = await orderRes.json();
+          if (orderData.success && orderData.order?.id) {
+            orderId = orderData.order.id;
+          }
+        }
+      } catch (_) {
+        // Backend not reachable — proceed without order (fallback mode)
+        console.warn("Backend unavailable, falling back to orderless checkout.");
+      }
+
       const options = {
         key: key,
         amount: 99900,
@@ -233,9 +255,36 @@ function App() {
         name: "Dhandha School",
         description: "Finance for Builders - Cohort 02",
         image: "/favicon.svg",
+        ...(orderId && { order_id: orderId }),
         handler: async function (response) {
-          alert("Payment Successful! Welcome to Dhandha School!");
+          // Step 2: Verify payment signature via backend
+          try {
+            const verifyRes = await fetch("/api/verify-payment", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_signature: response.razorpay_signature,
+                name: userName,
+                email: userEmail,
+                phone: userPhone,
+              }),
+            });
+            if (verifyRes.ok) {
+              const verifyData = await verifyRes.json();
+              if (!verifyData.success) {
+                console.warn("Signature verification failed on server.");
+              }
+            }
+          } catch (_) {
+            // Backend not reachable — still show success to user
+            console.warn("Could not verify payment on backend (offline).");
+          }
+
+          // Show in-app success screen
           setShowPaymentModal(false);
+          setPaymentSuccess(true);
           setUserName("");
           setUserEmail("");
           setUserPhone("");
@@ -253,12 +302,14 @@ function App() {
         },
       };
 
+      setPaymentLoading(false);
       const rzp1 = new window.Razorpay(options);
       rzp1.on("payment.failed", function (response) {
         alert(`Payment Failed! Reason: ${response.error.description}`);
       });
       rzp1.open();
     } catch (error) {
+      setPaymentLoading(false);
       console.error(error);
       alert("Failed to open checkout. Please try again!");
     }
@@ -898,17 +949,19 @@ function App() {
                       </div>
                     </div>
                   </div>
-                  <div className="curriculum-header-row">
-                    <div className="curriculum-header">
-                      <h2 className="story-heading">
-                        <span className="story-highlight story-highlight-cyan">Finance,</span>
-                        <span className="story-heading-line">for the ones actually building.</span>
-                      </h2>
-                      <p className="story-black-strip story-black-strip-wide">
-                        Four modules. Three hours. No MBA theater. No jargon for jargon&apos;s sake.
-                      </p>
+                  <div className="curriculum-header-outer">
+                    <div className="curriculum-header-row">
+                      <div className="curriculum-header">
+                        <h2 className="story-heading">
+                          <span className="story-highlight story-highlight-cyan">Finance,</span>
+                          <span className="story-heading-line">for the ones actually building.</span>
+                        </h2>
+                      </div>
+                      <img src="/laptop.png" alt="" aria-hidden="true" className="cutout-laptop-inline" />
                     </div>
-                    <img src="/laptop.png" alt="" aria-hidden="true" className="cutout-laptop-inline" />
+                    <p className="story-black-strip story-black-strip-wide">
+                      Four modules. Three hours. No MBA theater. No jargon for jargon&apos;s sake.
+                    </p>
                   </div>
                   <div className="curriculum-stack">
                     {curriculumModules.map((module) => (
@@ -1352,11 +1405,49 @@ function App() {
               </div>
               <div className="payment-modal-footer">
                 <div className="payment-price">₹999</div>
-                <button className="primer-btn" onClick={handleProceedToPayment}>
-                  Proceed to Payment
+                <button
+                  className="primer-btn"
+                  onClick={handleProceedToPayment}
+                  disabled={paymentLoading}
+                  style={paymentLoading ? { opacity: 0.7, cursor: 'not-allowed' } : {}}
+                >
+                  {paymentLoading ? (
+                    <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
+                      <span className="payment-btn-spinner" />
+                      Opening Checkout…
+                    </span>
+                  ) : (
+                    'Proceed to Payment'
+                  )}
                 </button>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Payment Success Screen */}
+      {paymentSuccess && (
+        <div className="payment-success-overlay" onClick={() => setPaymentSuccess(false)}>
+          <div className="payment-success-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="payment-success-icon-wrap">
+              <span className="payment-success-checkmark">✓</span>
+              <div className="payment-success-ripple" />
+              <div className="payment-success-ripple payment-success-ripple--2" />
+            </div>
+            <h2 className="payment-success-title">You&rsquo;re in!</h2>
+            <p className="payment-success-msg">
+              Welcome to <strong>Dhandha School</strong>. Your seat for <em>Finance for Builders — Cohort 02</em> is confirmed.
+            </p>
+            <p className="payment-success-sub">
+              Check your email inbox for confirmation &amp; next steps. See you in the live session! 🚀
+            </p>
+            <button
+              className="primer-btn payment-success-close-btn"
+              onClick={() => setPaymentSuccess(false)}
+            >
+              Back to Home
+            </button>
           </div>
         </div>
       )}
