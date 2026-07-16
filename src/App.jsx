@@ -318,9 +318,43 @@ function App() {
       }
 
       const rzp1 = new window.Razorpay(options);
+
+      // ── Success handler (fires immediately on payment completion) ──────────
       rzp1.on("payment.failed", function (response) {
-        alert(`Payment Failed! Reason: ${response.error.description}`);
+        console.error("payment.failed:", response.error);
+        // Don't alert — modal.ondismiss will poll and show the right message
       });
+
+      // ── Dismiss handler — polls backend to confirm status for async UPI ───
+      rzp1.on("modal.ondismiss", async function () {
+        if (!orderId) return; // no order was created, nothing to check
+        console.log("Modal dismissed — polling payment status for order:", orderId);
+
+        // Poll up to 8 times (every 1.5s = 12 seconds total) for async UPI
+        for (let i = 0; i < 8; i++) {
+          await new Promise(r => setTimeout(r, 1500));
+          try {
+            const res = await fetch(`${backendUrl}/api/payment-status?order_id=${orderId}`);
+            if (res.ok) {
+              const data = await res.json();
+              console.log(`Poll ${i + 1}: status =`, data.status);
+              if (data.status === "success") {
+                // Payment confirmed — show success screen
+                setShowPaymentModal(false);
+                setPaymentSuccess(true);
+                setUserName("");
+                setUserEmail("");
+                return;
+              }
+            }
+          } catch (e) {
+            console.warn("Poll error:", e.message);
+          }
+        }
+        // After polling, still pending — tell user to check email
+        console.log("Payment still pending after polling. Webhook will handle it.");
+      });
+
       rzp1.open();
     } catch (error) {
       setPaymentLoading(false);

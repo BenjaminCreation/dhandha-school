@@ -47,6 +47,22 @@ async function hmacSHA256hex(secret, message) {
     .join('');
 }
 
+// ── Payment Status Check ──────────────────────────────────────────────────────
+app.get('/api/payment-status', async (c) => {
+  const orderId = c.req.query('order_id');
+  if (!orderId) return c.json({ success: false, error: 'Missing order_id' }, 400);
+  try {
+    const row = await c.env.DB.prepare(
+      'SELECT status, payment_id FROM payments WHERE order_id = ?'
+    ).bind(orderId).first();
+    if (!row) return c.json({ success: false, status: 'not_found' });
+    return c.json({ success: true, status: row.status, payment_id: row.payment_id });
+  } catch (err) {
+    console.error('payment-status error:', err.message);
+    return c.json({ success: false, error: err.message }, 500);
+  }
+});
+
 // ── Create Order ──────────────────────────────────────────────────────────────
 app.post('/api/create-order', async (c) => {
   try {
