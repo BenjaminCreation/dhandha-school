@@ -7,6 +7,6 @@ compatibility_flags = ["nodejs_compat"]
 [[d1_databases]]
 binding = "DB"
 database_name = "dhandha-school-db"
-database_id = "" # You'll get this after creating the D1 DB
+database_id = "d234309f-3547-4408-b1c0-e086af79bb9f" # You'll get this after creating the D1 DB
 
 # Environment Variables (will be set in Cloudflare dashboard)
