@@ -201,6 +201,12 @@ function App() {
   const [userEmail, setUserEmail] = useState("");
   const [userPhone, setUserPhone] = useState("");
   const [isMobile, setIsMobile] = useState(false);
+  
+  // Debug: Check environment variable
+  useEffect(() => {
+    console.log("App Loaded - VITE_RAZORPAY_KEY_ID exists:", !!import.meta.env.VITE_RAZORPAY_KEY_ID);
+    console.log("Key starts with rzp_:", import.meta.env.VITE_RAZORPAY_KEY_ID?.startsWith("rzp_"));
+  }, []);
 
   useEffect(() => {
     const checkMobile = () => {
