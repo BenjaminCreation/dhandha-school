@@ -53,7 +53,7 @@ app.post('/api/create-order', async (c) => {
     console.log('create-order: start');
 
     const order = await razorpayFetch('/orders', 'POST', {
-      amount: 99900, // ₹999 in paise
+      amount: 100, // ₹1 in paise (TESTING — change to 99900 for production)
       currency: 'INR',
       receipt: 'receipt_' + Math.random().toString(36).substring(7),
     }, c.env);
