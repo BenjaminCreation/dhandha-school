@@ -235,14 +235,16 @@ function App() {
     try {
       setPaymentLoading(true);
       const key = import.meta.env.VITE_RAZORPAY_KEY_ID;
+      const backendUrl = import.meta.env.VITE_BACKEND_WORKER_URL || "";
       
       console.log("Razorpay Key:", key ? "Loaded" : "Missing");
+      console.log("Backend Worker URL:", backendUrl || "(relative)");
       console.log("window.Razorpay available:", typeof window.Razorpay !== "undefined");
 
       // Step 1: Try to create a Razorpay order via our backend
       let orderId = null;
       try {
-        const orderRes = await fetch("/api/create-order", {
+        const orderRes = await fetch(`${backendUrl}/api/create-order`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
         });
@@ -268,7 +270,7 @@ function App() {
         handler: async function (response) {
           // Step 2: Verify payment signature via backend
           try {
-            const verifyRes = await fetch("/api/verify-payment", {
+            const verifyRes = await fetch(`${backendUrl}/api/verify-payment`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
