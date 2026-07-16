@@ -11,12 +11,22 @@ const Hero = ({ setShowPaymentModal }) => {
     { num: '01', label: 'THE PREMISE', href: '#why', color: '#F94125' },
     { num: '02', label: 'MASTERCLASS', href: '#masterclass', color: '#3E82F7' },
     { num: '03', label: 'WHY US', href: '#whatsnext', color: '#000000' },
-    { num: '04', label: 'PRICING', href: '#pricing', color: '#6B4EE6' }
+    { num: '04', label: 'PRICING', href: '#second-cohort', color: '#6B4EE6' }
   ];
 
   const handleMenuScroll = (e, href) => {
     e.preventDefault();
     setMenuOpen(false);
+
+    // Pricing slide lives inside the pinned masterclass horizontal scroll —
+    // scroll to near the end of the trigger so the pricing panel is visible
+    if (href === '#second-cohort') {
+      const trigger = window.ScrollTrigger?.getAll().find(st => st.trigger?.id === 'masterclass');
+      if (trigger && window.__smoother) {
+        window.__smoother.scrollTo(trigger.end - 100, { duration: 1.5, ease: 'power3.out' });
+        return;
+      }
+    }
 
     const target = document.querySelector(href);
     if (target) {
