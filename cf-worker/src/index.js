@@ -1,41 +1,57 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
-import Razorpay from 'razorpay';
 import crypto from 'crypto';
 
 const app = new Hono();
 
-// Enable CORS for all routes
-app.use('/*', cors());
+// Enable CORS for all routes — allow any origin
+app.use('/*', cors({
+  origin: '*',
+  allowMethods: ['GET', 'POST', 'OPTIONS'],
+  allowHeaders: ['Content-Type', 'Authorization'],
+}));
+
+// Helper: call Razorpay REST API using fetch (works natively in CF Workers)
+async function razorpayFetch(path, method, body, env) {
+  const credentials = btoa(`${env.RAZORPAY_KEY_ID}:${env.RAZORPAY_KEY_SECRET}`);
+  const res = await fetch(`https://api.razorpay.com/v1${path}`, {
+    method,
+    headers: {
+      'Authorization': `Basic ${credentials}`,
+      'Content-Type': 'application/json',
+    },
+    ...(body ? { body: JSON.stringify(body) } : {}),
+  });
+  const data = await res.json();
+  if (!res.ok) {
+    console.error('Razorpay API error:', JSON.stringify(data));
+    throw new Error(data?.error?.description || `Razorpay ${path} failed: ${res.status}`);
+  }
+  return data;
+}
 
 // Create order endpoint
 app.post('/api/create-order', async (c) => {
   try {
-    const razorpay = new Razorpay({
-      key_id: c.env.RAZORPAY_KEY_ID,
-      key_secret: c.env.RAZORPAY_KEY_SECRET,
-    });
-
-    const options = {
-      amount: 100, // ₹1 in paise (for testing)
-      currency: "INR",
-      receipt: "receipt_" + Math.random().toString(36).substring(7),
-    };
-
-    const order = await razorpay.orders.create(options);
+    const order = await razorpayFetch('/orders', 'POST', {
+      amount: 99900, // ₹999 in paise
+      currency: 'INR',
+      receipt: 'receipt_' + Math.random().toString(36).substring(7),
+    }, c.env);
 
     // Insert pending payment into D1 DB
-    const stmt = c.env.DB.prepare(
+    await c.env.DB.prepare(
       'INSERT INTO payments (order_id, amount, status) VALUES (?, ?, ?)'
-    );
-    await stmt.bind(order.id, order.amount, 'pending').run();
+    ).bind(order.id, order.amount, 'pending').run();
 
+    console.log('Order created:', order.id);
     return c.json({ success: true, order });
   } catch (error) {
-    console.error(error);
-    return c.json({ success: false, error: 'Failed to create order' }, 500);
+    console.error('create-order error:', error.message);
+    return c.json({ success: false, error: error.message || 'Failed to create order' }, 500);
   }
 });
+
 
 // Verify payment endpoint
 app.post('/api/verify-payment', async (c) => {
