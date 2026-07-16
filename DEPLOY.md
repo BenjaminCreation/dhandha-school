@@ -66,6 +66,7 @@ If you want the frontend to make API calls to your Worker URL instead of relativ
 
 ## Step 5: Deploy Frontend to Cloudflare Pages
 
+Option A: Deploy via Wrangler CLI (manual)
 1. Go back to the project root:
    ```bash
    cd ..
@@ -79,6 +80,17 @@ If you want the frontend to make API calls to your Worker URL instead of relativ
    ```bash
    npx wrangler pages deploy dist --project-name=dhandha-school
    ```
+
+Option B: Deploy automatically via GitHub (auto-deploy on push)
+1. Go to https://dash.cloudflare.com/ → Workers & Pages → Create application → Pages
+2. Select "Connect to Git" and choose your dhandha-school repo
+3. In Build settings:
+   - Project name: `dhandha-school`
+   - Framework preset: `Vite`
+   - Build command: `npm run build`
+   - Build output directory: `dist`
+   - **IMPORTANT: Leave "Deploy command" BLANK!** (this is what caused your earlier error!)
+4. Click "Save and Deploy"
 
 ---
 
