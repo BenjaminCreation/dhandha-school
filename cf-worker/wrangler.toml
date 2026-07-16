@@ -1,0 +1,11 @@
+name = "dhandha-school-worker"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+
+# Cloudflare D1 Database
+[[d1_databases]]
+binding = "DB"
+database_name = "dhandha-school-db"
+database_id = "" # You'll get this after creating the D1 DB
+
+# Environment Variables (will be set in Cloudflare dashboard)
