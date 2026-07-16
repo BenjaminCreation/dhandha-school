@@ -1,17 +1,18 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
-import crypto from 'crypto';
 
 const app = new Hono();
 
-// Enable CORS for all routes — allow any origin
+// ── CORS ─────────────────────────────────────────────────────────────────────
 app.use('/*', cors({
   origin: '*',
   allowMethods: ['GET', 'POST', 'OPTIONS'],
   allowHeaders: ['Content-Type', 'Authorization'],
 }));
 
-// Helper: call Razorpay REST API using fetch (works natively in CF Workers)
+// ── Helpers ───────────────────────────────────────────────────────────────────
+
+// Call Razorpay REST API via fetch (no npm SDK — works natively in CF Workers)
 async function razorpayFetch(path, method, body, env) {
   const credentials = btoa(`${env.RAZORPAY_KEY_ID}:${env.RAZORPAY_KEY_SECRET}`);
   const res = await fetch(`https://api.razorpay.com/v1${path}`, {
@@ -30,32 +31,50 @@ async function razorpayFetch(path, method, body, env) {
   return data;
 }
 
-// Create order endpoint
+// HMAC-SHA256 using Web Crypto API (100% native CF Workers — no Node.js crypto needed)
+async function hmacSHA256hex(secret, message) {
+  const enc = new TextEncoder();
+  const key = await crypto.subtle.importKey(
+    'raw',
+    enc.encode(secret),
+    { name: 'HMAC', hash: 'SHA-256' },
+    false,
+    ['sign']
+  );
+  const sig = await crypto.subtle.sign('HMAC', key, enc.encode(message));
+  return Array.from(new Uint8Array(sig))
+    .map(b => b.toString(16).padStart(2, '0'))
+    .join('');
+}
+
+// ── Create Order ──────────────────────────────────────────────────────────────
 app.post('/api/create-order', async (c) => {
   try {
+    console.log('create-order: start');
+
     const order = await razorpayFetch('/orders', 'POST', {
       amount: 99900, // ₹999 in paise
       currency: 'INR',
       receipt: 'receipt_' + Math.random().toString(36).substring(7),
     }, c.env);
 
-    // Insert pending payment into D1 DB
     await c.env.DB.prepare(
       'INSERT INTO payments (order_id, amount, status) VALUES (?, ?, ?)'
     ).bind(order.id, order.amount, 'pending').run();
 
-    console.log('Order created:', order.id);
+    console.log('create-order: success, order_id =', order.id);
     return c.json({ success: true, order });
   } catch (error) {
-    console.error('create-order error:', error.message);
+    console.error('create-order: ERROR:', error.message);
     return c.json({ success: false, error: error.message || 'Failed to create order' }, 500);
   }
 });
 
-
-// Verify payment endpoint
+// ── Verify Payment ────────────────────────────────────────────────────────────
 app.post('/api/verify-payment', async (c) => {
   try {
+    console.log('verify-payment: start');
+
     const body = await c.req.json();
     const {
       razorpay_payment_id,
@@ -66,32 +85,43 @@ app.post('/api/verify-payment', async (c) => {
       phone,
     } = body;
 
-    // Verify signature
-    const hmac = crypto.createHmac('sha256', c.env.RAZORPAY_KEY_SECRET);
-    hmac.update(razorpay_order_id + '|' + razorpay_payment_id);
-    const generatedSignature = hmac.digest('hex');
+    console.log('verify-payment: payment_id =', razorpay_payment_id, '| order_id =', razorpay_order_id);
 
-    if (generatedSignature === razorpay_signature) {
-      // Update payment in DB
-      const stmt = c.env.DB.prepare(
-        'UPDATE payments SET payment_id = ?, signature = ?, name = ?, email = ?, phone = ?, status = ? WHERE order_id = ?'
-      );
-      await stmt
-        .bind(
-          razorpay_payment_id,
-          razorpay_signature,
-          name,
-          email,
-          phone,
-          'success',
-          razorpay_order_id
-        )
-        .run();
+    if (!razorpay_payment_id || !razorpay_order_id || !razorpay_signature) {
+      console.error('verify-payment: missing required fields');
+      return c.json({ success: false, message: 'Missing payment fields' }, 400);
+    }
 
-      // Send welcome email via Resend HTTP API
-      if (email) {
-        const firstName = name ? name.split(' ')[0] : 'there';
-        const html = `<!DOCTYPE html>
+    // ── Signature verification using Web Crypto API ───────────────────────────
+    const message = `${razorpay_order_id}|${razorpay_payment_id}`;
+    const generatedSignature = await hmacSHA256hex(c.env.RAZORPAY_KEY_SECRET, message);
+
+    console.log('verify-payment: sig match =', generatedSignature === razorpay_signature);
+
+    if (generatedSignature !== razorpay_signature) {
+      console.error('verify-payment: INVALID SIGNATURE');
+      return c.json({ success: false, message: 'Invalid signature' }, 400);
+    }
+
+    // ── Update DB ─────────────────────────────────────────────────────────────
+    const result = await c.env.DB.prepare(
+      'UPDATE payments SET payment_id = ?, signature = ?, name = ?, email = ?, phone = ?, status = ? WHERE order_id = ?'
+    ).bind(
+      razorpay_payment_id,
+      razorpay_signature,
+      name ?? null,
+      email ?? null,
+      phone ?? null,
+      'success',
+      razorpay_order_id
+    ).run();
+
+    console.log('verify-payment: DB updated, rows changed =', result.meta?.changes);
+
+    // ── Send welcome email via Resend ─────────────────────────────────────────
+    if (email) {
+      const firstName = name ? name.split(' ')[0] : 'there';
+      const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -150,31 +180,31 @@ app.post('/api/verify-payment', async (c) => {
 </body>
 </html>`;
 
-        try {
-          await fetch('https://api.resend.com/emails', {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${c.env.RESEND_API_KEY}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              from: 'Dhandha School <onboarding@resend.dev>',
-              to: [email],
-              subject: "Welcome to Dhandha School – You're In!",
-              html,
-            }),
-          });
-        } catch (err) {
-          console.error('Welcome email failed:', err);
-        }
+      try {
+        const emailRes = await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${c.env.RESEND_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            from: 'Dhandha School <onboarding@resend.dev>',
+            to: [email],
+            subject: "Welcome to Dhandha School – You're In!",
+            html,
+          }),
+        });
+        const emailData = await emailRes.json();
+        console.log('verify-payment: email sent, status =', emailRes.status, JSON.stringify(emailData));
+      } catch (err) {
+        console.error('verify-payment: email failed:', err.message);
       }
-
-      return c.json({ success: true, message: 'Payment verified successfully' });
-    } else {
-      return c.json({ success: false, message: 'Invalid signature' });
     }
+
+    return c.json({ success: true, message: 'Payment verified successfully' });
+
   } catch (error) {
-    console.error(error);
+    console.error('verify-payment: FATAL ERROR:', error.message, error.stack);
     return c.json({ success: false, error: 'Failed to verify payment' }, 500);
   }
 });
