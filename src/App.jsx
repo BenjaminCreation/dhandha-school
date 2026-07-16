@@ -199,7 +199,7 @@ function App() {
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
-  const [userPhone, setUserPhone] = useState("");
+
   const [isMobile, setIsMobile] = useState(false);
 
   // Debug: Check environment variable
@@ -224,8 +224,8 @@ function App() {
   const track3Ref = useRef(null);
 
   const handleProceedToPayment = async () => {
-    if (!userName.trim() || !userEmail.trim() || !userPhone.trim()) {
-      alert("Please fill all fields!");
+    if (!userName.trim() || !userEmail.trim()) {
+      alert("Please fill in your name and email!");
       return;
     }
     await openRazorpayCheckout();
@@ -279,7 +279,6 @@ function App() {
                 razorpay_signature: response.razorpay_signature,
                 name: userName,
                 email: userEmail,
-                phone: userPhone,
               }),
             });
             if (verifyRes.ok) {
@@ -298,12 +297,10 @@ function App() {
           setPaymentSuccess(true);
           setUserName("");
           setUserEmail("");
-          setUserPhone("");
         },
         prefill: {
           name: userName,
           email: userEmail,
-          contact: userPhone,
         },
         notes: {
           address: "Dhandha School Office",
@@ -1410,16 +1407,7 @@ function App() {
                   placeholder="your@email.com"
                 />
               </div>
-              <div className="form-group">
-                <label className="form-label">Phone Number</label>
-                <input
-                  type="tel"
-                  className="form-input"
-                  value={userPhone}
-                  onChange={(e) => setUserPhone(e.target.value)}
-                  placeholder="+91 98765 43210"
-                />
-              </div>
+
               <div className="payment-modal-footer">
                 <div className="payment-price">₹999</div>
                 <button
