@@ -204,7 +204,7 @@ app.post('/api/verify-payment', async (c) => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            from: 'Dhandha School <onboarding@resend.dev>',
+            from: 'Dhandha School <founder@dhandhaschool.com>',
             to: [email],
             subject: "Welcome to Dhandha School – You're In!",
             html,
@@ -320,7 +320,7 @@ app.post('/api/razorpay-webhook', async (c) => {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              from: 'Dhandha School <onboarding@resend.dev>',
+              from: 'Dhandha School <founder@dhandhaschool.com>',
               to: [email],
               subject: "Welcome to Dhandha School – You're In!",
               html,
