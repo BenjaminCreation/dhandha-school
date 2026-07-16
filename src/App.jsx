@@ -259,7 +259,7 @@ function App() {
 
       const options = {
         key: key,
-        amount: 99900,
+        amount: 100, // ₹1 in paise (for testing)
         currency: "INR",
         name: "Dhandha School",
         description: "Finance for Builders - Cohort 02",

@@ -18,9 +18,9 @@ app.post('/api/create-order', async (c) => {
     });
 
     const options = {
-      amount: 99900, // ₹999 in paise
-      currency: 'INR',
-      receipt: 'receipt_' + Math.random().toString(36).substring(7),
+      amount: 100, // ₹1 in paise (for testing)
+      currency: "INR",
+      receipt: "receipt_" + Math.random().toString(36).substring(7),
     };
 
     const order = await razorpay.orders.create(options);
