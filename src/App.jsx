@@ -21,7 +21,7 @@ const faqData = [
   {
     question: "What's the format? Live or recorded?",
     answer:
-      "One 4-hour live session, online. Q&A throughout. The session is recorded and you get lifetime access, so missing the live class is not fatal, but the live experience is the most valuable part."
+      "TWO 2-hour live session, online. Q&A throughout. The session is recorded and you get lifetime access, so missing the live class is not fatal, but the live experience is the most valuable part."
   },
   {
     question: 'What language will the session be in?',
@@ -906,7 +906,7 @@ function App() {
                     <div className="premise-copy story-panel">
                       <h2 className="story-heading">
                         <span className="story-highlight story-highlight-yellow">Indian education</span>
-                        <span className="story-heading-line">system is a scam.</span>
+                        <span className="story-heading-line">system is a broken.</span>
                         <span className="story-heading-line story-heading-line-offset">We need an alternative.</span>
                       </h2>
                       <div className="story-slant-capsule">
@@ -1008,7 +1008,7 @@ function App() {
                       <img src="/laptop.png" alt="" aria-hidden="true" className="cutout-laptop-inline" />
                     </div>
                     <p className="story-black-strip story-black-strip-wide">
-                      Four modules. Three hours. No MBA theater. No jargon for jargon&apos;s sake.
+                      Four modules. Four hours. No MBA theater. No jargon for jargon&apos;s sake.
                     </p>
                   </div>
                   <div className="curriculum-stack">
