@@ -906,7 +906,7 @@ function App() {
                     <div className="premise-copy story-panel">
                       <h2 className="story-heading">
                         <span className="story-highlight story-highlight-yellow">Indian education</span>
-                        <span className="story-heading-line">system is a broken.</span>
+                        <span className="story-heading-line">system is broken.</span>
                         <span className="story-heading-line story-heading-line-offset">We need an alternative.</span>
                       </h2>
                       <div className="story-slant-capsule">
