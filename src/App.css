@@ -1634,6 +1634,7 @@
   overflow: hidden;
   margin-top: 32px;
   width: 100%;
+  padding: 16px 0;
 }
 
 .testimonials-marquee-track {
@@ -1705,6 +1706,10 @@
   line-height: 1.6;
   color: #374151;
   flex-grow: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 8;
 }
 
 .testimonial-name {
@@ -1718,6 +1723,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
   margin-top: auto;
 }
 
@@ -1727,6 +1733,7 @@
   border-radius: 50%;
   border: 2px solid #000;
   object-fit: cover;
+  flex-shrink: 0;
 }
 
 /* Payment Modal Styles */
@@ -1868,7 +1875,6 @@
     min-width: 300px;
     max-width: 300px;
     min-height: 280px;
-    max-height: 280px;
   }
   .testimonial-review {
     -webkit-line-clamp: 7;
@@ -1880,7 +1886,6 @@
     min-width: 280px;
     max-width: 280px;
     min-height: 260px;
-    max-height: 260px;
   }
   .testimonial-review {
     -webkit-line-clamp: 6;
