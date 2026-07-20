@@ -314,6 +314,7 @@
 
 .get-started-btn:hover {
   background-color: #222222;
+  color: #fde047 !important;
   transform: translateY(-1px);
 }
 
