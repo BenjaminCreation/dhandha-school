@@ -1205,7 +1205,7 @@ function App() {
                   <span className="story-heading-line">can change how you read a business.</span>
                 </h2>
                 <div className="story-slant-capsule">
-                  <span className="story-capsule-text">Two masterclass . Only Leap</span>
+                  <span className="story-capsule-text">Two masterclasses. Only Leap.</span>
                 </div>
                 <p className="story-black-strip">
                   One language every builder eventually has to learn.

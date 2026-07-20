@@ -834,8 +834,8 @@
 
 .scroll-image-item {
   position: absolute;
-  bottom: 28px;
-  /* Base tucked cleanly behind marquee top edge */
+  bottom: 0px;
+  /* Base aligned to the bottom edge of the hero section */
   width: 180px;
   /* Larger high-impact images */
   height: 180px;
