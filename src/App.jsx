@@ -1457,6 +1457,7 @@ function App() {
                   value={userName}
                   onChange={(e) => setUserName(e.target.value)}
                   placeholder="Your name"
+                  autoFocus
                 />
               </div>
               <div className="form-group">
