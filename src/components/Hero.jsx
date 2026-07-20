@@ -44,8 +44,25 @@ const Hero = ({ setShowPaymentModal }) => {
 
   // Control scrolling state based on sticker completion
   useEffect(() => {
-    // We're using ScrollSmoother now, no need for Lenis-specific logic here
-    // But we can still keep the scroll lock behavior
+    let checkInterval;
+    
+    if (visibleItemsCount < 6) {
+      // Keep checking until window.__smoother exists, then pause it
+      checkInterval = setInterval(() => {
+        if (window.__smoother) {
+          window.__smoother.paused(true);
+          clearInterval(checkInterval);
+        }
+      }, 50);
+    } else {
+      if (window.__smoother) {
+        window.__smoother.paused(false);
+      }
+    }
+    
+    return () => {
+      if (checkInterval) clearInterval(checkInterval);
+    };
   }, [visibleItemsCount]);
 
   // Virtual scroll listener: Strictly locks scroll until all 6 stickers are popped up
