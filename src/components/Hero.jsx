@@ -102,17 +102,7 @@ const Hero = ({ setShowPaymentModal }) => {
         return;
       }
 
-      // At top of page with 6 stickers visible:
-      if (e.deltaY < 0) {
-        // Scrolling UP at top of page -> un-pop last sticker and lock page back at top
-        e.preventDefault();
-        accumulatedDelta += e.deltaY;
-        if (accumulatedDelta < -35) {
-          setVisibleItemsCount(5);
-          accumulatedDelta = 0;
-        }
-      }
-      // If e.deltaY > 0 at top of page with 6 stickers, do NOT preventDefault -> smoothly scroll down to Section 1!
+      // Once unlocked, do not re-lock when scrolling back to the top of the page.
     };
 
     window.addEventListener('wheel', handleWheel, { passive: false });
