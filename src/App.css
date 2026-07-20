@@ -512,6 +512,7 @@
 
 .curriculum-stack {
   display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 18px;
 }
 
@@ -649,6 +650,14 @@
 }
 
 /* Row that holds the heading block + laptop cutout side-by-side */
+.curriculum-header-outer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
 .curriculum-header-row {
   display: flex;
   flex-direction: row;
@@ -662,10 +671,12 @@
 }
 .cutout-laptop-inline {
   width: 160px;
-  flex-shrink: 0;
+  position: absolute;
+  right: 0;
+  top: -10px;
   display: block;
   object-fit: contain;
-  align-self: flex-end;
+  z-index: 10;
 }
 
 .story-stage-difference {
@@ -1524,6 +1535,9 @@
   }
 
   /* --- Curriculum / Masterclass Updates --- */
+  .curriculum-stack {
+    grid-template-columns: 1fr !important;
+  }
   .story-stage-curriculum .curriculum-header {
     position: relative !important;
     z-index: 2 !important;
@@ -2416,6 +2430,7 @@
     flex-shrink: 0 !important;
     align-self: flex-start !important;
     margin-top: 4px !important;
+    position: static !important;
   }
   /* Black strip: full-width, matches reference text style */
   .story-stage-curriculum .story-black-strip {
