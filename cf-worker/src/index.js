@@ -121,7 +121,7 @@ app.post('/api/verify-payment', async (c) => {
 
     // ── Update DB ─────────────────────────────────────────────────────────────
     const result = await c.env.DB.prepare(
-      'UPDATE payments SET payment_id = ?, signature = ?, name = ?, email = ?, phone = ?, status = ? WHERE order_id = ?'
+      "UPDATE payments SET payment_id = ?, signature = ?, name = ?, email = ?, phone = ?, status = ? WHERE order_id = ? AND status != 'success'"
     ).bind(
       razorpay_payment_id,
       razorpay_signature,
@@ -135,7 +135,7 @@ app.post('/api/verify-payment', async (c) => {
     console.log('verify-payment: DB updated, rows changed =', result.meta?.changes);
 
     // ── Send welcome email via Resend ─────────────────────────────────────────
-    if (email) {
+    if (email && result.meta?.changes > 0) {
       const firstName = name ? name.split(' ')[0] : 'there';
       const html = `<!DOCTYPE html>
 <html lang="en">
@@ -264,7 +264,7 @@ app.post('/api/razorpay-webhook', async (c) => {
       console.log('webhook: DB rows changed =', result.meta?.changes);
 
       // Send welcome email
-      if (email) {
+      if (email && result.meta?.changes > 0) {
         const firstName = name ? name.split(' ')[0] : 'there';
         const html = `<!DOCTYPE html>
 <html lang="en">

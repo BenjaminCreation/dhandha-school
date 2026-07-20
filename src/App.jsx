@@ -228,6 +228,11 @@ function App() {
       alert("Please fill in your name and email!");
       return;
     }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(userEmail.trim())) {
+      alert("Please enter a valid email address!");
+      return;
+    }
     await openRazorpayCheckout();
   };
 
@@ -248,15 +253,18 @@ function App() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
         });
-        if (orderRes.ok) {
-          const orderData = await orderRes.json();
-          if (orderData.success && orderData.order?.id) {
-            orderId = orderData.order.id;
-          }
+        if (!orderRes.ok) throw new Error("Server returned an error creating order.");
+        const orderData = await orderRes.json();
+        if (orderData.success && orderData.order?.id) {
+          orderId = orderData.order.id;
+        } else {
+          throw new Error("Invalid order response.");
         }
-      } catch (_) {
-        // Backend not reachable — proceed without order (fallback mode)
-        console.warn("Backend unavailable, falling back to orderless checkout.");
+      } catch (error) {
+        console.error("Order creation failed:", error);
+        alert("Failed to initialize payment. Please check your connection and try again.");
+        setPaymentLoading(false);
+        return;
       }
 
       const options = {
@@ -284,12 +292,23 @@ function App() {
             if (verifyRes.ok) {
               const verifyData = await verifyRes.json();
               if (!verifyData.success) {
-                console.warn("Signature verification failed on server.");
+                console.error("Signature verification failed on server.");
+                alert("Payment verification failed. Please contact support.");
+                return;
+              }
+            } else {
+              // Note: 400 response from backend also hits here. If it's an explicit 400 "Invalid signature", we might want to catch it.
+              // For now, if verifyRes is NOT ok, we will let it fall through to success because the webhook will eventually verify it.
+              // Wait, verify-payment returns 400 for invalid signature.
+              const errorText = await verifyRes.text();
+              if (verifyRes.status === 400 && errorText.includes('signature')) {
+                 alert("Payment verification failed: Invalid Signature.");
+                 return;
               }
             }
-          } catch (_) {
-            // Backend not reachable — still show success to user
-            console.warn("Could not verify payment on backend (offline).");
+          } catch (error) {
+            // Backend not reachable — still show success to user (webhook will act as fallback)
+            console.warn("Could not verify payment on backend. Relying on webhook.", error);
           }
 
           // Show in-app success screen
@@ -304,6 +323,8 @@ function App() {
         },
         notes: {
           address: "Dhandha School Office",
+          name: userName,
+          email: userEmail,
         },
         theme: {
           color: "#FFD93D",
@@ -1412,18 +1433,25 @@ function App() {
       {/* Payment Modal */}
       {showPaymentModal && (
         <div className="payment-modal-overlay" onClick={() => setShowPaymentModal(false)}>
-          <div className="payment-modal" onClick={(e) => e.stopPropagation()}>
-            <button className="payment-modal-close" onClick={() => setShowPaymentModal(false)}>
+          <div
+            className="payment-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="payment-modal-title"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button className="payment-modal-close" aria-label="Close modal" onClick={() => setShowPaymentModal(false)}>
               ×
             </button>
             <div className="payment-modal-header">
-              <h2 className="payment-modal-title">Join the Masterclass</h2>
+              <h2 id="payment-modal-title" className="payment-modal-title">Join the Masterclass</h2>
               <p className="payment-modal-subtitle">Fill in your details to proceed with payment</p>
             </div>
             <div className="payment-form">
               <div className="form-group">
-                <label className="form-label">Full Name</label>
+                <label htmlFor="user-name" className="form-label">Full Name</label>
                 <input
+                  id="user-name"
                   type="text"
                   className="form-input"
                   value={userName}
@@ -1432,8 +1460,9 @@ function App() {
                 />
               </div>
               <div className="form-group">
-                <label className="form-label">Email Address</label>
+                <label htmlFor="user-email" className="form-label">Email Address</label>
                 <input
+                  id="user-email"
                   type="email"
                   className="form-input"
                   value={userEmail}
@@ -1468,13 +1497,19 @@ function App() {
       {/* Payment Success Screen */}
       {paymentSuccess && (
         <div className="payment-success-overlay" onClick={() => setPaymentSuccess(false)}>
-          <div className="payment-success-modal" onClick={(e) => e.stopPropagation()}>
-            <div className="payment-success-icon-wrap">
+          <div
+            className="payment-success-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="payment-success-title"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="payment-success-icon-wrap" aria-hidden="true">
               <span className="payment-success-checkmark">✓</span>
               <div className="payment-success-ripple" />
               <div className="payment-success-ripple payment-success-ripple--2" />
             </div>
-            <h2 className="payment-success-title">You&rsquo;re in!</h2>
+            <h2 id="payment-success-title" className="payment-success-title">You&rsquo;re in!</h2>
             <p className="payment-success-msg">
               Welcome to <strong>Dhandha School</strong>. Your seat for <em>Finance for Builders — Cohort 02</em> is confirmed.
             </p>
