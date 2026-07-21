@@ -10,6 +10,10 @@ import './App.css';
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 if (typeof window !== 'undefined') {
   window.ScrollTrigger = ScrollTrigger;
+  if ('scrollRestoration' in window.history) {
+    window.history.scrollRestoration = 'manual';
+  }
+  window.scrollTo(0, 0);
 }
 
 const faqData = [
@@ -201,12 +205,8 @@ function App() {
   const [userEmail, setUserEmail] = useState("");
 
   const [isMobile, setIsMobile] = useState(false);
-
-  // Debug: Check environment variable
-  useEffect(() => {
-    console.log("App Loaded - VITE_RAZORPAY_KEY_ID exists:", !!import.meta.env.VITE_RAZORPAY_KEY_ID);
-    console.log("Key starts with rzp_:", import.meta.env.VITE_RAZORPAY_KEY_ID?.startsWith("rzp_"));
-  }, []);
+  const hasActiveOrder = useRef(false);
+  const orderIdRef = useRef(null);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -224,6 +224,7 @@ function App() {
   const track3Ref = useRef(null);
 
   const handleProceedToPayment = async () => {
+    if (hasActiveOrder.current) return;
     if (!userName.trim() || !userEmail.trim()) {
       alert("Please fill in your name and email!");
       return;
@@ -242,16 +243,13 @@ function App() {
       const key = import.meta.env.VITE_RAZORPAY_KEY_ID;
       const backendUrl = import.meta.env.VITE_BACKEND_WORKER_URL || "";
 
-      console.log("Razorpay Key:", key ? "Loaded" : "Missing");
-      console.log("Backend Worker URL:", backendUrl || "(relative)");
-      console.log("window.Razorpay available:", typeof window.Razorpay !== "undefined");
-
       // Step 1: Try to create a Razorpay order via our backend
       let orderId = null;
       try {
         const orderRes = await fetch(`${backendUrl}/api/create-order`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name: userName, email: userEmail }),
         });
         if (!orderRes.ok) throw new Error("Server returned an error creating order.");
         const orderData = await orderRes.json();
@@ -267,6 +265,9 @@ function App() {
         return;
       }
 
+      hasActiveOrder.current = true;
+      orderIdRef.current = orderId;
+
       const options = {
         key: key,
         amount: 99900, // ₹999 in paise (production)
@@ -276,6 +277,8 @@ function App() {
         image: "/favicon.svg",
         ...(orderId && { order_id: orderId }),
         handler: async function (response) {
+          hasActiveOrder.current = false;
+          orderIdRef.current = null;
           // Step 2: Verify payment signature via backend
           try {
             const verifyRes = await fetch(`${backendUrl}/api/verify-payment`, {
@@ -297,9 +300,6 @@ function App() {
                 return;
               }
             } else {
-              // Note: 400 response from backend also hits here. If it's an explicit 400 "Invalid signature", we might want to catch it.
-              // For now, if verifyRes is NOT ok, we will let it fall through to success because the webhook will eventually verify it.
-              // Wait, verify-payment returns 400 for invalid signature.
               const errorText = await verifyRes.text();
               if (verifyRes.status === 400 && errorText.includes('signature')) {
                  alert("Payment verification failed: Invalid Signature.");
@@ -307,11 +307,9 @@ function App() {
               }
             }
           } catch (error) {
-            // Backend not reachable — still show success to user (webhook will act as fallback)
             console.warn("Could not verify payment on backend. Relying on webhook.", error);
           }
 
-          // Show in-app success screen
           setShowPaymentModal(false);
           setPaymentSuccess(true);
           setUserName("");
@@ -340,27 +338,26 @@ function App() {
 
       const rzp1 = new window.Razorpay(options);
 
-      // ── Success handler (fires immediately on payment completion) ──────────
       rzp1.on("payment.failed", function (response) {
+        hasActiveOrder.current = false;
+        orderIdRef.current = null;
         console.error("payment.failed:", response.error);
-        // Don't alert — modal.ondismiss will poll and show the right message
       });
 
-      // ── Dismiss handler — polls backend to confirm status for async UPI ───
       rzp1.on("modal.ondismiss", async function () {
-        if (!orderId) return; // no order was created, nothing to check
-        console.log("Modal dismissed — polling payment status for order:", orderId);
+        if (!orderIdRef.current) {
+          hasActiveOrder.current = false;
+          return;
+        }
+        const currentOrderId = orderIdRef.current;
 
-        // Poll up to 8 times (every 1.5s = 12 seconds total) for async UPI
         for (let i = 0; i < 8; i++) {
           await new Promise(r => setTimeout(r, 1500));
           try {
-            const res = await fetch(`${backendUrl}/api/payment-status?order_id=${orderId}`);
+            const res = await fetch(`${backendUrl}/api/payment-status?order_id=${currentOrderId}`);
             if (res.ok) {
               const data = await res.json();
-              console.log(`Poll ${i + 1}: status =`, data.status);
               if (data.status === "success") {
-                // Payment confirmed — show success screen
                 setShowPaymentModal(false);
                 setPaymentSuccess(true);
                 setUserName("");
@@ -372,12 +369,15 @@ function App() {
             console.warn("Poll error:", e.message);
           }
         }
-        // After polling, still pending — tell user to check email
-        console.log("Payment still pending after polling. Webhook will handle it.");
+        hasActiveOrder.current = false;
+        orderIdRef.current = null;
+        alert("Payment is being processed. You'll receive a confirmation email shortly.");
       });
 
       rzp1.open();
     } catch (error) {
+      hasActiveOrder.current = false;
+      orderIdRef.current = null;
       setPaymentLoading(false);
       console.error("Razorpay Checkout Error:", error);
       alert("Failed to open checkout. Please check the console for details and try again!");
@@ -385,8 +385,20 @@ function App() {
   };
 
   useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+
+    const handleBeforeUnload = () => {
+      window.scrollTo(0, 0);
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
     if (window.innerWidth <= 768) {
-      return;
+      return () => {
+        window.removeEventListener('beforeunload', handleBeforeUnload);
+      };
     }
     const smoother = ScrollSmoother.create({
       smooth: 1.2,
@@ -396,8 +408,10 @@ function App() {
     });
 
     window.__smoother = smoother;
+    smoother.scrollTop(0);
 
     return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
       smoother.kill();
       delete window.__smoother;
     };
@@ -418,7 +432,7 @@ function App() {
         const track1 = track1Ref.current;
         const outer1 = outer1Ref.current;
         if (track1 && outer1) {
-          const getScrollAmount1 = () => track1.scrollWidth - window.innerWidth;
+          const getScrollAmount1 = () => track1.scrollWidth - outer1.clientWidth;
           gsap.to(track1, {
             x: () => -getScrollAmount1(),
             ease: 'none',
@@ -437,6 +451,7 @@ function App() {
         const outer2 = outer2Ref.current;
         if (track2 && outer2) {
           const verticalScrollAmount = window.innerHeight * 0.3; // Short pause before horizontal shift
+          const getScrollAmount2 = () => track2.children[0]?.offsetWidth || outer2.clientWidth;
 
           gsap.set(track2, { x: 0 }); // Start with section4 visible
 
@@ -447,30 +462,30 @@ function App() {
               pin: true,
               scrub: 1,
               start: 'top top',
-              end: () => `+=${verticalScrollAmount + (track2.children[0]?.offsetWidth || window.innerWidth)}`,
+              end: () => `+=${verticalScrollAmount + getScrollAmount2()}`,
               invalidateOnRefresh: true
             }
           });
 
           timeline2.to({}, { duration: verticalScrollAmount }); // Brief pause
           timeline2.to(track2, {
-            x: () => -(track2.children[0]?.offsetWidth || window.innerWidth),
+            x: () => -getScrollAmount2(),
             ease: 'none',
-            duration: (track2.children[0]?.offsetWidth || window.innerWidth)
+            duration: getScrollAmount2()
           }); // Then: horizontal scroll to section3
         }
 
         const track3 = track3Ref.current;
         const outer3 = outer3Ref.current;
         if (track3 && outer3) {
-          const getScrollAmount3 = () => track3.scrollWidth - window.innerWidth;
+          const getScrollAmount3 = () => track3.scrollWidth - outer3.clientWidth;
           const timeline3 = gsap.timeline({
             scrollTrigger: {
               trigger: outer3,
               pin: true,
               scrub: 1,
               start: 'top top',
-              end: () => `+=${getScrollAmount3() + window.innerHeight * 0.4}`,
+              end: () => `+=${getScrollAmount3() + window.innerHeight * 1.5}`,
               invalidateOnRefresh: true,
               onUpdate: (self) => {
                 const event = new CustomEvent('instructor-scroll', {
@@ -1064,21 +1079,21 @@ function App() {
                     <span className="story-badge">04 / SECOND COHORT</span>
                     <div className="story-chip-row">
                       <span className="story-chip">
-                        <svg className="chip-icon mobile-only-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: '13px', height: '13px', marginRight: '6px', display: 'none', verticalAlign: 'middle' }}>
+                        <svg className="chip-icon mobile-only-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                           <path d="M23 7l-7 5 7 5V7z"></path>
                           <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
                         </svg>
                         Online session
                       </span>
                       <span className="story-chip">
-                        <svg className="chip-icon mobile-only-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: '13px', height: '13px', marginRight: '6px', display: 'none', verticalAlign: 'middle' }}>
+                        <svg className="chip-icon mobile-only-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                           <circle cx="12" cy="12" r="10"></circle>
                           <polygon points="10 8 16 12 10 16 10 8"></polygon>
                         </svg>
                         Lifetime recording access
                       </span>
                       <span className="story-chip">
-                        <svg className="chip-icon mobile-only-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: '13px', height: '13px', marginRight: '6px', display: 'none', verticalAlign: 'middle' }}>
+                        <svg className="chip-icon mobile-only-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                           <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                           <line x1="16" y1="2" x2="16" y2="6"></line>
                           <line x1="8" y1="2" x2="8" y2="6"></line>
@@ -1255,7 +1270,7 @@ function App() {
                   const isOpen = openFaqIndex === index;
                   return (
                     <div key={item.question} className={`sec8-faq-item story-panel ${isOpen ? 'is-open' : ''}`}>
-                      <div className="sec8-faq-question" onClick={() => setOpenFaqIndex(isOpen ? null : index)}>
+                      <div className="sec8-faq-question" onClick={() => setOpenFaqIndex(isOpen ? null : index)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setOpenFaqIndex(isOpen ? null : index); } }} role="button" tabIndex={0}>
                         <span>{item.question}</span>
                         <span className="sec8-faq-icon">{isOpen ? '−' : '+'}</span>
                       </div>
@@ -1428,7 +1443,7 @@ function App() {
 
       {/* Payment Modal */}
       {showPaymentModal && (
-        <div className="payment-modal-overlay" onClick={() => setShowPaymentModal(false)}>
+        <div className="payment-modal-overlay">
           <div
             className="payment-modal"
             role="dialog"
@@ -1493,7 +1508,7 @@ function App() {
 
       {/* Payment Success Screen */}
       {paymentSuccess && (
-        <div className="payment-success-overlay" onClick={() => setPaymentSuccess(false)}>
+        <div className="payment-success-overlay">
           <div
             className="payment-success-modal"
             role="dialog"

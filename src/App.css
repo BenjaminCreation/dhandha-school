@@ -575,30 +575,41 @@
 }
 
 .story-stage-pricing {
-  padding-top: 40px;
-  padding-bottom: 40px;
-  min-height: auto !important;
-  height: auto;
+  padding-top: 32px;
+  padding-bottom: 32px;
   justify-content: center;
   gap: 28px;
 }
 
+.story-stage-pricing .pricing-copy {
+  flex: 1 1 0;
+  max-width: 520px;
+}
+
 .story-stage-pricing .pricing-copy .story-heading {
-  font-size: clamp(3rem, 6vw, 5.5rem);
+  font-size: clamp(2.4rem, 4.2vw, 3.8rem);
+  line-height: 1.05;
 }
 
 .story-stage-pricing .pricing-copy .story-body {
-  font-size: 1.35rem;
-  line-height: 1.8;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #4b5563;
+  margin-top: 10px;
 }
 
 .story-stage-pricing .pricing-copy .story-slant-capsule {
-  margin-top: 4px;
+  margin-top: 14px;
+  margin-bottom: 10px;
 }
 
 .story-stage-pricing .pricing-layout {
-  align-items: stretch;
-  gap: 32px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  width: 100%;
 }
 
 .section-4 {
@@ -788,18 +799,21 @@
 }
 
 .pricing-poster {
-  padding: 28px;
+  padding: 24px 28px;
   background: #fffef8;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
   justify-content: center;
+  flex: 0 0 460px;
+  max-width: 460px;
+  box-sizing: border-box;
 }
 
 .pricing-poster-top {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
 .pricing-eyebrow {
@@ -807,8 +821,8 @@
   border: 1px solid #000;
   background: #000;
   color: #fff;
-  padding: 7px 12px;
-  font-size: 0.75rem;
+  padding: 5px 12px;
+  font-size: 0.72rem;
   font-weight: 900;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -817,12 +831,12 @@
 .pricing-amounts {
   display: flex;
   align-items: baseline;
-  gap: 14px;
+  gap: 12px;
 }
 
 .pricing-old {
   font-family: 'Poppins', sans-serif;
-  font-size: 2rem;
+  font-size: 1.4rem;
   font-weight: 700;
   color: #9ca3af;
   text-decoration: line-through;
@@ -830,7 +844,7 @@
 
 .pricing-new {
   font-family: 'Geist', 'Inter', sans-serif;
-  font-size: clamp(4.5rem, 9vw, 7.5rem);
+  font-size: clamp(3.2rem, 5.5vw, 4.5rem);
   font-weight: 900;
   line-height: 1;
   letter-spacing: -0.05em;
@@ -842,31 +856,31 @@
   padding: 0;
   margin: 0;
   display: grid;
-  gap: 12px;
+  gap: 10px;
 }
 
 .pricing-list li {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   font-weight: 700;
-  line-height: 1.55;
+  line-height: 1.45;
   color: #374151;
 }
 
 .pricing-list li::before {
   content: '+';
   font-family: 'JetBrains Mono', monospace;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 900;
   color: #2563eb;
 }
 
 .pricing-primary-btn {
   width: fit-content;
-  padding: 1rem 2.8rem !important;
-  font-size: 1.15rem !important;
+  padding: 0.85rem 2.5rem !important;
+  font-size: 1.05rem !important;
   font-weight: 800 !important;
   letter-spacing: 0.04em;
   background: #f5c518 !important;
@@ -903,25 +917,25 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin-top: 4px;
+  margin-top: 8px;
 }
 
 .pricing-arrow {
   position: absolute;
-  width: 50px;
+  width: 44px;
   height: auto;
   opacity: 0.85;
 }
 
 .pricing-arrow-left {
-  left: -60px;
-  top: -8px;
+  left: -48px;
+  top: 0px;
   animation: arrow-bounce-left 1.5s ease-in-out infinite;
 }
 
 .pricing-arrow-right {
-  right: -60px;
-  top: -8px;
+  right: -48px;
+  top: 0px;
   animation: arrow-bounce-right 1.5s ease-in-out infinite;
 }
 
@@ -1060,11 +1074,6 @@
   width: 160px;
   left: -128px;
   bottom: 110px;
-}
-
-/* cutout-laptop is now inline (.cutout-laptop-inline); legacy rule kept minimal */
-.cutout-laptop {
-  display: none;
 }
 
 .cutout-trophy {
@@ -1346,6 +1355,7 @@
   #smooth-content {
     will-change: auto !important;
   }
+
   .horizontal-scroll-outer {
     width: 100% !important;
     min-height: auto !important;
@@ -1382,41 +1392,6 @@
     padding: 24px 16px !important;
   }
 
-  .manifesto-grid,
-  .difference-board {
-    grid-template-columns: 1fr;
-  }
-
-  .sec8-footer-grid {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 24px !important;
-    text-align: left !important;
-  }
-  .sec8-col-brand {
-    max-width: 100% !important;
-    margin-bottom: 12px !important;
-  }
-  .sec8-col-backtop {
-    justify-content: flex-start !important;
-    margin-top: 12px !important;
-  }
-
-  .floating-cutout {
-    opacity: 0.72;
-  }
-}
-
-@media (max-width: 768px) {
-  .placeholder-section {
-    width: 100% !important;
-    height: auto !important;
-    min-height: auto !important;
-    flex-shrink: 1 !important;
-    padding: 0 !important;
-    border: none !important;
-  }
-
   .story-topbar,
   .cta-actions {
     flex-direction: column;
@@ -1440,6 +1415,15 @@
 
   .story-heading-line-offset {
     padding-left: 0;
+  }
+
+  .manifesto-grid,
+  .difference-board {
+    grid-template-columns: 1fr;
+  }
+
+  .floating-cutout {
+    opacity: 0.72;
   }
 
   .floating-cutout:not(.cutout-bill):not(.cutout-graduation):not(.cutout-job):not(.cutout-laptop) {
@@ -1480,14 +1464,36 @@
     transform: rotate(5deg) !important;
   }
 
-  /* cutout-laptop is now inline via .cutout-laptop-inline */
   .cutout-laptop {
     display: none !important;
   }
+
   .cutout-laptop-inline {
     width: 110px !important;
     align-self: flex-end !important;
     flex-shrink: 0 !important;
+  }
+
+  .sec8-footer-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 24px !important;
+    text-align: left !important;
+  }
+
+  .sec8-col-brand {
+    max-width: 100% !important;
+    margin-bottom: 12px !important;
+  }
+
+  .sec8-col-backtop {
+    justify-content: flex-start !important;
+    margin-top: 12px !important;
+  }
+
+  .sec8-right-buttons {
+    right: 16px;
+    gap: 1rem;
   }
 
   .pricing-primary-btn {
@@ -1517,26 +1523,28 @@
     min-width: 0 !important;
     padding: 0 !important;
   }
-  /* Hide the duplicated marquee chips (list is concatenated twice for desktop scroll) */
+
   .story-marquee-track .story-chip:nth-child(n + 6) {
     display: none !important;
   }
 
-  /* --- Curriculum / Masterclass Updates --- */
   .curriculum-stack {
     grid-template-columns: 1fr !important;
   }
+
   .story-stage-curriculum .curriculum-header {
     position: relative !important;
     z-index: 2 !important;
     padding-right: 0 !important;
   }
+
   .story-stage-curriculum .curriculum-header .story-heading {
     padding-right: 125px !important;
     font-size: clamp(2.3rem, 10vw, 2.9rem) !important;
     line-height: 0.9 !important;
     letter-spacing: -0.05em !important;
   }
+
   .story-stage-curriculum .story-black-strip {
     display: block !important;
     width: 100% !important;
@@ -1546,57 +1554,59 @@
     line-height: 1.4 !important;
     margin-top: 16px !important;
   }
-  /* curriculum-header-row controls laptop placement; no absolute override needed */
+
   .story-stage-curriculum .curriculum-header-row {
     align-items: flex-end !important;
     gap: 12px !important;
   }
+
   .story-stage-curriculum .module-ribbon {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
     padding: 10px 14px !important;
   }
+
   .story-stage-curriculum .module-ribbon span:nth-child(1) {
     margin-right: 4px;
   }
+
   .story-stage-curriculum .module-ribbon span:nth-child(2) {
     flex-grow: 1;
     text-align: left;
   }
+
   .story-stage-curriculum .module-ribbon span:nth-child(2)::before {
     content: '•';
     margin-right: 8px;
     font-weight: 800;
   }
+
   .story-stage-curriculum .module-main {
     display: flex !important;
     flex-direction: column !important;
     gap: 12px !important;
   }
 
-  /* --- Pricing Updates --- */
   .story-stage-pricing .story-topbar {
     margin-bottom: 24px;
   }
+
   .story-stage-pricing .story-heading {
     font-size: 3.5rem !important;
   }
+
   .story-stage-pricing .story-heading-line {
     font-size: clamp(2.2rem, 10vw, 2.9rem) !important;
     line-height: 1.02 !important;
   }
+
   .story-stage-pricing .story-slant-capsule {
     margin-bottom: 24px;
   }
+
   .story-stage-pricing .pricing-poster {
     padding: 24px 20px !important;
-  }
-
-
-  .sec8-right-buttons {
-    right: 16px;
-    gap: 1rem;
   }
 }
 
@@ -1680,7 +1690,6 @@
   gap: 16px;
   width: 420px;
   flex-shrink: 0;
-  min-height: 320px;
   height: auto;
 }
 

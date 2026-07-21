@@ -65,6 +65,23 @@ const Hero = ({ setShowPaymentModal }) => {
     };
   }, [visibleItemsCount]);
 
+  // Lock scroll when menu overlay is open
+  useEffect(() => {
+    if (menuOpen) {
+      window.__smoother?.paused(true);
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+      if (visibleItemsCount >= 6) {
+        window.__smoother?.paused(false);
+      }
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [menuOpen, visibleItemsCount]);
+
   // Virtual scroll listener: Strictly locks scroll until all 6 stickers are popped up
   useEffect(() => {
     let accumulatedDelta = 0;
