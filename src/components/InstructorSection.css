@@ -3,8 +3,7 @@
    ========================================================================== */
 
 .section-6 {
-  background-color: var(--color-custom-white);
-  border-left: 1px solid #000;
+  background: linear-gradient(135deg, #fbf9f4 0%, #f5ead0 100%);
   position: relative;
   overflow: hidden;
 }
