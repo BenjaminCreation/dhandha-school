@@ -893,10 +893,6 @@ function App() {
     <div className="app-shell">
       <div id="smooth-wrapper">
         <div id="smooth-content">
-          <div className="iisc-bg-overlay" />
-          <div className="iim-bg-overlay" />
-          <div className="mckinsey-bg-overlay" />
-
           <Hero setShowPaymentModal={setShowPaymentModal} />
 
           <div className="horizontal-scroll-outer" id="why" ref={outer1Ref}>

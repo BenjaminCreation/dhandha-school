@@ -608,20 +608,6 @@
   padding-bottom: 16px;
   justify-content: flex-start;
   gap: 12px;
-  overflow-y: auto;
-  max-height: calc(100vh - 80px);
-  /* Ensures internal scrollbar on smaller screens */
-}
-/* Style the internal scrollbar to be subtle */
-.story-stage-curriculum::-webkit-scrollbar {
-  width: 6px;
-}
-.story-stage-curriculum::-webkit-scrollbar-track {
-  background: transparent;
-}
-.story-stage-curriculum::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
 }
 
 .story-stage-curriculum .curriculum-header {

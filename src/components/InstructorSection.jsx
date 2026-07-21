@@ -220,9 +220,12 @@ const InstructorSection = () => {
 
   return (
     <section className="placeholder-section section-6" id="instructor">
-      <div className="story-stage story-stage-instructor story-panel instructor-content">
-        <h3 className="font-geist" id="instructor-name">Vibhanshu Golia (WhyBhanshu)</h3>
-        <div className="instructor-split">
+      <div className="story-stage story-stage-instructor story-panel instructor-content" style={{ overflow: 'hidden' }}>
+        <div className="iisc-bg-overlay" />
+        <div className="iim-bg-overlay" />
+        <div className="mckinsey-bg-overlay" />
+        <h3 className="font-geist" id="instructor-name" style={{ position: 'relative', zIndex: 2 }}>Vibhanshu Golia (WhyBhanshu)</h3>
+        <div className="instructor-split" style={{ position: 'relative', zIndex: 2 }}>
           <div className="instructor-image">
             <img src="/founder.jpeg" alt="Vibhanshu Golia" />
           </div>
