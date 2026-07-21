@@ -97,8 +97,8 @@ const InstructorSection = () => {
         const mckinseyEl = mckinseyRef.current;
         const nameEl = document.getElementById('instructor-name');
 
-        if (progress <= 0) {
-          // Reset to standard unhighlighted state when above the section
+        if (progress <= 0 || progress >= 1) {
+          // Reset to standard unhighlighted state when above or below the section
           resetAnim(iiscEl);
           resetAnim(iimEl);
           resetAnim(mckinseyEl);
@@ -107,16 +107,6 @@ const InstructorSection = () => {
           logoIimRef.current?.classList.remove('active');
           logoMckinseyRef.current?.classList.remove('active');
           currentZone = -1;
-        } else if (progress >= 1) {
-          // Keep all highlighted and active when scrolled below the section
-          setStatic(iiscEl, '#125c99');
-          setStatic(iimEl, '#b52c31');
-          setStatic(mckinseyEl, '#2c457d');
-          if (nameEl) nameEl.style.color = '#2c457d';
-          logoIiscRef.current?.classList.add('active');
-          logoIimRef.current?.classList.add('active');
-          logoMckinseyRef.current?.classList.add('active');
-          currentZone = 3;
         }
         return;
       }

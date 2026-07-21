@@ -96,7 +96,9 @@
 
 .story-stage {
   position: relative;
-  width: min(1320px, 100%);
+  width: 100% !important;
+  max-width: 1320px !important;
+  box-sizing: border-box !important;
   height: auto;
   min-height: 100vh;
   border: 1.5px solid #000;
@@ -106,13 +108,13 @@
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.14);
   overflow: visible;
   padding: 40px 32px;
-  margin: 0 auto;
+  margin-left: auto !important;
+  margin-right: auto !important;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 24px;
   will-change: transform, opacity;
-  box-sizing: border-box;
 }
 
 .story-stage::before {
