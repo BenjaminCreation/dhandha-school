@@ -58,36 +58,33 @@
   justify-content: center;
   padding: 100px 32px 40px;
   box-sizing: border-box;
-  border-top: 1px solid #000;
   font-family: 'Plus Jakarta Sans', sans-serif;
   position: relative;
   overflow: visible;
 }
 
 .section-1 {
-  background: linear-gradient(180deg, #fbf9f4 0%, #fdf5d5 100%);
+  background: linear-gradient(135deg, #fbf9f4 0%, #fdf5d5 60%, #f6f1ea 100%);
   padding-top: 0px;
 }
 
 .section-2 {
-  background: linear-gradient(180deg, #fbf9f4 0%, #efe9ff 100%);
-  border-left: 1px solid #000;
+  background: linear-gradient(135deg, #f6f1ea 0%, #efe9ff 60%, #fbf9f4 100%);
 }
 
 .section-3 {
-  background: linear-gradient(180deg, #fbf9f4 0%, #e5f3ff 100%);
-  border-left: 1px solid #000;
+  background: linear-gradient(135deg, #fbf9f4 0%, #e5f3ff 60%, #f0eaeb 100%);
   padding-top: 0px;
   margin-top: 0px;
 }
 
 .section-4 {
-  background: linear-gradient(180deg, #fff6ec 0%, #fbe1d8 100%);
+  background: linear-gradient(135deg, #f0eaeb 0%, #fbe1d8 60%, #ede4ea 100%);
   padding-top: 0px;
 }
 
 .section-5 {
-  background: linear-gradient(180deg, #eef5ff 0%, #dde7fb 100%);
+  background: linear-gradient(135deg, #ede4ea 0%, #dde7fb 60%, #fbf9f4 100%);
 }
 
 .section-7 {
@@ -679,19 +676,64 @@
 }
 
 .story-stage-difference {
-  padding-top: 30px;
-  padding-bottom: 30px;
-  justify-content: flex-start;
+  padding-top: 32px;
+  padding-bottom: 32px;
+  justify-content: center;
+  gap: 28px;
+}
+
+.story-stage-difference .difference-copy {
+  flex: 1 1 0;
+  max-width: 500px;
+}
+
+.story-stage-difference .story-heading {
+  font-size: clamp(2.4rem, 4.2vw, 3.8rem);
+  line-height: 1.05;
 }
 
 .story-stage-difference .difference-copy .story-body {
-  font-size: 1.2rem;
-  line-height: 1.72;
-  max-width: 520px;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #4b5563;
+  margin-top: 12px;
+  max-width: 460px;
 }
 
 .story-stage-difference .difference-layout {
-  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 36px;
+  width: 100%;
+}
+
+.story-stage-difference .difference-board {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  flex: 0 0 540px;
+  max-width: 540px;
+}
+
+.story-stage-difference .difference-note {
+  padding: 20px 22px;
+}
+
+.story-stage-difference .difference-title {
+  font-size: clamp(1.2rem, 1.7vw, 1.5rem);
+  margin-bottom: 8px;
+}
+
+.story-stage-difference .difference-body {
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.story-stage-difference .difference-index {
+  margin-bottom: 8px;
+  font-size: 0.8rem;
 }
 
 .section-1, .section-3, .section-5 {
