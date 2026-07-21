@@ -108,7 +108,7 @@ const InstructorSection = () => {
           logoMckinseyRef.current?.classList.remove('active');
           currentZone = -1;
         } else if (progress >= 1) {
-          // Keep all highlighted and active when scrolled below the section
+          // Keep all 3 texts and logos active/visible when scrolled below the section
           setStatic(iiscEl, '#125c99');
           setStatic(iimEl, '#b52c31');
           setStatic(mckinseyEl, '#2c457d');
@@ -122,9 +122,9 @@ const InstructorSection = () => {
       }
 
       // Calculate thresholds for horizontal movement cutoff vs locked animation phase
-      const track = document.querySelector('.horizontal-scroll-track');
+      const track = document.querySelector('#whatsnext .horizontal-scroll-track') || document.querySelector('.horizontal-scroll-track');
       if (!track) return;
-      const scrollAmount = track.scrollWidth - window.innerWidth;
+      const scrollAmount = track.scrollWidth - (track.parentElement?.clientWidth || window.innerWidth);
       const lockedAmount = window.innerHeight * 1.5;
       const totalAmount = scrollAmount + lockedAmount;
       const cutoff = scrollAmount / totalAmount;
@@ -220,6 +220,9 @@ const InstructorSection = () => {
 
   return (
     <section className="placeholder-section section-6" id="instructor">
+      <div className="iisc-bg-overlay" />
+      <div className="iim-bg-overlay" />
+      <div className="mckinsey-bg-overlay" />
       <div className="story-stage story-stage-instructor story-panel instructor-content">
         <h3 className="font-geist" id="instructor-name">Vibhanshu Golia (WhyBhanshu)</h3>
         <div className="instructor-split">

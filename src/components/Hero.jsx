@@ -44,9 +44,43 @@ const Hero = ({ setShowPaymentModal }) => {
 
   // Control scrolling state based on sticker completion
   useEffect(() => {
-    // We're using ScrollSmoother now, no need for Lenis-specific logic here
-    // But we can still keep the scroll lock behavior
+    let checkInterval;
+    
+    if (visibleItemsCount < 6) {
+      // Keep checking until window.__smoother exists, then pause it
+      checkInterval = setInterval(() => {
+        if (window.__smoother) {
+          window.__smoother.paused(true);
+          clearInterval(checkInterval);
+        }
+      }, 50);
+    } else {
+      if (window.__smoother) {
+        window.__smoother.paused(false);
+      }
+    }
+    
+    return () => {
+      if (checkInterval) clearInterval(checkInterval);
+    };
   }, [visibleItemsCount]);
+
+  // Lock scroll when menu overlay is open
+  useEffect(() => {
+    if (menuOpen) {
+      window.__smoother?.paused(true);
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+      if (visibleItemsCount >= 6) {
+        window.__smoother?.paused(false);
+      }
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [menuOpen, visibleItemsCount]);
 
   // Virtual scroll listener: Strictly locks scroll until all 6 stickers are popped up
   useEffect(() => {
@@ -85,17 +119,7 @@ const Hero = ({ setShowPaymentModal }) => {
         return;
       }
 
-      // At top of page with 6 stickers visible:
-      if (e.deltaY < 0) {
-        // Scrolling UP at top of page -> un-pop last sticker and lock page back at top
-        e.preventDefault();
-        accumulatedDelta += e.deltaY;
-        if (accumulatedDelta < -35) {
-          setVisibleItemsCount(5);
-          accumulatedDelta = 0;
-        }
-      }
-      // If e.deltaY > 0 at top of page with 6 stickers, do NOT preventDefault -> smoothly scroll down to Section 1!
+      // Once unlocked, do not re-lock when scrolling back to the top of the page.
     };
 
     window.addEventListener('wheel', handleWheel, { passive: false });

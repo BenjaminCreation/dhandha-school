@@ -12,8 +12,8 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '10kb' }));
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
 // Initialize database
 const db = new Database("./dhandha-school.db");
@@ -22,7 +22,7 @@ const db = new Database("./dhandha-school.db");
 db.exec(`
   CREATE TABLE IF NOT EXISTS payments (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    payment_id TEXT NOT NULL,
+    payment_id TEXT,
     order_id TEXT NOT NULL,
     signature TEXT,
     name TEXT,
@@ -175,6 +175,8 @@ async function sendWelcomeEmail(name, email) {
 // Create Order Endpoint
 app.post("/api/create-order", async (req, res) => {
   try {
+    const { name, email } = req.body || {};
+
     const options = {
       amount: 99900, // Amount in paise (₹999)
       currency: "INR",
@@ -185,9 +187,9 @@ app.post("/api/create-order", async (req, res) => {
 
     // Insert pending payment into DB
     const insertPayment = db.prepare(`
-      INSERT INTO payments (order_id, amount, status) VALUES (?, ?, 'pending')
+      INSERT INTO payments (order_id, name, email, amount, status) VALUES (?, ?, ?, ?, 'pending')
     `);
-    insertPayment.run(order.id, order.amount);
+    insertPayment.run(order.id, name || null, email || null, order.amount);
 
     res.json({ success: true, order });
   } catch (error) {
@@ -208,6 +210,10 @@ app.post("/api/verify-payment", async (req, res) => {
       phone,
     } = req.body;
 
+    if (!razorpay_payment_id || !razorpay_order_id || !razorpay_signature) {
+      return res.status(400).json({ success: false, message: 'Missing payment fields' });
+    }
+
     // Verify signature
     const hmac = crypto.createHmac("sha256", process.env.RAZORPAY_KEY_SECRET);
     hmac.update(razorpay_order_id + "|" + razorpay_payment_id);
@@ -218,7 +224,7 @@ app.post("/api/verify-payment", async (req, res) => {
       const updatePayment = db.prepare(`
         UPDATE payments
         SET payment_id = ?, signature = ?, name = ?, email = ?, phone = ?, status = 'success'
-        WHERE order_id = ?
+        WHERE order_id = ? AND status != 'success'
       `);
       updatePayment.run(
         razorpay_payment_id,
@@ -239,7 +245,7 @@ app.post("/api/verify-payment", async (req, res) => {
       res.json({ success: true, message: "Payment verified successfully" });
     } else {
       // Invalid signature
-      res.json({ success: false, message: "Invalid signature" });
+      res.status(400).json({ success: false, message: "Invalid signature" });
     }
   } catch (error) {
     console.error(error);

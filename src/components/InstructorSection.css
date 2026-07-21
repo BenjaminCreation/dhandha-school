@@ -5,6 +5,8 @@
 .section-6 {
   background-color: var(--color-custom-white);
   border-left: 1px solid #000;
+  position: relative;
+  overflow: hidden;
 }
 
 .instructor-content {
@@ -14,6 +16,9 @@
   justify-content: center;
   gap: 1.2rem;
   transition: background-color 0.6s ease, color 0.6s ease, border-color 0.6s ease;
+  position: relative;
+  z-index: 2 !important;
+  background: rgba(255, 255, 255, 0.95) !important;
 }
 
 body.inverted-theme .instructor-content {
@@ -110,52 +115,41 @@ body.inverted-theme .instructor-content {
 }
 
 /* Background Overlays */
-.iisc-bg-overlay {
-  position: fixed;
-  inset: 0;
-  background-image: url('/bg1.png');
+.iisc-bg-overlay,
+.iim-bg-overlay,
+.mckinsey-bg-overlay {
+  position: absolute !important;
+  inset: 0 !important;
   background-size: cover;
   background-position: center;
   opacity: 0;
-  z-index: -1;
+  z-index: 1 !important;
   transition: opacity 0.6s ease;
   pointer-events: none;
 }
 
-body.inverted-theme.show-iisc-bg .iisc-bg-overlay {
-  opacity: 1;
+.iisc-bg-overlay {
+  background-image: url('/bg1.png');
 }
 
 .iim-bg-overlay {
-  position: fixed;
-  inset: 0;
   background-image: url('/bg2.png');
-  background-size: cover;
-  background-position: center;
-  opacity: 0;
-  z-index: -1;
-  transition: opacity 0.6s ease;
-  pointer-events: none;
-}
-
-body.inverted-theme.show-iim-bg .iim-bg-overlay {
-  opacity: 1;
 }
 
 .mckinsey-bg-overlay {
-  position: fixed;
-  inset: 0;
   background-image: url('/bg3.png');
-  background-size: cover;
-  background-position: center;
-  opacity: 0;
-  z-index: -1;
-  transition: opacity 0.6s ease;
-  pointer-events: none;
 }
 
-body.inverted-theme.show-mckinsey-bg .mckinsey-bg-overlay {
-  opacity: 1;
+body.show-iisc-bg .iisc-bg-overlay {
+  opacity: 1 !important;
+}
+
+body.show-iim-bg .iim-bg-overlay {
+  opacity: 1 !important;
+}
+
+body.show-mckinsey-bg .mckinsey-bg-overlay {
+  opacity: 1 !important;
 }
 
 @media (max-width: 992px) {

@@ -162,112 +162,6 @@
   transform: translateY(-2px);
 }
 
-/* Dropdown Menu Box */
-.nav_burger-dropdown {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  min-width: 380px;
-  background-color: #ffffff;
-  border: 1px solid #000000;
-  border-top: none;
-  box-sizing: border-box;
-  padding: 1.5rem;
-  z-index: 40;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-  animation: dropdown-slide-down 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes dropdown-slide-down {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.dropdown-list {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 2rem;
-}
-
-.dropdown-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 16px;
-  font-size: 1.05rem;
-  font-weight: 500;
-  color: #111;
-  cursor: pointer;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  transition: background-color 0.3s ease, color 0.2s ease, padding-left 0.3s ease;
-  border-radius: 4px;
-}
-
-.dropdown-item:last-child {
-  border-bottom: none;
-}
-
-.dropdown-item:hover {
-  background-color: #3572ef;
-  color: #ffffff;
-  padding-left: 20px;
-}
-
-.plus-icon {
-  font-size: 1.2rem;
-  font-weight: 300;
-  color: #666;
-  transition: color 0.2s ease;
-}
-
-.dropdown-item:hover .plus-icon {
-  color: #ffffff;
-}
-
-.dropdown-bottom-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.dropdown-btn {
-  width: 100%;
-  padding: 0.9rem;
-  border-radius: 100px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.dropdown-btn.is-black {
-  background-color: #000000;
-  color: #ffffff;
-  border: none;
-}
-
-.dropdown-btn.is-black:hover {
-  background-color: #222222;
-}
-
-.dropdown-btn.is-white-outlined {
-  background-color: #ffffff;
-  color: #000000;
-  border: 1px solid #000000;
-}
-
-.dropdown-btn.is-white-outlined:hover {
-  background-color: #f4f4f4;
-}
-
 /* Right Box Group */
 .nav_right_box {
   position: absolute;
@@ -314,6 +208,7 @@
 
 .get-started-btn:hover {
   background-color: #222222;
+  color: #fde047 !important;
   transform: translateY(-1px);
 }
 
@@ -409,41 +304,6 @@
 .hero-mobile-br,
 .hero-blue-br {
   display: none;
-}
-
-.capsule-teal-text {
-  font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
-  font-weight: 800;
-  font-style: italic;
-  font-size: 2.3rem;
-  color: #06b6d4;
-  letter-spacing: -0.03em;
-}
-
-.word-build {
-  font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
-  font-weight: 800;
-  font-style: italic;
-  font-size: 2.3rem;
-  letter-spacing: -0.03em;
-  transition: color 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-  display: inline-block;
-}
-
-/* Description Text on Black Rectangle Highlight */
-.hero-description {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 1.15rem;
-  font-weight: 600;
-  line-height: 1.5;
-  margin-top: 8px;
-  text-align: center;
-  background-color: #000000;
-  padding: 10px 22px;
-  border-radius: 0;
-  display: inline-block;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
-  transition: color 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hero-subheading-fade {
@@ -834,8 +694,8 @@
 
 .scroll-image-item {
   position: absolute;
-  bottom: 28px;
-  /* Base tucked cleanly behind marquee top edge */
+  bottom: -20px;
+  /* Base aligned slightly below the bottom edge of the hero section */
   width: 180px;
   /* Larger high-impact images */
   height: 180px;

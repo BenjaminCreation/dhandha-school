@@ -4,11 +4,26 @@ import { cors } from 'hono/cors';
 const app = new Hono();
 
 // ── CORS ─────────────────────────────────────────────────────────────────────
+const allowedOrigins = [
+  'https://dhandhaschool.com',
+  'https://www.dhandhaschool.com',
+  'http://localhost:5173',
+  'http://localhost:4173',
+];
 app.use('/*', cors({
-  origin: '*',
+  origin: allowedOrigins,
   allowMethods: ['GET', 'POST', 'OPTIONS'],
   allowHeaders: ['Content-Type', 'Authorization'],
 }));
+
+// ── Body size limit middleware ───────────────────────────────────────────────
+app.use('/api/*', async (c, next) => {
+  const contentLength = parseInt(c.req.header('content-length') || '0', 10);
+  if (contentLength > 10240) {
+    return c.json({ error: 'Request body too large' }, 413);
+  }
+  await next();
+});
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -68,6 +83,8 @@ app.post('/api/create-order', async (c) => {
   try {
     console.log('create-order: start');
 
+    const { name, email } = await c.req.json().catch(() => ({}));
+
     const order = await razorpayFetch('/orders', 'POST', {
       amount: 99900, // ₹999 in paise (production)
       currency: 'INR',
@@ -75,8 +92,8 @@ app.post('/api/create-order', async (c) => {
     }, c.env);
 
     await c.env.DB.prepare(
-      'INSERT INTO payments (order_id, amount, status) VALUES (?, ?, ?)'
-    ).bind(order.id, order.amount, 'pending').run();
+      'INSERT INTO payments (order_id, name, email, amount, status) VALUES (?, ?, ?, ?, ?)'
+    ).bind(order.id, name ?? null, email ?? null, order.amount, 'pending').run();
 
     console.log('create-order: success, order_id =', order.id);
     return c.json({ success: true, order });
@@ -121,7 +138,7 @@ app.post('/api/verify-payment', async (c) => {
 
     // ── Update DB ─────────────────────────────────────────────────────────────
     const result = await c.env.DB.prepare(
-      'UPDATE payments SET payment_id = ?, signature = ?, name = ?, email = ?, phone = ?, status = ? WHERE order_id = ?'
+      "UPDATE payments SET payment_id = ?, signature = ?, name = ?, email = ?, phone = ?, status = ? WHERE order_id = ? AND status != 'success'"
     ).bind(
       razorpay_payment_id,
       razorpay_signature,
@@ -135,7 +152,7 @@ app.post('/api/verify-payment', async (c) => {
     console.log('verify-payment: DB updated, rows changed =', result.meta?.changes);
 
     // ── Send welcome email via Resend ─────────────────────────────────────────
-    if (email) {
+    if (email && result.meta?.changes > 0) {
       const firstName = name ? name.split(' ')[0] : 'there';
       const html = `<!DOCTYPE html>
 <html lang="en">
@@ -264,7 +281,7 @@ app.post('/api/razorpay-webhook', async (c) => {
       console.log('webhook: DB rows changed =', result.meta?.changes);
 
       // Send welcome email
-      if (email) {
+      if (email && result.meta?.changes > 0) {
         const firstName = name ? name.split(' ')[0] : 'there';
         const html = `<!DOCTYPE html>
 <html lang="en">

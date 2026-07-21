@@ -60,18 +60,24 @@ html, body {
   color: var(--text-color);
   min-height: 100vh;
   overflow-x: hidden !important;
-  -ms-overflow-style: none !important;  /* IE and Edge */
-  scrollbar-width: none !important;  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: #d4d4d4 var(--bg-color);
 }
 
-/* Hide webkit scrollbars (Chrome, Safari, Opera) */
-html::-webkit-scrollbar,
-body::-webkit-scrollbar,
-#root::-webkit-scrollbar,
-*::-webkit-scrollbar {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
+/* Custom subtle scrollbar (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+::-webkit-scrollbar-thumb {
+  background: #d4d4d4;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a3a3a3;
 }
 
 #root {
