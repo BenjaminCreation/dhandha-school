@@ -1431,8 +1431,10 @@ function App() {
 
               <div className="sec8-footer-bottom-bar">
                 <span>© 2026 Dhandha School · Made in India · All rights reserved</span>
-                <a href="https://www.upforgeconsulting.com" target="_blank" rel="noopener noreferrer" className="footer-upforge-link">Made by UpForge</a>
-                <span>Cohort 02 · 2026</span>
+                <div className="sec8-footer-credits">
+                  <a href="https://www.upforgeconsulting.com" target="_blank" rel="noopener noreferrer" className="footer-upforge-link">Made by UpForge</a>
+                  <span>Cohort 02 · 2026</span>
+                </div>
               </div>
             </footer>
           </section>
