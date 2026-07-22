@@ -587,8 +587,8 @@
     display: flex !important;
     align-items: flex-end !important;
     justify-content: center !important;
-    width: 120px !important;
-    height: 170px !important;
+    width: 104px !important;
+    height: 104px !important;
     bottom: 0 !important;
   }
 
@@ -599,48 +599,53 @@
     filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.20)) !important;
   }
 
-  /*
-    5 hands L→R: book, trophy, graduation, ID card, laptop
-    Figma: book bleeds off left, laptop bleeds off right.
-    Using negative left for book and >80% for laptop.
-  */
   .hero-sticker-book {
-    left: -2% !important;
-    bottom: 0 !important;
+    left: 50% !important;
+    margin-left: -220px !important;
+    bottom: -25px !important;
     z-index: 1 !important;
-    transform: rotate(-10deg) !important;
+    transform: rotate(-22deg) scale(0.9) !important;
   }
 
   .hero-sticker-trophy {
-    left: 18% !important;
-    bottom: 24px !important;
+    left: 50% !important;
+    margin-left: -154px !important;
+    bottom: -3px !important;
     z-index: 2 !important;
-    transform: rotate(6deg) !important;
+    transform: rotate(-12deg) scale(0.98) !important;
   }
 
   .hero-sticker-graduation {
-    left: 36% !important;
-    bottom: 6px !important;
+    left: 50% !important;
+    margin-left: -85px !important;
+    bottom: 16px !important;
     z-index: 3 !important;
-    transform: rotate(-5deg) !important;
+    transform: rotate(-3deg) scale(1.05) !important;
   }
 
   .hero-sticker-job {
-    left: 54% !important;
-    bottom: 20px !important;
+    left: 50% !important;
+    margin-left: -21px !important;
+    bottom: 16px !important;
     z-index: 2 !important;
-    transform: rotate(-8deg) !important;
+    transform: rotate(3deg) scale(1.05) !important;
   }
 
   .hero-sticker-credit {
-    display: none !important;
+    display: flex !important;
+    left: 50% !important;
+    margin-left: 48px !important;
+    bottom: -3px !important;
+    z-index: 2 !important;
+    transform: rotate(12deg) scale(0.98) !important;
   }
 
   .hero-sticker-laptop {
-    left: 72% !important;
-    bottom: -10px !important;
+    left: 50% !important;
+    margin-left: 114px !important;
+    bottom: -25px !important;
     z-index: 1 !important;
-    transform: rotate(12deg) !important;
+    transform: rotate(22deg) scale(0.9) !important;
   }
 }
 
