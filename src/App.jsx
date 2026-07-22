@@ -942,8 +942,8 @@ function App() {
                           <span className="sticker-eyebrow">{card.eyebrow}</span>
                           <h3 className="sticker-title">{card.title}</h3>
                           <p className="sticker-body">{card.body}</p>
-                          {card.eyebrow === '01' && <img src="/alarm.png" className="card-cutout mobile-only-cutout" alt="" />}
-                          {card.eyebrow === '02' && <img src="/stack.png" className="card-cutout mobile-only-cutout" alt="" />}
+                          {card.eyebrow === '01' && <img src="/graduation.png" className="card-cutout mobile-only-cutout" alt="" />}
+                          {card.eyebrow === '02' && <img src="/job.png" className="card-cutout mobile-only-cutout" alt="" />}
                           {card.eyebrow === '03' && <img src="/credit.png" className="card-cutout mobile-only-cutout" alt="" />}
                         </article>
                       ))}
@@ -952,8 +952,8 @@ function App() {
                   <div className="mobile-only-collage">
                     <img src="/book.png" className="collage-hand hand-book" alt="" />
                     <img src="/trophy.png" className="collage-hand hand-trophy" alt="" />
-                    <img src="/alarm.png" className="collage-hand hand-graduation" alt="" />
-                    <img src="/stack.png" className="collage-hand hand-job" alt="" />
+                    <img src="/graduation.png" className="collage-hand hand-graduation" alt="" />
+                    <img src="/job.png" className="collage-hand hand-job" alt="" />
                     <img src="/credit.png" className="collage-hand hand-credit" alt="" />
                     <img src="/laptop.png" className="collage-hand hand-laptop" alt="" />
                   </div>

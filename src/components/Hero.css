@@ -615,21 +615,21 @@
     left: 18% !important;
     bottom: 24px !important;
     z-index: 2 !important;
-    transform: rotate(-12deg) !important;
+    transform: rotate(6deg) !important;
   }
 
   .hero-sticker-graduation {
     left: 36% !important;
     bottom: 6px !important;
     z-index: 3 !important;
-    transform: rotate(8deg) !important;
+    transform: rotate(-5deg) !important;
   }
 
   .hero-sticker-job {
     left: 54% !important;
     bottom: 20px !important;
     z-index: 2 !important;
-    transform: rotate(-8deg) scale(0.88) !important;
+    transform: rotate(-8deg) !important;
   }
 
   .hero-sticker-credit {
