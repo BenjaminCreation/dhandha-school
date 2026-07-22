@@ -725,26 +725,6 @@ function App() {
           );
         });
 
-        // ── Footer ──
-        const footerGrid = document.querySelector('.sec8-footer-grid');
-        if (footerGrid) {
-          gsap.utils.toArray(footerGrid.querySelectorAll('.sec8-col')).forEach((col, i) => {
-            gsap.fromTo(col,
-              { autoAlpha: 0, y: 40 },
-              {
-                autoAlpha: 1, y: 0,
-                duration: 0.9,
-                delay: i * 0.1,
-                ease: 'power3.out',
-                scrollTrigger: {
-                  trigger: footerGrid,
-                  start: 'top 85%',
-                  toggleActions: 'play none none reverse'
-                }
-              }
-            );
-          });
-        }
 
         // Helper: only animate elements NOT inside horizontal scroll sections
         const outsideHorizontal = (selector) =>
@@ -768,6 +748,10 @@ function App() {
         });
 
         outsideHorizontal('.story-slant-capsule').forEach((capsule) => {
+          if (capsule.closest('.section-7')) {
+            gsap.set(capsule, { autoAlpha: 1, x: 0, rotate: -2 });
+            return;
+          }
           gsap.fromTo(capsule,
             { autoAlpha: 0, x: -40, rotate: -6 },
             {
@@ -784,6 +768,10 @@ function App() {
         });
 
         outsideHorizontal('.story-black-strip').forEach((strip) => {
+          if (strip.closest('.section-7')) {
+            gsap.set(strip, { autoAlpha: 1, x: 0 });
+            return;
+          }
           gsap.fromTo(strip,
             { autoAlpha: 0, x: -30 },
             {
@@ -1402,8 +1390,8 @@ function App() {
                     onClick={() => {
                       if (window.__smoother) {
                         window.__smoother.scrollTo(0, {
-                          duration: 3.8,
-                          ease: "power3.out"
+                          duration: 2.2,
+                          ease: "none"
                         });
                       } else {
                         window.scrollTo({ top: 0, behavior: 'smooth' });

@@ -736,6 +736,11 @@
     gap: 16px;
     flex: 0 0 540px;
     max-width: 540px;
+    margin-right: 80px !important;
+  }
+
+  .story-stage-difference .cutout-medal {
+    right: 600px !important;
   }
 }
 
@@ -2740,5 +2745,124 @@
   }
   .payment-success-title {
     font-size: 1.9rem;
+  }
+}
+
+/* ==========================================================================
+   Desktop-only Snapping Viewport Sizing (CTA, Testimonials, FAQ, Footer)
+   ========================================================================== */
+@media (min-width: 1181px) {
+  /* Section 7 (CTA) */
+  .section-7 {
+    height: 100vh !important;
+    min-height: 100vh !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 40px 32px !important;
+    box-sizing: border-box !important;
+  }
+  .story-stage-cta {
+    height: calc(100vh - 80px) !important;
+    min-height: calc(100vh - 80px) !important;
+    justify-content: center !important;
+    gap: 20px !important;
+    padding: 40px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Section Testimonials */
+  .section-testimonials {
+    height: 100vh !important;
+    min-height: 100vh !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 40px 32px !important;
+    box-sizing: border-box !important;
+  }
+  .story-stage-testimonials {
+    height: calc(100vh - 80px) !important;
+    min-height: calc(100vh - 80px) !important;
+    justify-content: center !important;
+    gap: 24px !important;
+    padding: 40px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Section 8 Combined FAQ & Footer container */
+  .section-8-container {
+    height: 100vh !important;
+    min-height: 100vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  /* FAQ inside 100vh container */
+  .sec8-faq-top {
+    flex: 1 1 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 0 6vw !important;
+    box-sizing: border-box !important;
+  }
+  .sec8-faq-header {
+    margin-bottom: 20px !important;
+    gap: 8px !important;
+  }
+  .sec8-faq-list {
+    gap: 10px !important;
+    max-width: 980px !important;
+  }
+  .sec8-faq-question {
+    padding: 16px 24px !important;
+    font-size: 1.12rem !important;
+  }
+  .sec8-faq-title {
+    font-size: clamp(1.8rem, 2.5vw, 2.3rem) !important;
+    margin-bottom: 0 !important;
+  }
+  .sec8-faq-answer {
+    padding: 0 24px 16px !important;
+  }
+  .sec8-faq-answer p {
+    font-size: 0.95rem !important;
+    line-height: 1.55 !important;
+  }
+
+  /* Footer inside 100vh container */
+  .sec8-footer-bottom {
+    flex: 0 0 auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 20px 6vw 16px !important;
+    margin-top: 0 !important;
+    box-sizing: border-box !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+  }
+  .sec8-footer-grid {
+    gap: 20px !important;
+  }
+  .sec8-brand-desc {
+    font-size: 0.82rem !important;
+    line-height: 1.4 !important;
+  }
+  .sec8-col-title {
+    margin-bottom: 8px !important;
+  }
+  .sec8-col-links a {
+    font-size: 0.85rem !important;
+  }
+  .sec8-footer-bottom-bar {
+    margin-top: 14px !important;
+    padding-top: 10px !important;
   }
 }
