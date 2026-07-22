@@ -615,21 +615,21 @@
     left: 18% !important;
     bottom: 24px !important;
     z-index: 2 !important;
-    transform: rotate(6deg) !important;
+    transform: rotate(-12deg) !important;
   }
 
   .hero-sticker-graduation {
     left: 36% !important;
     bottom: 6px !important;
     z-index: 3 !important;
-    transform: rotate(-5deg) !important;
+    transform: rotate(8deg) !important;
   }
 
   .hero-sticker-job {
     left: 54% !important;
     bottom: 20px !important;
     z-index: 2 !important;
-    transform: rotate(-8deg) !important;
+    transform: rotate(-8deg) scale(0.88) !important;
   }
 
   .hero-sticker-credit {
@@ -722,6 +722,30 @@
 
 .scroll-image-item.is-visible:hover .pop-image {
   transform: scale(1.08) translateY(-6px);
+}
+
+.hero-sticker-trophy {
+  transform: translateX(-50%) translateY(110px) scale(0.6) rotate(-12deg);
+}
+
+.hero-sticker-trophy.is-visible {
+  transform: translateX(-50%) translateY(0) scale(1) rotate(-12deg) !important;
+}
+
+.hero-sticker-graduation {
+  transform: translateX(-50%) translateY(110px) scale(0.6) rotate(8deg);
+}
+
+.hero-sticker-graduation.is-visible {
+  transform: translateX(-50%) translateY(0) scale(1) rotate(8deg) !important;
+}
+
+.hero-sticker-job {
+  transform: translateX(-50%) translateY(110px) scale(0.53);
+}
+
+.hero-sticker-job.is-visible {
+  transform: translateX(-50%) translateY(0) scale(0.88) !important;
 }
 
 /* Bottom Marquee Banner - Positioned higher z-index to mask image bases */
