@@ -1719,6 +1719,7 @@
   padding-top: 16px;
   padding-bottom: 24px;
   width: 100%;
+  padding: 16px 0;
 }
 
 .testimonials-marquee-track {
@@ -1789,6 +1790,10 @@
   line-height: 1.6;
   color: #374151;
   flex-grow: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 8;
 }
 
 .testimonial-name {
@@ -1802,6 +1807,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
   margin-top: auto;
 }
 
@@ -1811,6 +1817,7 @@
   border-radius: 50%;
   border: 2px solid #000;
   object-fit: cover;
+  flex-shrink: 0;
 }
 
 /* Payment Modal Styles */
@@ -2359,12 +2366,50 @@
     font-size: clamp(0.78rem, 3.35vw, 0.9rem) !important;
     line-height: 1.3 !important;
   }
+  .story-stage-pricing .pricing-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 24px !important;
+    width: 100% !important;
+  }
+  .story-stage-pricing .pricing-copy {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
   .story-stage-pricing .pricing-poster {
+    width: 100% !important;
+    box-sizing: border-box !important;
     padding: 24px 20px !important;
     border: 1px solid rgba(0, 0, 0, 0.15) !important;
     border-radius: 12px !important;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05) !important;
     background: #ffffff !important;
+    overflow: hidden !important;
+  }
+  .story-stage-pricing .pricing-btn-wrapper {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  .story-stage-pricing .pricing-arrow {
+    display: none !important;
+  }
+  .story-stage-pricing .pricing-primary-btn {
+    width: 100% !important;
+    text-align: center !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 1rem 1.5rem !important;
+  }
+  .story-stage-pricing .pricing-new {
+    font-size: clamp(3rem, 14vw, 4.5rem) !important;
+  }
+  .story-stage-pricing .pricing-amounts {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+  .story-stage-pricing .pricing-list li {
+    font-size: 0.95rem !important;
   }
 
   /* Section 5 Difference note cards */

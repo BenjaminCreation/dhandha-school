@@ -18,9 +18,12 @@ const Hero = ({ setShowPaymentModal }) => {
     e.preventDefault();
     setMenuOpen(false);
 
+    // Unlock the scrolling lock immediately by revealing all stickers
+    setVisibleItemsCount(6);
+
     // Pricing slide lives inside the pinned masterclass horizontal scroll —
     // scroll to near the end of the trigger so the pricing panel is visible
-    if (href === '#second-cohort') {
+    if (href === '#second-cohort' && !isMobile) {
       const trigger = window.ScrollTrigger?.getAll().find(st => st.trigger?.id === 'masterclass');
       if (trigger && window.__smoother) {
         window.__smoother.scrollTo(trigger.end - 100, { duration: 1.5, ease: 'power3.out' });
@@ -41,6 +44,13 @@ const Hero = ({ setShowPaymentModal }) => {
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
+
+  // Pause ScrollSmoother while the menu is open to prevent background scrolling
+  useEffect(() => {
+    if (window.__smoother) {
+      window.__smoother.paused(menuOpen);
+    }
+  }, [menuOpen]);
 
   // Control scrolling state based on sticker completion
   useEffect(() => {
@@ -160,7 +170,11 @@ const Hero = ({ setShowPaymentModal }) => {
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
+      const mobile = window.innerWidth <= 768;
+      setIsMobile(mobile);
+      if (mobile) {
+        setVisibleItemsCount(6);
+      }
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);
