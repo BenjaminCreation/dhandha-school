@@ -2001,59 +2001,6 @@
   .mobile-only-inline {
     display: inline-block !important;
   }
-  .mobile-only-collage {
-    display: flex !important;
-    position: relative !important;
-    width: 100% !important;
-    height: 120px !important;
-    margin-top: 36px !important;
-    justify-content: center !important;
-    align-items: flex-end !important;
-    overflow: visible !important;
-  }
-  .mobile-only-collage img, .collage-hand {
-    position: absolute !important;
-    width: 92px !important;
-    height: 92px !important;
-    object-fit: contain !important;
-    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.15)) !important;
-  }
-  .hand-book {
-    left: 50% !important;
-    margin-left: -191px !important;
-    bottom: -22px !important;
-    transform: rotate(-22deg) scale(0.9) !important;
-  }
-  .hand-trophy {
-    left: 50% !important;
-    margin-left: -134px !important;
-    bottom: -3px !important;
-    transform: rotate(-12deg) scale(0.98) !important;
-  }
-  .hand-graduation {
-    left: 50% !important;
-    margin-left: -74px !important;
-    bottom: 14px !important;
-    transform: rotate(-3deg) scale(1.05) !important;
-  }
-  .hand-job {
-    left: 50% !important;
-    margin-left: -18px !important;
-    bottom: 14px !important;
-    transform: rotate(3deg) scale(1.05) !important;
-  }
-  .hand-credit {
-    left: 50% !important;
-    margin-left: 42px !important;
-    bottom: -3px !important;
-    transform: rotate(12deg) scale(0.98) !important;
-  }
-  .hand-laptop {
-    left: 50% !important;
-    margin-left: 99px !important;
-    bottom: -22px !important;
-    transform: rotate(22deg) scale(0.9) !important;
-  }
 
   .card-cutout {
     display: block !important;
