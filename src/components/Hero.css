@@ -915,8 +915,34 @@
 
 .menu-item__label {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(3rem, 6.5vw, 6.5rem);
+  font-size: clamp(2.4rem, 6.5vw, 6.5rem);
   font-weight: 900;
   letter-spacing: -0.04em;
   text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .menu-content {
+    padding: 0 6vw;
+  }
+  
+  .menu-item {
+    gap: 1.2rem;
+    padding: 1.2rem 0;
+  }
+  
+  .menu-item__num {
+    font-size: 0.95rem;
+  }
+  
+  .menu-item__label {
+    font-size: clamp(1.8rem, 5.8vw, 2.5rem);
+  }
+  
+  .menu-close {
+    top: 20px;
+    right: 20px;
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+  }
 }
