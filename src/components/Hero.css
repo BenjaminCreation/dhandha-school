@@ -581,6 +581,7 @@
     width: 104px !important;
     height: 104px !important;
     bottom: 0 !important;
+    transform: translateX(-50%) translateY(0) scale(1) !important;
   }
 
   .pop-image {

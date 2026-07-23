@@ -2813,3 +2813,241 @@
     padding-top: 10px !important;
   }
 }
+
+/* ─────────────────────────────────────────
+   FLOATING & MOBILE CUTOUT STYLES
+───────────────────────────────────────── */
+.floating-cutout {
+  position: absolute;
+  z-index: 3;
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.18));
+  pointer-events: none;
+}
+
+.cutout-graduation {
+  width: 150px;
+  right: 10px;
+  top: 110px;
+}
+
+.cutout-job {
+  width: 170px;
+  right: -85px;
+  bottom: -30px;
+}
+
+.cutout-book {
+  width: 126px;
+  left: -20px;
+  bottom: -30px;
+}
+
+.cutout-bill {
+  width: 140px;
+  right: 46px;
+  top: 110px;
+}
+
+.cutout-credit {
+  width: 160px;
+  left: -128px;
+  bottom: 110px;
+}
+
+.cutout-laptop {
+  display: none;
+}
+
+.cutout-trophy {
+  width: 124px;
+  left: -92px;
+  top: 112px;
+}
+
+.cutout-medal {
+  width: 132px;
+  right: 520px;
+  top: 250px;
+}
+
+.cutout-book-cta {
+  width: 140px;
+  left: -20px;
+  bottom: -30px;
+}
+
+.cutout-trophy-cta {
+  width: 120px;
+  right: 70px;
+  top: 88px;
+}
+
+.curriculum-header-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 24px;
+  width: 100%;
+}
+
+.curriculum-header-row .curriculum-header {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.cutout-laptop-inline {
+  width: 160px;
+  flex-shrink: 0;
+  display: block;
+  object-fit: contain;
+  align-self: flex-end;
+}
+
+.mobile-only-inline,
+.mobile-only-collage,
+.card-cutout {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-only-inline {
+    display: inline-block !important;
+  }
+
+  .floating-cutout:not(.cutout-bill):not(.cutout-graduation):not(.cutout-job):not(.cutout-laptop) {
+    display: none !important;
+  }
+
+  .cutout-bill {
+    display: block !important;
+    width: clamp(130px, 24vw, 110px) !important;
+    position: absolute !important;
+    right: 6px !important;
+    top: 240px !important;
+    bottom: auto !important;
+    z-index: 15 !important;
+    opacity: 1 !important;
+    transform: rotate(6deg) !important;
+  }
+
+  .cutout-graduation {
+    display: block !important;
+    width: 68px !important;
+    position: absolute !important;
+    right: 12px !important;
+    top: auto !important;
+    bottom: 350px !important;
+    z-index: 10 !important;
+    transform: rotate(-10deg) !important;
+  }
+
+  .cutout-job {
+    display: block !important;
+    width: 60px !important;
+    position: absolute !important;
+    right: 20px !important;
+    top: auto !important;
+    bottom: 210px !important;
+    z-index: 10 !important;
+    transform: rotate(5deg) !important;
+  }
+
+  .cutout-laptop {
+    display: none !important;
+  }
+
+  .cutout-laptop-inline {
+    width: 110px !important;
+    align-self: flex-end !important;
+    flex-shrink: 0 !important;
+  }
+
+  .mobile-only-collage {
+    display: flex !important;
+    position: relative !important;
+    width: 100% !important;
+    height: 120px !important;
+    margin-top: 36px !important;
+    justify-content: center !important;
+    align-items: flex-end !important;
+    overflow: visible !important;
+  }
+
+  .mobile-only-collage img,
+  .collage-hand {
+    position: absolute !important;
+    width: 92px !important;
+    height: 92px !important;
+    object-fit: contain !important;
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.15)) !important;
+  }
+
+  .hand-book {
+    left: 50% !important;
+    margin-left: -191px !important;
+    bottom: -22px !important;
+    transform: rotate(-22deg) scale(0.9) !important;
+  }
+
+  .hand-trophy {
+    left: 50% !important;
+    margin-left: 99px !important;
+    bottom: -22px !important;
+    transform: rotate(22deg) scale(0.9) !important;
+  }
+
+  .card-cutout {
+    display: block !important;
+    position: absolute !important;
+    object-fit: contain !important;
+    z-index: 10 !important;
+    pointer-events: none !important;
+  }
+
+  .story-stage-premise .floating-cutout {
+    display: none !important;
+  }
+
+  .sticker-card {
+    position: relative !important;
+    padding-right: 110px !important;
+    min-height: 140px !important;
+    box-sizing: border-box !important;
+  }
+
+  .sticker-card .mobile-only-cutout {
+    display: block !important;
+    position: absolute !important;
+    right: 5px !important;
+    bottom: -8px !important;
+    width: auto !important;
+    height: 125px !important;
+    object-fit: contain !important;
+    z-index: 10 !important;
+    pointer-events: none !important;
+    transform-origin: bottom right !important;
+  }
+
+  .sticker-card:nth-child(1) .mobile-only-cutout {
+    transform: rotate(-5deg) !important;
+    bottom: -10px !important;
+    right: 5px !important;
+  }
+
+  .sticker-card:nth-child(2) .mobile-only-cutout {
+    transform: rotate(-2deg) !important;
+    bottom: -2px !important;
+    right: 15px !important;
+    height: 120px !important;
+  }
+
+  .sticker-card:nth-child(3) .mobile-only-cutout {
+    transform: rotate(-8deg) !important;
+    bottom: -10px !important;
+    right: 5px !important;
+  }
+
+  .manifesto-card .mobile-only-cutout {
+    display: none !important;
+  }
+}
