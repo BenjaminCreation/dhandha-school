@@ -558,7 +558,17 @@
      Laptop extends to right edge.
   ───────────────────────────────────────── */
   .fixed-bottom-bar-container {
-    display: none !important;
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    height: 120px !important;
+    margin-top: 20px !important;
+    margin-bottom: 0 !important;
+    z-index: 5 !important;
+    pointer-events: none !important;
+    overflow: visible !important;
+    display: block !important;
   }
 
   .hero-images-overlay {
