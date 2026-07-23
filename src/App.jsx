@@ -949,6 +949,14 @@ function App() {
                       ))}
                     </div>
                   </div>
+                    <div className="mobile-only-collage">
+                    <img src="/book.png" className="collage-hand hand-book" alt="" />
+                    <img src="/trophy.png" className="collage-hand hand-trophy" alt="" />
+                    <img src="/graduation.png" className="collage-hand hand-graduation" alt="" />
+                    <img src="/job.png" className="collage-hand hand-job" alt="" />
+                    <img src="/credit.png" className="collage-hand hand-credit" alt="" />
+                    <img src="/laptop.png" className="collage-hand hand-laptop" alt="" />
+                  </div>
                 </div>
               </section>
 
