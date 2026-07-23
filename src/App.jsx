@@ -725,26 +725,6 @@ function App() {
           );
         });
 
-        // ── Footer ──
-        const footerGrid = document.querySelector('.sec8-footer-grid');
-        if (footerGrid) {
-          gsap.utils.toArray(footerGrid.querySelectorAll('.sec8-col')).forEach((col, i) => {
-            gsap.fromTo(col,
-              { autoAlpha: 0, y: 40 },
-              {
-                autoAlpha: 1, y: 0,
-                duration: 0.9,
-                delay: i * 0.1,
-                ease: 'power3.out',
-                scrollTrigger: {
-                  trigger: footerGrid,
-                  start: 'top 85%',
-                  toggleActions: 'play none none reverse'
-                }
-              }
-            );
-          });
-        }
 
         // Helper: only animate elements NOT inside horizontal scroll sections
         const outsideHorizontal = (selector) =>
@@ -768,6 +748,10 @@ function App() {
         });
 
         outsideHorizontal('.story-slant-capsule').forEach((capsule) => {
+          if (capsule.closest('.section-7')) {
+            gsap.set(capsule, { autoAlpha: 1, x: 0, rotate: -2 });
+            return;
+          }
           gsap.fromTo(capsule,
             { autoAlpha: 0, x: -40, rotate: -6 },
             {
@@ -784,6 +768,10 @@ function App() {
         });
 
         outsideHorizontal('.story-black-strip').forEach((strip) => {
+          if (strip.closest('.section-7')) {
+            gsap.set(strip, { autoAlpha: 1, x: 0 });
+            return;
+          }
           gsap.fromTo(strip,
             { autoAlpha: 0, x: -30 },
             {
@@ -922,8 +910,8 @@ function App() {
                       <div className="hero-circ_pink" />
                     </div>
                   </div>
-                  <img src="/graduation.png" alt="" aria-hidden="true" className="floating-cutout cutout-graduation" />
-                  <img src="/job.png" alt="" aria-hidden="true" className="floating-cutout cutout-job" />
+                  <img src="/alarm.png" alt="" aria-hidden="true" className="floating-cutout cutout-graduation" />
+                  <img src="/stack.png" alt="" aria-hidden="true" className="floating-cutout cutout-job" />
                   <div className="story-topbar">
                     <span className="story-badge">01 / THE PREMISE</span>
                     <div className="story-chip-row">
@@ -960,14 +948,6 @@ function App() {
                         </article>
                       ))}
                     </div>
-                  </div>
-                  <div className="mobile-only-collage">
-                    <img src="/book.png" className="collage-hand hand-book" alt="" />
-                    <img src="/trophy.png" className="collage-hand hand-trophy" alt="" />
-                    <img src="/graduation.png" className="collage-hand hand-graduation" alt="" />
-                    <img src="/job.png" className="collage-hand hand-job" alt="" />
-                    <img src="/credit.png" className="collage-hand hand-credit" alt="" />
-                    <img src="/laptop.png" className="collage-hand hand-laptop" alt="" />
                   </div>
                 </div>
               </section>
@@ -1402,8 +1382,8 @@ function App() {
                     onClick={() => {
                       if (window.__smoother) {
                         window.__smoother.scrollTo(0, {
-                          duration: 3.8,
-                          ease: "power3.out"
+                          duration: 2.2,
+                          ease: "none"
                         });
                       } else {
                         window.scrollTo({ top: 0, behavior: 'smooth' });
