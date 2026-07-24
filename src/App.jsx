@@ -204,13 +204,13 @@ function App() {
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
 
-  const [isMobile, setIsMobile] = useState(false);
+  const [isCompactViewport, setIsCompactViewport] = useState(false);
   const hasActiveOrder = useRef(false);
   const orderIdRef = useRef(null);
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
+      setIsCompactViewport(window.innerWidth < 1200);
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);
@@ -395,7 +395,7 @@ function App() {
     };
     window.addEventListener('beforeunload', handleBeforeUnload);
 
-    if (window.innerWidth <= 768) {
+    if (window.innerWidth < 1200) {
       return () => {
         window.removeEventListener('beforeunload', handleBeforeUnload);
       };
@@ -427,8 +427,8 @@ function App() {
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
-      // ── DESKTOP ANIMATIONS (>= 769px) ──
-      mm.add("(min-width: 769px)", () => {
+      // ── DESKTOP ANIMATIONS (>= 1200px) ──
+      mm.add("(min-width: 1200px)", () => {
         const track1 = track1Ref.current;
         const outer1 = outer1Ref.current;
         if (track1 && outer1) {
@@ -510,8 +510,8 @@ function App() {
         }
       });
 
-      // ── MOBILE ANIMATIONS (<= 768px) ──
-      mm.add("(max-width: 768px)", () => {
+      // ── COMPACT/TABLET ANIMATIONS (< 1200px) ──
+      mm.add("(max-width: 1199.98px)", () => {
         // Trigger vertical highlights in Section 6 (Instructor)
         const instructorEl = document.getElementById('instructor');
         if (instructorEl) {
@@ -549,8 +549,8 @@ function App() {
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
-      // ── DESKTOP ANIMATIONS (min-width: 769px) ──
-      mm.add("(min-width: 769px)", () => {
+      // ── DESKTOP ANIMATIONS (min-width: 1200px) ──
+      mm.add("(min-width: 1200px)", () => {
         // Helper: only animate elements NOT inside horizontal scroll sections
         const outsideHScroll = (selector) =>
           gsap.utils.toArray(selector).filter(el => !el.closest('.horizontal-scroll-outer'));
@@ -824,8 +824,8 @@ function App() {
         });
       });
 
-      // ── MOBILE ANIMATIONS (max-width: 768px) ──
-      mm.add("(max-width: 768px)", () => {
+      // ── COMPACT/TABLET ANIMATIONS (max-width: 1199.98px) ──
+      mm.add("(max-width: 1199.98px)", () => {
         // One-time only reveal transitions on scroll (Lazy Loading)
         const revealOnMobile = (elements, yOffset = 30, xOffset = 0, scaleStart = 1, delayTime = 0) => {
           gsap.utils.toArray(elements).forEach((el) => {
@@ -949,14 +949,6 @@ function App() {
                       ))}
                     </div>
                   </div>
-                    <div className="mobile-only-collage">
-                    <img src="/book.png" className="collage-hand hand-book" alt="" />
-                    <img src="/trophy.png" className="collage-hand hand-trophy" alt="" />
-                    <img src="/graduation.png" className="collage-hand hand-graduation" alt="" />
-                    <img src="/job.png" className="collage-hand hand-job" alt="" />
-                    <img src="/credit.png" className="collage-hand hand-credit" alt="" />
-                    <img src="/laptop.png" className="collage-hand hand-laptop" alt="" />
-                  </div>
                 </div>
               </section>
 
@@ -1006,7 +998,7 @@ function App() {
                     <span className="story-badge">03 / MASTERCLASS </span>
                     <div className="story-marquee-inline">
                       <div className="story-marquee-track">
-                        {(isMobile
+                        {(isCompactViewport
                           ? sectionAnnouncements.filter(item => item !== 'Lifetime recordings')
                           : sectionAnnouncements.concat(sectionAnnouncements)
                         ).map((item, index) => (
@@ -1021,8 +1013,17 @@ function App() {
                     <div className="curriculum-header-row">
                       <div className="curriculum-header">
                         <h2 className="story-heading">
-                          <span className="story-highlight story-highlight-cyan">Finance,</span>
-                          <span className="story-heading-line">for the ones actually building.</span>
+                          <span className="curriculum-heading-desktop-lines">
+                            <span className="story-highlight story-highlight-cyan">Finance,</span>
+                            <span className="story-heading-line">for the ones actually building.</span>
+                          </span>
+                          <span className="curriculum-heading-mobile-lines">
+                            <span className="curriculum-heading-mobile-first">
+                              <span className="story-highlight story-highlight-cyan">Finance,</span>
+                              <span>{' '}for the ones</span>
+                            </span>
+                            <span className="story-heading-line">actually building.</span>
+                          </span>
                         </h2>
                       </div>
                       <img src="/laptop.png" alt="" aria-hidden="true" className="cutout-laptop-inline" />
