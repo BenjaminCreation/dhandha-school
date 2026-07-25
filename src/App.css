@@ -127,7 +127,7 @@
   opacity: 0.45;
 }
 
-.story-stage > * {
+.story-stage>* {
   position: relative;
   z-index: 2;
 }
@@ -505,6 +505,7 @@
   from {
     transform: translateX(0);
   }
+
   to {
     transform: translateX(-50%);
   }
@@ -644,10 +645,12 @@
   gap: 16px;
   width: 100%;
 }
+
 .curriculum-header-row .curriculum-header {
   flex: 1 1 0;
   min-width: 0;
 }
+
 .cutout-laptop-inline {
   width: clamp(100px, 11vw, 150px);
   flex-shrink: 0;
@@ -673,7 +676,9 @@
   align-items: flex-start;
 }
 
-.section-1, .section-3, .section-5 {
+.section-1,
+.section-3,
+.section-5 {
   /* padding-top: 100px; (Aligned to top in horizontal-scroll-track) */
 }
 
@@ -881,9 +886,12 @@
 }
 
 @keyframes btn-pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 4px 4px 0 #000, 0 0 0 0 rgba(245, 197, 24, 0.4);
   }
+
   50% {
     box-shadow: 4px 4px 0 #000, 0 0 20px 6px rgba(245, 197, 24, 0.35);
   }
@@ -917,13 +925,27 @@
 }
 
 @keyframes arrow-bounce-left {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(-6px, -4px); }
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(-6px, -4px);
+  }
 }
 
 @keyframes arrow-bounce-right {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(6px, -4px); }
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(6px, -4px);
+  }
 }
 
 .pricing-sparkle {
@@ -953,8 +975,17 @@
 }
 
 @keyframes sparkle-pop {
-  0%, 100% { opacity: 0.3; transform: scale(0.6) rotate(0deg); }
-  50% { opacity: 1; transform: scale(1.1) rotate(20deg); }
+
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.6) rotate(0deg);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.1) rotate(20deg);
+  }
 }
 
 .difference-board {
@@ -1035,7 +1066,7 @@
 
 .cutout-job {
   width: clamp(75px, 8.5vw, 130px);
-  right: clamp(-15px, -1vw, 2px);
+  right: clamp(20px, -1vw, 2px);
   bottom: clamp(10px, 1.8vh, 30px);
 }
 
@@ -1070,8 +1101,8 @@
 
 .cutout-medal {
   width: clamp(70px, 7.5vw, 115px);
-  right: clamp(400px, 44vw, 680px);
-  top: clamp(140px, 20vh, 260px);
+  right: clamp(310px, 34vw, 510px);
+  top: clamp(120px, 16vh, 230px);
 }
 
 .cutout-book-cta {
@@ -1316,6 +1347,7 @@
 }
 
 @media (max-width: 1180px) {
+
   .premise-layout,
   .pricing-layout,
   .difference-layout,
@@ -1341,6 +1373,7 @@
   #smooth-content {
     will-change: auto !important;
   }
+
   .horizontal-scroll-outer {
     width: 100% !important;
     min-height: auto !important;
@@ -1388,10 +1421,12 @@
     gap: 24px !important;
     text-align: left !important;
   }
+
   .sec8-col-brand {
     max-width: 100% !important;
     margin-bottom: 12px !important;
   }
+
   .sec8-col-backtop {
     justify-content: flex-start !important;
     margin-top: 12px !important;
@@ -1468,7 +1503,7 @@
     display: block !important;
     width: 60px !important;
     position: absolute !important;
-    right: -6px !important;
+    right: 20px !important;
     top: auto !important;
     bottom: 210px !important;
     z-index: 10 !important;
@@ -1479,6 +1514,7 @@
   .cutout-laptop {
     display: none !important;
   }
+
   .cutout-laptop-inline {
     width: 110px !important;
     align-self: flex-end !important;
@@ -1512,6 +1548,7 @@
     min-width: 0 !important;
     padding: 0 !important;
   }
+
   /* Hide the duplicated marquee chips (list is concatenated twice for desktop scroll) */
   .story-marquee-track .story-chip:nth-child(n + 6) {
     display: none !important;
@@ -1523,12 +1560,14 @@
     z-index: 2 !important;
     padding-right: 0 !important;
   }
+
   .story-stage-curriculum .curriculum-header .story-heading {
     padding-right: 125px !important;
     font-size: clamp(2.3rem, 10vw, 2.9rem) !important;
     line-height: 0.9 !important;
     letter-spacing: -0.05em !important;
   }
+
   .story-stage-curriculum .story-black-strip {
     display: block !important;
     width: 100% !important;
@@ -1538,29 +1577,35 @@
     line-height: 1.4 !important;
     margin-top: 16px !important;
   }
+
   /* curriculum-header-row controls laptop placement; no absolute override needed */
   .story-stage-curriculum .curriculum-header-row {
     align-items: flex-end !important;
     gap: 12px !important;
   }
+
   .story-stage-curriculum .module-ribbon {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
     padding: 10px 14px !important;
   }
+
   .story-stage-curriculum .module-ribbon span:nth-child(1) {
     margin-right: 4px;
   }
+
   .story-stage-curriculum .module-ribbon span:nth-child(2) {
     flex-grow: 1;
     text-align: left;
   }
+
   .story-stage-curriculum .module-ribbon span:nth-child(2)::before {
     content: '•';
     margin-right: 8px;
     font-weight: 800;
   }
+
   .story-stage-curriculum .module-main {
     display: flex !important;
     flex-direction: column !important;
@@ -1571,16 +1616,20 @@
   .story-stage-pricing .story-topbar {
     margin-bottom: 24px;
   }
+
   .story-stage-pricing .story-heading {
     font-size: 3.5rem !important;
   }
+
   .story-stage-pricing .story-heading-line {
     font-size: clamp(2.2rem, 10vw, 2.9rem) !important;
     line-height: 1.02 !important;
   }
+
   .story-stage-pricing .story-slant-capsule {
     margin-bottom: 24px;
   }
+
   .story-stage-pricing .pricing-poster {
     padding: 24px 20px !important;
   }
@@ -1656,6 +1705,7 @@
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
   }
@@ -1884,6 +1934,7 @@
     max-width: 300px;
     min-height: 280px;
   }
+
   .testimonial-review {
     -webkit-line-clamp: 7;
   }
@@ -1895,9 +1946,11 @@
     max-width: 280px;
     min-height: 260px;
   }
+
   .testimonial-review {
     -webkit-line-clamp: 6;
   }
+
   .payment-modal {
     padding: 24px;
   }
@@ -1914,6 +1967,7 @@
   .mobile-only-inline {
     display: inline-block !important;
   }
+
   .mobile-only-collage {
     display: flex !important;
     position: relative !important;
@@ -1924,43 +1978,51 @@
     align-items: flex-end !important;
     overflow: visible !important;
   }
-  .mobile-only-collage img, .collage-hand {
+
+  .mobile-only-collage img,
+  .collage-hand {
     position: absolute !important;
     width: 92px !important;
     height: 92px !important;
     object-fit: contain !important;
-    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.15)) !important;
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.15)) !important;
   }
+
   .hand-book {
     left: 50% !important;
     margin-left: -191px !important;
     bottom: -22px !important;
     transform: rotate(-22deg) scale(0.9) !important;
   }
+
   .hand-trophy {
     left: 50% !important;
     margin-left: -134px !important;
     bottom: -3px !important;
     transform: rotate(-12deg) scale(0.98) !important;
   }
+
   .hand-graduation {
     left: 50% !important;
     margin-left: -74px !important;
     bottom: 14px !important;
     transform: rotate(-3deg) scale(1.05) !important;
   }
+
   .hand-job {
     left: 50% !important;
     margin-left: -18px !important;
     bottom: 14px !important;
     transform: rotate(3deg) scale(1.05) !important;
   }
+
   .hand-credit {
     left: 50% !important;
     margin-left: 42px !important;
     bottom: -3px !important;
     transform: rotate(12deg) scale(0.98) !important;
   }
+
   .hand-laptop {
     left: 50% !important;
     margin-left: 99px !important;
@@ -1991,6 +2053,7 @@
     display: inline-flex !important;
     margin-bottom: 14px !important;
   }
+
   .story-stage-premise .story-topbar {
     display: flex !important;
     flex-direction: column !important;
@@ -1998,6 +2061,7 @@
     width: 100% !important;
     margin-bottom: 24px !important;
   }
+
   .story-stage-premise .story-chip-row {
     display: flex !important;
     flex-direction: row !important;
@@ -2007,6 +2071,7 @@
     gap: 8px !important;
     margin-top: 0 !important;
   }
+
   .story-stage-premise .story-chip {
     flex: 1 1 0 !important;
     min-width: 0 !important;
@@ -2024,34 +2089,41 @@
     color: #111827 !important;
     font-weight: 700 !important;
   }
+
   .story-stage-premise .floating-cutout {
     display: none !important;
   }
+
   .story-stage-premise .story-gradient-left {
     width: 250px !important;
     height: 250px !important;
     top: -60px !important;
     left: -60px !important;
   }
+
   .story-stage-premise .premise-copy .story-heading {
     font-size: clamp(2.1rem, 9vw, 2.85rem) !important;
     line-height: 1.0 !important;
   }
+
   .story-stage-premise .story-highlight-yellow {
     display: block !important;
     width: 100% !important;
     box-sizing: border-box !important;
     padding: 12px 16px 14px !important;
   }
+
   .story-stage-premise .story-slant-capsule {
     width: 100% !important;
     justify-content: center !important;
     padding: 10px 16px !important;
   }
+
   .story-stage-premise .story-capsule-text {
     font-size: clamp(0.78rem, 3.35vw, 0.9rem) !important;
     line-height: 1.3 !important;
   }
+
   .story-stage-premise .story-black-strip {
     width: 100% !important;
     font-size: clamp(0.74rem, 3.15vw, 0.86rem) !important;
@@ -2063,17 +2135,20 @@
   .sticker-card {
     position: relative !important;
     overflow: visible !important;
-    transform: none !important; /* Flat cards, no rotation on mobile */
+    transform: none !important;
+    /* Flat cards, no rotation on mobile */
     border: 1px solid rgba(0, 0, 0, 0.15) !important;
     border-radius: 12px !important;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06) !important;
-    padding: 24px 110px 24px 20px !important; /* Extra padding on the right for cutout */
+    padding: 24px 110px 24px 20px !important;
+    /* Extra padding on the right for cutout */
     min-height: 140px !important;
     box-sizing: border-box !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
   }
+
   .sticker-card .mobile-only-cutout {
     display: block !important;
     position: absolute !important;
@@ -2086,12 +2161,14 @@
     pointer-events: none !important;
     transform-origin: bottom right !important;
   }
+
   /* Card 1 specific rotation */
   .sticker-card:nth-child(1) .mobile-only-cutout {
     transform: rotate(-5deg) !important;
     bottom: -10px !important;
     right: 5px !important;
   }
+
   /* Card 2 specific rotation */
   .sticker-card:nth-child(2) .mobile-only-cutout {
     transform: rotate(-2deg) !important;
@@ -2099,12 +2176,14 @@
     right: 15px !important;
     height: 120px !important;
   }
+
   /* Card 3 specific rotation */
   .sticker-card:nth-child(3) .mobile-only-cutout {
     transform: rotate(-8deg) !important;
     bottom: -10px !important;
     right: 5px !important;
   }
+
   .sticker-eyebrow {
     font-size: 0.75rem !important;
     font-weight: 800 !important;
@@ -2113,6 +2192,7 @@
     letter-spacing: 0.05em !important;
     margin-bottom: 8px !important;
   }
+
   .sticker-title {
     font-size: 1.7rem !important;
     font-weight: 900 !important;
@@ -2120,6 +2200,7 @@
     color: #111827 !important;
     margin: 0 0 10px 0 !important;
   }
+
   .sticker-body {
     font-size: 0.95rem !important;
     line-height: 1.45 !important;
@@ -2131,6 +2212,7 @@
   .manifesto-mobile-br {
     display: block !important;
   }
+
   .story-stage-why .story-topbar {
     display: flex !important;
     flex-direction: row !important;
@@ -2140,6 +2222,7 @@
     gap: 12px !important;
     margin-bottom: 16px !important;
   }
+
   .story-stage-why .story-badge {
     flex-shrink: 0 !important;
     white-space: nowrap !important;
@@ -2147,6 +2230,7 @@
     letter-spacing: 0.09em !important;
     padding: 8px 16px !important;
   }
+
   .story-stage-why .story-top-copy {
     display: block !important;
     font-size: clamp(0.8rem, 3.4vw, 0.92rem) !important;
@@ -2157,11 +2241,13 @@
     line-height: 1.3 !important;
     font-weight: 600 !important;
   }
+
   .story-stage-why .manifesto-header .story-heading {
     font-size: clamp(1.75rem, 7.6vw, 2.2rem) !important;
     line-height: 0.98 !important;
     width: 100% !important;
   }
+
   .story-stage-why .story-highlight-lavender {
     display: block !important;
     width: 100% !important;
@@ -2172,9 +2258,11 @@
     box-shadow: none !important;
     padding: 16px 16px 18px !important;
   }
+
   .story-stage-why .manifesto-header {
     margin-bottom: 0 !important;
   }
+
   .story-stage-why .story-body {
     font-size: clamp(0.84rem, 3.6vw, 0.95rem) !important;
     line-height: 1.55 !important;
@@ -2183,9 +2271,11 @@
     margin-bottom: 0 !important;
     max-width: 100% !important;
   }
+
   .story-stage-why .manifesto-grid {
     gap: 16px !important;
   }
+
   .manifesto-card {
     position: relative !important;
     overflow: visible !important;
@@ -2194,18 +2284,23 @@
     border: 1px solid rgba(0, 0, 0, 0.15) !important;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05) !important;
   }
+
   .story-stage-why .manifesto-card-1 {
     background: #fde68a !important;
   }
+
   .story-stage-why .manifesto-card-2 {
     background: #bfdbfe !important;
   }
+
   .story-stage-why .manifesto-card-3 {
     background: #ddd6fe !important;
   }
+
   .story-stage-why .manifesto-card-4 {
     background: #fecdd3 !important;
   }
+
   .manifesto-index {
     font-size: 0.85rem !important;
     font-weight: 700 !important;
@@ -2213,17 +2308,20 @@
     margin-bottom: 10px !important;
     font-family: 'Geist Mono', ui-monospace, monospace !important;
   }
+
   .manifesto-title {
     font-size: clamp(1.3rem, 5.6vw, 1.55rem) !important;
     font-weight: 900 !important;
     line-height: 1.05 !important;
     margin-bottom: 12px !important;
   }
+
   .manifesto-body {
     font-size: clamp(0.9rem, 3.7vw, 1rem) !important;
     line-height: 1.5 !important;
     color: #4b5563 !important;
   }
+
   .manifesto-card .mobile-only-cutout {
     display: none !important;
   }
@@ -2236,9 +2334,11 @@
     align-items: center !important;
     padding: 12px 14px !important;
   }
+
   .module-copy {
     grid-column: 1 !important;
   }
+
   .module-tags {
     grid-column: 2 !important;
     display: grid !important;
@@ -2248,10 +2348,12 @@
     max-width: 130px !important;
     margin-top: 0 !important;
   }
+
   .module-tag {
     padding: 4px 8px !important;
     font-size: 0.72rem !important;
   }
+
   .mobile-chevron {
     display: inline-block !important;
     margin-left: 8px !important;
@@ -2264,6 +2366,7 @@
     display: inline-block !important;
     vertical-align: middle !important;
   }
+
   /* Section 4 custom layouts & premium card styling */
   .story-stage-pricing .story-highlight-blue {
     display: inline-flex !important;
@@ -2272,6 +2375,7 @@
     padding: 10px 14px 12px !important;
     background-color: #bfdbfe !important;
   }
+
   .story-stage-pricing .story-slant-capsule-dark {
     width: 100% !important;
     justify-content: center !important;
@@ -2280,10 +2384,12 @@
     display: flex !important;
     transform: none !important;
   }
+
   .story-stage-pricing .story-capsule-text-dark {
     font-size: clamp(0.78rem, 3.35vw, 0.9rem) !important;
     line-height: 1.3 !important;
   }
+
   .story-stage-pricing .pricing-poster {
     padding: 24px 20px !important;
     border: 1px solid rgba(0, 0, 0, 0.15) !important;
@@ -2296,13 +2402,15 @@
   .difference-note {
     position: relative !important;
     overflow: visible !important;
-    transform: none !important; /* Flat cards, no rotation */
+    transform: none !important;
+    /* Flat cards, no rotation */
     border: 1px solid rgba(0, 0, 0, 0.15) !important;
     border-radius: 12px !important;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06) !important;
     padding: 22px !important;
     box-sizing: border-box !important;
   }
+
   .story-stage-difference .story-highlight-peach {
     display: block !important;
     width: 100% !important;
@@ -2310,17 +2418,25 @@
     padding: 12px 16px 14px !important;
     background-color: #ffd2c9 !important;
   }
+
   .story-stage-difference .difference-note-1 {
-    background: #fde68a !important; /* warm yellow */
+    background: #fde68a !important;
+    /* warm yellow */
   }
+
   .story-stage-difference .difference-note-2 {
-    background: #bfdbfe !important; /* soft blue */
+    background: #bfdbfe !important;
+    /* soft blue */
   }
+
   .story-stage-difference .difference-note-3 {
-    background: #fecdd3 !important; /* soft pink */
+    background: #fecdd3 !important;
+    /* soft pink */
   }
+
   .story-stage-difference .difference-note-4 {
-    background: #ddd6fe !important; /* lavender */
+    background: #ddd6fe !important;
+    /* lavender */
   }
 
   /* Section 6 CTA / Your Move */
@@ -2331,6 +2447,7 @@
     padding: 10px 14px 12px !important;
     background-color: #fde047 !important;
   }
+
   .story-stage-cta .story-black-strip {
     display: block !important;
     width: 100% !important;
@@ -2340,6 +2457,7 @@
     line-height: 1.4 !important;
     margin-top: 16px !important;
   }
+
   .story-stage-cta .story-gradient-right {
     width: 250px !important;
     height: 250px !important;
@@ -2357,15 +2475,19 @@
     min-height: auto !important;
     padding: 20px !important;
   }
+
   .story-stage-testimonials .testimonial-card-1 {
     background: #fde68a !important;
   }
+
   .story-stage-testimonials .testimonial-card-2 {
     background: #bfdbfe !important;
   }
+
   .story-stage-testimonials .testimonial-card-3 {
     background: #fecdd3 !important;
   }
+
   .story-stage-testimonials .testimonial-card-4 {
     background: #ddd6fe !important;
   }
@@ -2377,6 +2499,7 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
     margin-bottom: 12px !important;
   }
+
   .sec8-footer-bottom .footer-gradient-bg {
     width: 100% !important;
     height: 100% !important;
@@ -2399,10 +2522,12 @@
     gap: 12px !important;
     width: 100% !important;
   }
+
   .curriculum-header-row .curriculum-header {
     flex: 1 1 0 !important;
     min-width: 0 !important;
   }
+
   /* Laptop cutout: larger on mobile, aligned to top */
   .cutout-laptop-inline {
     width: 130px !important;
@@ -2410,6 +2535,7 @@
     align-self: flex-start !important;
     margin-top: 4px !important;
   }
+
   /* Black strip: full-width, matches reference text style */
   .story-stage-curriculum .story-black-strip {
     display: block !important;
@@ -2420,12 +2546,14 @@
     line-height: 1.6 !important;
     padding: 18px 20px !important;
   }
+
   /* Heading fills the flex column naturally */
   .story-stage-curriculum .curriculum-header .story-heading {
     font-size: clamp(1.7rem, 7.5vw, 2.2rem) !important;
     line-height: 0.96 !important;
     width: 100% !important;
   }
+
   .story-stage-curriculum .story-highlight-cyan {
     display: block !important;
     width: fit-content !important;
@@ -2438,7 +2566,9 @@
    Payment Button Spinner
    ============================================================ */
 @keyframes payment-spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .payment-btn-spinner {
@@ -2469,8 +2599,13 @@
 }
 
 @keyframes success-overlay-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .payment-success-modal {
@@ -2486,8 +2621,15 @@
 }
 
 @keyframes success-modal-in {
-  from { opacity: 0; transform: scale(0.85) translateY(20px); }
-  to   { opacity: 1; transform: scale(1)   translateY(0);     }
+  from {
+    opacity: 0;
+    transform: scale(0.85) translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 /* --- Icon / Checkmark --- */
@@ -2519,8 +2661,13 @@
 }
 
 @keyframes checkmark-pop {
-  from { transform: scale(0); }
-  to   { transform: scale(1); }
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1);
+  }
 }
 
 .payment-success-ripple {
@@ -2537,8 +2684,15 @@
 }
 
 @keyframes success-ripple {
-  0%   { transform: scale(1);   opacity: 0.7; }
-  100% { transform: scale(2.2); opacity: 0;   }
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
 }
 
 /* --- Text --- */
@@ -2612,6 +2766,7 @@
   .payment-success-modal {
     padding: 36px 24px 32px;
   }
+
   .payment-success-title {
     font-size: 1.9rem;
   }
@@ -2624,33 +2779,42 @@
   .story-stage {
     width: min(94vw, 1850px);
   }
+
   .story-heading {
     font-size: clamp(3.2rem, 5vw, 6.5rem);
   }
+
   .story-top-copy {
     max-width: 520px;
     font-size: 1.1rem;
   }
+
   .manifesto-grid {
     gap: clamp(16px, 1.6vw, 32px);
   }
+
   .manifesto-card {
     padding: clamp(20px, 1.8vw, 36px);
   }
+
   .manifesto-body {
     font-size: clamp(1rem, 1.1vw, 1.25rem);
     line-height: 1.65;
   }
+
   .difference-layout {
     gap: clamp(24px, 2.5vw, 48px);
   }
+
   .difference-copy .story-body {
     max-width: 640px;
     font-size: clamp(1.25rem, 1.35vw, 1.5rem);
   }
+
   .pricing-layout {
     gap: clamp(36px, 3.5vw, 72px);
   }
+
   .pricing-copy .story-body {
     font-size: clamp(1.35rem, 1.45vw, 1.6rem);
   }
@@ -2661,11 +2825,12 @@
     width: min(95vw, 2100px);
     padding: 64px 56px;
   }
+
   .horizontal-scroll-track .placeholder-section:not(.instructor-section-container) {
     padding: 48px 48px;
   }
+
   .placeholder-section {
     padding: 80px 48px 60px;
   }
 }
-
