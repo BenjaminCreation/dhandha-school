@@ -669,11 +669,13 @@
 .story-stage-difference .difference-copy .story-body {
   font-size: 1.2rem;
   line-height: 1.72;
-  max-width: 520px;
+  max-width: 640px;
 }
 
 .story-stage-difference .difference-layout {
-  align-items: flex-start;
+  align-items: center;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: clamp(20px, 2.5vw, 40px);
 }
 
 .section-1,
@@ -1101,7 +1103,7 @@
 
 .cutout-medal {
   width: clamp(70px, 7.5vw, 115px);
-  right: clamp(375px, 40vw, 595px);
+  right: clamp(430px, 45vw, 650px);
   top: clamp(120px, 16vh, 230px);
 }
 
