@@ -1495,10 +1495,10 @@
 
   .cutout-bill {
     display: block !important;
-    width: clamp(115px, 30vw, 155px) !important;
+    width: 170px !important;
     position: absolute !important;
     right: 6px !important;
-    top: 238px !important;
+    top: 260px !important;
     bottom: auto !important;
     z-index: 15 !important;
     opacity: 1 !important;
