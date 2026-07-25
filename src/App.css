@@ -1495,14 +1495,14 @@
 
   .cutout-bill {
     display: block !important;
-    width: clamp(110px, 28vw, 155px) !important;
+    width: clamp(115px, 30vw, 155px) !important;
     position: absolute !important;
-    right: -10px !important;
-    top: 195px !important;
+    right: 6px !important;
+    top: 175px !important;
     bottom: auto !important;
-    z-index: 4 !important;
+    z-index: 15 !important;
     opacity: 1 !important;
-    transform: rotate(4deg) !important;
+    transform: rotate(-7deg) !important;
   }
 
   .cutout-graduation {
