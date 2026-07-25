@@ -1495,11 +1495,11 @@
 
   .cutout-bill {
     display: block !important;
-    width: 170px !important;
+    width: 125px !important;
     max-width: none !important;
     position: absolute !important;
     right: 6px !important;
-    top: 260px !important;
+    top: 232px !important;
     bottom: auto !important;
     z-index: 15 !important;
     opacity: 1 !important;
@@ -2314,6 +2314,7 @@
 
   .story-stage-why .manifesto-card-1 {
     background: #fde68a !important;
+    padding-right: 130px !important;
   }
 
   .story-stage-why .manifesto-card-2 {
