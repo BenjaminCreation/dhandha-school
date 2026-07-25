@@ -1498,7 +1498,7 @@
     width: clamp(115px, 30vw, 155px) !important;
     position: absolute !important;
     right: 6px !important;
-    top: 175px !important;
+    top: 238px !important;
     bottom: auto !important;
     z-index: 15 !important;
     opacity: 1 !important;
@@ -1631,7 +1631,7 @@
 
   /* --- Pricing Updates --- */
   .story-stage-pricing .story-topbar {
-    margin-bottom: 24px;
+    margin-bottom: 10px;
   }
 
   .story-stage-pricing .story-heading {
@@ -1644,7 +1644,16 @@
   }
 
   .story-stage-pricing .story-slant-capsule {
-    margin-bottom: 24px;
+    margin-bottom: 8px;
+  }
+
+  .story-stage-pricing .pricing-copy {
+    gap: 10px !important;
+  }
+
+  .story-stage-pricing .pricing-copy .story-body {
+    font-size: 1rem !important;
+    line-height: 1.55 !important;
   }
 
   .story-stage-pricing .pricing-poster {
