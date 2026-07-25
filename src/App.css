@@ -1005,8 +1005,8 @@
 
 .card-cutout-medal {
   position: absolute;
-  left: -24px;
-  bottom: -18px;
+  left: -42px;
+  bottom: -28px;
   width: clamp(55px, 6.5vw, 85px);
   z-index: 10;
   pointer-events: none;
