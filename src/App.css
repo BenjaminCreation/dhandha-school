@@ -42,12 +42,12 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: 40px 32px;
+  padding: clamp(20px, 2.5vh, 40px) clamp(16px, 2vw, 36px);
   box-sizing: border-box;
 }
 
 .horizontal-scroll-track .story-stage {
-  min-height: calc(100vh - 80px);
+  min-height: calc(100vh - clamp(40px, 6vh, 80px));
 }
 
 .placeholder-section {
@@ -56,7 +56,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 100px 32px 40px;
+  padding: clamp(40px, 5vh, 80px) clamp(16px, 2.5vw, 40px) 40px;
   box-sizing: border-box;
   border-top: 1px solid #000;
   font-family: 'Plus Jakarta Sans', sans-serif;
@@ -96,7 +96,7 @@
 
 .story-stage {
   position: relative;
-  width: min(1320px, 100%);
+  width: min(92vw, 1750px);
   height: auto;
   min-height: 100vh;
   border: 1.5px solid #000;
@@ -105,12 +105,12 @@
   -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.14);
   overflow: visible;
-  padding: 40px 32px;
+  padding: clamp(28px, 3.5vw, 56px) clamp(24px, 3vw, 48px);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 24px;
+  gap: clamp(20px, 2vw, 36px);
   will-change: transform, opacity;
   box-sizing: border-box;
 }
@@ -2608,3 +2608,56 @@
     font-size: 1.9rem;
   }
 }
+
+/* ==========================================================================
+   Wide Display & Zoom-Out Responsive Enhancements (Inspired by allthingswtf)
+   ========================================================================== */
+@media (min-width: 1440px) {
+  .story-stage {
+    width: min(94vw, 1850px);
+  }
+  .story-heading {
+    font-size: clamp(3.2rem, 5vw, 6.5rem);
+  }
+  .story-top-copy {
+    max-width: 520px;
+    font-size: 1.1rem;
+  }
+  .manifesto-grid {
+    gap: clamp(16px, 1.6vw, 32px);
+  }
+  .manifesto-card {
+    padding: clamp(20px, 1.8vw, 36px);
+  }
+  .manifesto-body {
+    font-size: clamp(1rem, 1.1vw, 1.25rem);
+    line-height: 1.65;
+  }
+  .difference-layout {
+    gap: clamp(24px, 2.5vw, 48px);
+  }
+  .difference-copy .story-body {
+    max-width: 640px;
+    font-size: clamp(1.25rem, 1.35vw, 1.5rem);
+  }
+  .pricing-layout {
+    gap: clamp(36px, 3.5vw, 72px);
+  }
+  .pricing-copy .story-body {
+    font-size: clamp(1.35rem, 1.45vw, 1.6rem);
+  }
+}
+
+@media (min-width: 1920px) {
+  .story-stage {
+    width: min(95vw, 2100px);
+    padding: 64px 56px;
+  }
+  .horizontal-scroll-track .placeholder-section:not(.instructor-section-container) {
+    padding: 48px 48px;
+  }
+  .placeholder-section {
+    padding: 80px 48px 60px;
+  }
+}
+
