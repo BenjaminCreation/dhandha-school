@@ -1034,9 +1034,9 @@
 }
 
 .cutout-job {
-  width: clamp(90px, 11vw, 170px);
-  right: clamp(4px, 1.5vw, 20px);
-  bottom: clamp(10px, 2vh, 40px);
+  width: clamp(75px, 8.5vw, 130px);
+  right: clamp(-15px, -1vw, 2px);
+  bottom: clamp(10px, 1.8vh, 30px);
 }
 
 .cutout-book {
@@ -1069,9 +1069,9 @@
 }
 
 .cutout-medal {
-  width: clamp(80px, 9vw, 132px);
-  right: clamp(200px, 30vw, 520px);
-  top: clamp(120px, 15vh, 250px);
+  width: clamp(70px, 7.5vw, 115px);
+  right: clamp(400px, 44vw, 680px);
+  top: clamp(140px, 20vh, 260px);
 }
 
 .cutout-book-cta {
@@ -1468,7 +1468,7 @@
     display: block !important;
     width: 60px !important;
     position: absolute !important;
-    right: 20px !important;
+    right: -6px !important;
     top: auto !important;
     bottom: 210px !important;
     z-index: 10 !important;
