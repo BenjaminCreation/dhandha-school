@@ -672,10 +672,12 @@
   max-width: 640px;
 }
 
-.story-stage-difference .difference-layout {
-  align-items: center;
-  grid-template-columns: 0.95fr 1.05fr;
-  gap: clamp(20px, 2.5vw, 40px);
+@media (min-width: 1181px) {
+  .story-stage-difference .difference-layout {
+    align-items: center;
+    grid-template-columns: 0.95fr 1.05fr;
+    gap: clamp(20px, 2.5vw, 40px);
+  }
 }
 
 .section-1,
@@ -1486,7 +1488,8 @@
     padding-left: 0;
   }
 
-  .floating-cutout:not(.cutout-bill):not(.cutout-graduation):not(.cutout-job):not(.cutout-laptop) {
+  .floating-cutout:not(.cutout-bill):not(.cutout-graduation):not(.cutout-job):not(.cutout-laptop),
+  .card-cutout-medal {
     display: none !important;
   }
 
