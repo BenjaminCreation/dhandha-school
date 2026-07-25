@@ -1496,6 +1496,7 @@
   .cutout-bill {
     display: block !important;
     width: 170px !important;
+    max-width: none !important;
     position: absolute !important;
     right: 6px !important;
     top: 260px !important;
