@@ -1066,7 +1066,7 @@
 
 .cutout-job {
   width: clamp(75px, 8.5vw, 130px);
-  right: clamp(20px, -1vw, 2px);
+  right: clamp(0px, -1vw, 2px);
   bottom: clamp(10px, 1.8vh, 30px);
 }
 
@@ -1101,7 +1101,7 @@
 
 .cutout-medal {
   width: clamp(70px, 7.5vw, 115px);
-  right: clamp(310px, 34vw, 510px);
+  right: clamp(375px, 40vw, 595px);
   top: clamp(120px, 16vh, 230px);
 }
 
