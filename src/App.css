@@ -2266,10 +2266,10 @@
   }
   /* Section 4 custom layouts & premium card styling */
   .story-stage-pricing .story-highlight-blue {
-    display: block !important;
-    width: 100% !important;
+    display: inline-flex !important;
+    width: fit-content !important;
     box-sizing: border-box !important;
-    padding: 12px 16px 14px !important;
+    padding: 10px 14px 12px !important;
     background-color: #bfdbfe !important;
   }
   .story-stage-pricing .story-slant-capsule-dark {
@@ -2325,10 +2325,10 @@
 
   /* Section 6 CTA / Your Move */
   .story-stage-cta .story-highlight-yellow {
-    display: block !important;
-    width: 100% !important;
+    display: inline-flex !important;
+    width: fit-content !important;
     box-sizing: border-box !important;
-    padding: 12px 16px 14px !important;
+    padding: 10px 14px 12px !important;
     background-color: #fde047 !important;
   }
   .story-stage-cta .story-black-strip {
