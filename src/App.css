@@ -1,4 +1,4 @@
-.app-shell {
+﻿.app-shell {
   position: relative;
   min-height: 100vh;
   background-color: #fbf9f4;
@@ -1499,7 +1499,7 @@
     max-width: none !important;
     position: absolute !important;
     right: 6px !important;
-    top: 232px !important;
+    top: 212px !important;
     bottom: auto !important;
     z-index: 15 !important;
     opacity: 1 !important;
@@ -2314,7 +2314,6 @@
 
   .story-stage-why .manifesto-card-1 {
     background: #fde68a !important;
-    padding-right: 130px !important;
   }
 
   .story-stage-why .manifesto-card-2 {
