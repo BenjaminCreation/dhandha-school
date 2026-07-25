@@ -1128,7 +1128,6 @@ function App() {
             <div className="horizontal-scroll-track" ref={track3Ref}>
               <section className="placeholder-section section-5">
                 <div className="story-stage story-stage-difference story-panel">
-                  <img src="/medal.png" alt="" aria-hidden="true" className="floating-cutout cutout-medal" />
                   <div className="story-topbar">
                     <span className="story-badge">05 / THE DIFFERENCE</span>
                     <div className="story-chip-row">
@@ -1154,6 +1153,7 @@ function App() {
                           <span className="difference-index">{item.index}</span>
                           <h3 className="difference-title">{item.title}</h3>
                           <p className="difference-body">{item.body}</p>
+                          {index === 0 && <img src="/medal.png" alt="" aria-hidden="true" className="card-cutout-medal" />}
                         </article>
                       ))}
                     </div>
