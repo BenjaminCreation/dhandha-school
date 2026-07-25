@@ -104,7 +104,7 @@
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.14);
-  overflow: visible;
+  overflow: hidden;
   padding: clamp(28px, 3.5vw, 56px) clamp(24px, 3vw, 48px);
   margin: 0 auto;
   display: flex;
@@ -220,7 +220,7 @@
   gap: 4px;
   font-family: 'Geist', 'Inter', sans-serif;
   font-weight: 900;
-  font-size: clamp(2.8rem, 5.2vw, 5.6rem);
+  font-size: clamp(2.2rem, 4.2vw, 5.6rem);
   line-height: 0.92;
   letter-spacing: -0.06em;
   color: #111;
@@ -243,7 +243,7 @@
 .story-highlight {
   display: inline-flex;
   align-items: center;
-  padding: 16px 26px 18px;
+  padding: clamp(8px, 1.2vw, 16px) clamp(12px, 1.8vw, 26px) clamp(10px, 1.4vw, 18px);
   border: 1px solid #000;
   box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.08);
   flex-wrap: wrap;
@@ -282,7 +282,7 @@
 .sec8-faq-answer p,
 .sec8-brand-desc {
   margin: 0;
-  font-size: 1rem;
+  font-size: clamp(0.88rem, 1.1vw, 1.1rem);
   line-height: 1.72;
   color: #374151;
 }
@@ -290,7 +290,7 @@
 .story-slant-capsule {
   display: inline-flex;
   width: fit-content;
-  padding: 14px 24px 16px;
+  padding: clamp(8px, 1vw, 14px) clamp(14px, 1.8vw, 24px) clamp(10px, 1.1vw, 16px);
   border: 1px solid #000;
   background: #e0e7ff;
   transform: rotate(-2deg);
@@ -303,7 +303,7 @@
 
 .story-capsule-text {
   font-family: 'Inter', sans-serif;
-  font-size: 1.35rem;
+  font-size: clamp(1rem, 1.3vw, 1.35rem);
   font-weight: 900;
   font-style: italic;
   color: #2563eb;
@@ -319,8 +319,8 @@
   margin: 0;
   background: #000;
   color: #fff;
-  padding: 16px 22px;
-  font-size: 1.15rem;
+  padding: clamp(10px, 1.2vw, 16px) clamp(14px, 1.6vw, 22px);
+  font-size: clamp(0.88rem, 1.05vw, 1.15rem);
   font-weight: 600;
   line-height: 1.6;
   box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
@@ -383,12 +383,12 @@
 }
 
 .sticker-card {
-  padding: 26px 28px;
+  padding: clamp(16px, 2vw, 26px) clamp(18px, 2.2vw, 28px);
   transform-origin: center;
 }
 
 .sticker-title {
-  font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+  font-size: clamp(1.2rem, 1.8vw, 1.9rem);
 }
 
 .sticker-body {
@@ -430,7 +430,7 @@
 .sec8-faq-title {
   margin: 0 0 10px;
   font-family: 'Poppins', sans-serif;
-  font-size: clamp(1.3rem, 2vw, 1.8rem);
+  font-size: clamp(1.1rem, 1.6vw, 1.8rem);
   line-height: 1.15;
   color: #111;
   display: flex;
@@ -461,11 +461,11 @@
 .manifesto-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 22px;
+  gap: clamp(12px, 1.6vw, 22px);
 }
 
 .manifesto-card {
-  padding: 24px;
+  padding: clamp(14px, 1.8vw, 24px);
 }
 
 .manifesto-card-1 {
@@ -560,24 +560,26 @@
 }
 
 .story-stage-why {
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: clamp(16px, 2vh, 30px);
+  padding-bottom: clamp(16px, 2vh, 30px);
   justify-content: flex-start;
+  gap: clamp(12px, 1.5vh, 24px);
 }
 
 .story-stage-premise {
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: clamp(16px, 2vh, 30px);
+  padding-bottom: clamp(16px, 2vh, 30px);
   justify-content: flex-start;
+  gap: clamp(12px, 1.5vh, 24px);
 }
 
 .story-stage-pricing {
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding-top: clamp(20px, 2.5vh, 40px);
+  padding-bottom: clamp(20px, 2.5vh, 40px);
   min-height: auto !important;
   height: auto;
   justify-content: center;
-  gap: 28px;
+  gap: clamp(16px, 2vh, 28px);
 }
 
 .story-stage-pricing .pricing-copy .story-heading {
@@ -603,10 +605,10 @@
 }
 
 .story-stage-curriculum {
-  padding-top: 20px;
-  padding-bottom: 16px;
+  padding-top: clamp(12px, 1.5vh, 20px);
+  padding-bottom: clamp(10px, 1.2vh, 16px);
   justify-content: flex-start;
-  gap: 12px;
+  gap: clamp(8px, 1vh, 12px);
 }
 
 .story-stage-curriculum .curriculum-header {
@@ -655,9 +657,10 @@
 }
 
 .story-stage-difference {
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: clamp(16px, 2vh, 30px);
+  padding-bottom: clamp(16px, 2vh, 30px);
   justify-content: flex-start;
+  gap: clamp(12px, 1.5vh, 24px);
 }
 
 .story-stage-difference .difference-copy .story-body {
@@ -675,10 +678,11 @@
 }
 
 .story-stage-cta {
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: clamp(16px, 2vh, 30px);
+  padding-bottom: clamp(16px, 2vh, 30px);
   min-height: auto;
-  justify-content: flex-start;
+  justify-content: center;
+  gap: clamp(12px, 1.5vh, 24px);
 }
 
 .section-7-cta {
@@ -852,8 +856,8 @@
 
 .pricing-primary-btn {
   width: fit-content;
-  padding: 1rem 2.8rem !important;
-  font-size: 1.15rem !important;
+  padding: clamp(0.7rem, 1.1vw, 1rem) clamp(1.6rem, 2.2vw, 2.8rem) !important;
+  font-size: clamp(0.95rem, 1.1vw, 1.15rem) !important;
   font-weight: 800 !important;
   letter-spacing: 0.04em;
   background: #f5c518 !important;
@@ -956,12 +960,12 @@
 .difference-board {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
+  gap: clamp(12px, 1.5vw, 18px);
   align-content: center;
 }
 
 .difference-note {
-  padding: 22px;
+  padding: clamp(14px, 1.6vw, 22px);
 }
 
 .difference-note-1 {
@@ -989,7 +993,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 48px;
+  gap: clamp(24px, 3.5vh, 48px);
   text-align: center;
   position: relative;
   z-index: 10;
@@ -1017,36 +1021,40 @@
   z-index: 3;
   filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.18));
   pointer-events: none;
+  /* Prevent cutouts from rendering outside stage bounds */
+  max-width: 14vw;
 }
 
 .cutout-graduation {
-  width: 150px;
-  right: 10px;
-  top: 110px;
+  width: clamp(80px, 10vw, 150px);
+  right: clamp(4px, 1vw, 10px);
+  top: clamp(60px, 8vh, 110px);
+  /* always inside right edge */
+  max-right: 0;
 }
 
 .cutout-job {
-  width: 170px;
-  right: -85px;
-  bottom: -30px;
+  width: clamp(90px, 11vw, 170px);
+  right: clamp(4px, 1.5vw, 20px);
+  bottom: clamp(10px, 2vh, 40px);
 }
 
 .cutout-book {
-  width: 126px;
-  left: -20px;
-  bottom: -30px;
+  width: clamp(70px, 9vw, 126px);
+  left: clamp(4px, 1vw, 16px);
+  bottom: clamp(10px, 2vh, 40px);
 }
 
 .cutout-bill {
-  width: 140px;
-  right: 46px;
-  top: 110px;
+  width: clamp(80px, 10vw, 140px);
+  right: clamp(20px, 3vw, 46px);
+  top: clamp(60px, 8vh, 110px);
 }
 
 .cutout-credit {
-  width: 160px;
-  left: -128px;
-  bottom: 110px;
+  width: clamp(90px, 11vw, 160px);
+  left: clamp(4px, 1vw, 16px);
+  bottom: clamp(60px, 8vh, 110px);
 }
 
 /* cutout-laptop is now inline (.cutout-laptop-inline); legacy rule kept minimal */
@@ -1055,27 +1063,27 @@
 }
 
 .cutout-trophy {
-  width: 124px;
-  left: -92px;
-  top: 112px;
+  width: clamp(70px, 9vw, 124px);
+  left: clamp(4px, 1vw, 16px);
+  top: clamp(60px, 8vh, 112px);
 }
 
 .cutout-medal {
-  width: 132px;
-  right: 520px;
-  top: 250px;
+  width: clamp(80px, 9vw, 132px);
+  right: clamp(200px, 30vw, 520px);
+  top: clamp(120px, 15vh, 250px);
 }
 
 .cutout-book-cta {
-  width: 140px;
-  left: -20px;
-  bottom: -30px;
+  width: clamp(80px, 9vw, 140px);
+  left: clamp(4px, 1vw, 16px);
+  bottom: clamp(10px, 2vh, 40px);
 }
 
 .cutout-trophy-cta {
-  width: 120px;
-  right: 70px;
-  top: 88px;
+  width: clamp(70px, 8vw, 120px);
+  right: clamp(30px, 4vw, 70px);
+  top: clamp(50px, 7vh, 88px);
 }
 
 .section-8-container {
@@ -1102,7 +1110,7 @@
 
 .sec8-faq-top {
   flex: 1;
-  padding: 120px 6vw 50px;
+  padding: clamp(60px, 8vh, 120px) clamp(4vw, 6vw, 8vw) clamp(30px, 4vh, 50px);
   display: flex;
   flex-direction: column;
   justify-content: center;
