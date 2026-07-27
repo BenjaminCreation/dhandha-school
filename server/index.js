@@ -149,6 +149,46 @@ async function sendWelcomeEmail(name, email) {
 }
 
 
+// Waitlist Endpoint
+const handleWaitlistReq = async (req, res) => {
+  try {
+    const { name, phone, email } = req.body;
+    if (!email) {
+      return res.status(400).json({ success: false, error: "Email is required" });
+    }
+
+    try {
+      db.exec(`
+        CREATE TABLE IF NOT EXISTS waitlist (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          name TEXT,
+          phone TEXT,
+          email TEXT NOT NULL,
+          created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+      `);
+      const stmt = db.prepare("INSERT INTO waitlist (name, phone, email) VALUES (?, ?, ?)");
+      stmt.run(name || null, phone || null, email);
+    } catch (err) {
+      console.error("DB insert waitlist failed:", err.message);
+    }
+
+    if (email) {
+      sendWelcomeEmail(name, email).catch((err) =>
+        console.error("Waitlist email failed:", err.message)
+      );
+    }
+
+    res.json({ success: true, message: "Added to waitlist" });
+  } catch (error) {
+    console.error("Waitlist error:", error);
+    res.status(500).json({ success: false, error: "Failed to process waitlist" });
+  }
+};
+
+app.post("/api/waitlist", handleWaitlistReq);
+app.post("/waitlist", handleWaitlistReq);
+
 // Create Order Endpoint
 app.post("/api/create-order", async (req, res) => {
   try {

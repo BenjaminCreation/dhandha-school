@@ -237,20 +237,28 @@ function App() {
     }
     setWaitlistLoading(true);
 
-    // Optionally notify backend about waitlist signup (non-blocking)
     try {
       const backendUrl = import.meta.env.VITE_BACKEND_WORKER_URL || "";
-      await fetch(`${backendUrl}/api/waitlist`, {
+      const primaryUrl = backendUrl ? `${backendUrl}/api/waitlist` : "/api/waitlist";
+      const res = await fetch(primaryUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: userName, phone: userPhone, email: userEmail }),
       });
-    } catch (_) {
-      // Backend optional — still redirect to WhatsApp
+      if (!res.ok && backendUrl) {
+        await fetch("/api/waitlist", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name: userName, phone: userPhone, email: userEmail }),
+        });
+      }
+    } catch (err) {
+      console.error("Waitlist API error:", err);
     }
 
     setWaitlistLoading(false);
     setShowWaitlistModal(false);
+    setWaitlistSuccess(true);
     setUserName("");
     setUserPhone("");
     setUserEmail("");

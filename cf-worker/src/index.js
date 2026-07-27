@@ -48,7 +48,7 @@ async function hmacSHA256hex(secret, message) {
 }
 
 // ── Waitlist Signup ───────────────────────────────────────────────────────────
-app.post('/api/waitlist', async (c) => {
+const handleWaitlist = async (c) => {
   try {
     const body = await c.req.json();
     const { name, phone, email } = body;
@@ -162,7 +162,11 @@ app.post('/api/waitlist', async (c) => {
     console.error('waitlist: FATAL ERROR:', error.message);
     return c.json({ success: false, error: 'Failed to add to waitlist' }, 500);
   }
-});
+};
+
+app.post('/api/waitlist', handleWaitlist);
+app.post('/waitlist', handleWaitlist);
+
 
 // ── Payment Status Check ──────────────────────────────────────────────────────
 app.get('/api/payment-status', async (c) => {
