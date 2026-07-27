@@ -47,6 +47,123 @@ async function hmacSHA256hex(secret, message) {
     .join('');
 }
 
+// ── Waitlist Signup ───────────────────────────────────────────────────────────
+app.post('/api/waitlist', async (c) => {
+  try {
+    const body = await c.req.json();
+    const { name, phone, email } = body;
+
+    if (!email) {
+      return c.json({ success: false, error: 'Email is required' }, 400);
+    }
+
+    console.log('waitlist: signup from', email);
+
+    // ── Save to D1 ────────────────────────────────────────────────────────────
+    try {
+      await c.env.DB.prepare(
+        'INSERT INTO waitlist (name, phone, email) VALUES (?, ?, ?)'
+      ).bind(name ?? null, phone ?? null, email).run();
+      console.log('waitlist: saved to DB');
+    } catch (dbErr) {
+      console.error('waitlist: DB insert failed:', dbErr.message);
+      // Continue — still send the email even if DB fails
+    }
+
+    // ── Send confirmation email via Resend ────────────────────────────────────
+    const firstName = name ? name.split(' ')[0] : 'there';
+    const html = `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"/><title>Dhandha School – Waitlist Confirmed</title></head>
+<body style="margin:0;padding:0;background:#0d0d0d;font-family:'Segoe UI',Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#0d0d0d;padding:40px 0;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#141414;border-radius:20px;overflow:hidden;border:1px solid #2a2a2a;">
+
+        <!-- Header -->
+        <tr><td style="background:#FFD93D;padding:32px 40px;text-align:center;">
+          <p style="margin:0;font-size:13px;font-weight:700;letter-spacing:3px;color:#0d0d0d;text-transform:uppercase;">Dhandha School</p>
+          <h1 style="margin:8px 0 0;font-size:30px;font-weight:800;color:#0d0d0d;line-height:1.2;">You're on the List, ${firstName}! 🎉</h1>
+        </td></tr>
+
+        <!-- Body -->
+        <tr><td style="padding:36px 40px;">
+          <p style="margin:0 0 12px;font-size:15px;color:#d1d5db;line-height:1.7;">
+            You've officially joined the waitlist for <strong style="color:#FFD93D;">Finance for Builders – Cohort 03</strong>. We're glad you're here.
+          </p>
+          <p style="margin:0 0 28px;font-size:15px;color:#d1d5db;line-height:1.7;">
+            The cohort is scheduled for <strong style="color:#fff;">August 22 &amp; 23 (Saturday &amp; Sunday), 2 PM – 4 PM</strong> each day. You'll get priority access to register before we open it publicly.
+          </p>
+
+          <!-- WhatsApp CTA -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="background:#0c3d2a;border:1px solid #1a5c3a;border-radius:14px;margin-bottom:28px;overflow:hidden;">
+            <tr><td style="padding:24px;text-align:center;">
+              <p style="margin:0 0 6px;font-size:15px;font-weight:700;color:#6ee7b7;">Join the WhatsApp Community</p>
+              <p style="margin:0 0 16px;font-size:13px;color:#9ca3af;line-height:1.6;">Get cohort updates, connect with fellow builders, and be the first to register.</p>
+              <a href="https://chat.whatsapp.com/IhZsZTpYuk84rQPeEjtg5o"
+                 style="display:inline-block;background:#25D366;color:#fff;font-weight:700;font-size:14px;padding:12px 28px;border-radius:10px;text-decoration:none;">
+                💬 Join WhatsApp Group
+              </a>
+            </td></tr>
+          </table>
+
+          <!-- What to expect -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="background:#1e1e1e;border:1px solid #2d2d2d;border-radius:14px;margin-bottom:28px;overflow:hidden;">
+            <tr><td style="padding:20px 24px;">
+              <p style="margin:0 0 12px;font-size:12px;font-weight:700;letter-spacing:2px;color:#FFD93D;text-transform:uppercase;">What to expect</p>
+              <ul style="margin:0;padding:0 0 0 18px;color:#d1d5db;font-size:14px;line-height:2;">
+                <li>4-hour live session with Vibhanshu (Aug 22 &amp; 23, 2–4 PM each day)</li>
+                <li>Early-bird access before public registration opens</li>
+                <li>Workbook, templates &amp; lifetime recording access</li>
+                <li>Private Cohort 03 community</li>
+              </ul>
+            </td></tr>
+          </table>
+
+          <p style="margin:0;font-size:15px;color:#d1d5db;line-height:1.7;">
+            We'll be in touch soon. Until then — see you in the WhatsApp group! 🚀
+          </p>
+        </td></tr>
+
+        <!-- Footer -->
+        <tr><td style="background:#0d0d0d;padding:24px 40px;text-align:center;border-top:1px solid #1f1f1f;">
+          <p style="margin:0;font-size:13px;color:#6b7280;">— Team Dhandha School</p>
+          <p style="margin:8px 0 0;font-size:12px;color:#4b5563;">© 2026 Dhandha School · Made in India</p>
+        </td></tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+
+    try {
+      const emailRes = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${c.env.RESEND_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          from: 'Dhandha School <founder@dhandhaschool.com>',
+          to: [email],
+          subject: "You're on the Cohort 03 Waitlist – Dhandha School",
+          html,
+        }),
+      });
+      const emailData = await emailRes.json();
+      console.log('waitlist: email sent, status =', emailRes.status, JSON.stringify(emailData));
+    } catch (emailErr) {
+      console.error('waitlist: email failed:', emailErr.message);
+    }
+
+    return c.json({ success: true, message: 'Added to waitlist' });
+  } catch (error) {
+    console.error('waitlist: FATAL ERROR:', error.message);
+    return c.json({ success: false, error: 'Failed to add to waitlist' }, 500);
+  }
+});
+
 // ── Payment Status Check ──────────────────────────────────────────────────────
 app.get('/api/payment-status', async (c) => {
   const orderId = c.req.query('order_id');
@@ -62,6 +179,7 @@ app.get('/api/payment-status', async (c) => {
     return c.json({ success: false, error: err.message }, 500);
   }
 });
+
 
 // ── Create Order ──────────────────────────────────────────────────────────────
 app.post('/api/create-order', async (c) => {
