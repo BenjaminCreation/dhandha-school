@@ -21,7 +21,7 @@ const faqData = [
   {
     question: "What's the format? Live or recorded?",
     answer:
-      "TWO 2-hour live session, online. Q&A throughout. The session is recorded and you get lifetime access, so missing the live class is not fatal, but the live experience is the most valuable part."
+      "TWO 2-hour live sessions, online. Q&A throughout. The session is recorded and you get lifetime access, so missing the live class is not fatal, but the live experience is the most valuable part."
   },
   {
     question: 'What language will the session be in?',
@@ -29,14 +29,19 @@ const faqData = [
       "Primarily English, with Hinglish where it makes the idea clearer. The goal is clarity, not formality. If demand grows for fully regional-language cohorts, we'll build those."
   },
   {
-    question: "Why is it ₹999? What's the catch?",
+    question: "When does Cohort 03 start?",
     answer:
-      `Because you're joining early. Cohort 02 is intentionally priced at ₹999 to reward early believers and help us build the community with your feedback.`
+      "Cohort 03 is scheduled for August 22 & 23 (Saturday & Sunday), 2 PM – 4 PM each day. Join the waitlist and you'll get first access to register before we open it publicly."
+  },
+  {
+    question: "Why should I join the waitlist?",
+    answer:
+      "Cohort 03 seats are limited. Waitlist members get first access, early-bird pricing, and a direct line to the community of builders joining alongside them."
   },
   {
     question: "What if it's not for me?",
     answer:
-      "If you join the live session and feel it's not what you signed up for, message us within 48 hours and we'll refund you. No forms, no friction."
+      "No pressure. The waitlist is free. Once dates and pricing are announced, you can decide then — no commitment until you choose to join."
   }
 ];
 
@@ -130,7 +135,7 @@ const pricingPerks = [
   'Workbook with templates for all 4 modules',
   'Live Q&A across the full session',
   'Lifetime access to recordings',
-  'Private community of cohort 02',
+  'Private community of cohort 03',
   'Discounted access to future masterclasses'
 ];
 
@@ -191,21 +196,23 @@ const sectionAnnouncements = [
   'Lifetime recordings'
 ];
 
+const WHATSAPP_COHORT3_LINK = "https://chat.whatsapp.com/IhZsZTpYuk84rQPeEjtg5o";
+
 function App() {
   const [loading, setLoading] = useState(true);
   const [openFaqIndex, setOpenFaqIndex] = useState(0);
-  const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [paymentSuccess, setPaymentSuccess] = useState(false);
-  const [paymentLoading, setPaymentLoading] = useState(false);
+  const [showWaitlistModal, setShowWaitlistModal] = useState(false);
+  const [waitlistSuccess, setWaitlistSuccess] = useState(false);
+  const [waitlistLoading, setWaitlistLoading] = useState(false);
   const [userName, setUserName] = useState("");
+  const [userPhone, setUserPhone] = useState("");
   const [userEmail, setUserEmail] = useState("");
 
   const [isMobile, setIsMobile] = useState(false);
 
-  // Debug: Check environment variable
+  // Debug: Check environment
   useEffect(() => {
-    console.log("App Loaded - VITE_RAZORPAY_KEY_ID exists:", !!import.meta.env.VITE_RAZORPAY_KEY_ID);
-    console.log("Key starts with rzp_:", import.meta.env.VITE_RAZORPAY_KEY_ID?.startsWith("rzp_"));
+    console.log("App Loaded - Cohort 03 Waitlist Mode");
   }, []);
 
   useEffect(() => {
@@ -223,144 +230,32 @@ function App() {
   const outer3Ref = useRef(null);
   const track3Ref = useRef(null);
 
-  const handleProceedToPayment = async () => {
-    if (!userName.trim() || !userEmail.trim()) {
-      alert("Please fill in your name and email!");
+  const handleWaitlistSubmit = async () => {
+    if (!userName.trim() || !userPhone.trim() || !userEmail.trim()) {
+      alert("Please fill in all fields!");
       return;
     }
-    await openRazorpayCheckout();
-  };
+    setWaitlistLoading(true);
 
-  const openRazorpayCheckout = async () => {
+    // Optionally notify backend about waitlist signup (non-blocking)
     try {
-      setPaymentLoading(true);
-      const key = import.meta.env.VITE_RAZORPAY_KEY_ID;
       const backendUrl = import.meta.env.VITE_BACKEND_WORKER_URL || "";
-
-      console.log("Razorpay Key:", key ? "Loaded" : "Missing");
-      console.log("Backend Worker URL:", backendUrl || "(relative)");
-      console.log("window.Razorpay available:", typeof window.Razorpay !== "undefined");
-
-      // Step 1: Try to create a Razorpay order via our backend
-      let orderId = null;
-      try {
-        const orderRes = await fetch(`${backendUrl}/api/create-order`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-        });
-        if (orderRes.ok) {
-          const orderData = await orderRes.json();
-          if (orderData.success && orderData.order?.id) {
-            orderId = orderData.order.id;
-          }
-        }
-      } catch (_) {
-        // Backend not reachable — proceed without order (fallback mode)
-        console.warn("Backend unavailable, falling back to orderless checkout.");
-      }
-
-      const options = {
-        key: key,
-        amount: 99900, // ₹999 in paise (production)
-        currency: "INR",
-        name: "Dhandha School",
-        description: "Finance for Builders - Cohort 02",
-        image: "/favicon.svg",
-        ...(orderId && { order_id: orderId }),
-        handler: async function (response) {
-          // Step 2: Verify payment signature via backend
-          try {
-            const verifyRes = await fetch(`${backendUrl}/api/verify-payment`, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_order_id: response.razorpay_order_id,
-                razorpay_signature: response.razorpay_signature,
-                name: userName,
-                email: userEmail,
-              }),
-            });
-            if (verifyRes.ok) {
-              const verifyData = await verifyRes.json();
-              if (!verifyData.success) {
-                console.warn("Signature verification failed on server.");
-              }
-            }
-          } catch (_) {
-            // Backend not reachable — still show success to user
-            console.warn("Could not verify payment on backend (offline).");
-          }
-
-          // Show in-app success screen
-          setShowPaymentModal(false);
-          setPaymentSuccess(true);
-          setUserName("");
-          setUserEmail("");
-        },
-        prefill: {
-          name: userName,
-          email: userEmail,
-        },
-        notes: {
-          address: "Dhandha School Office",
-        },
-        theme: {
-          color: "#FFD93D",
-        },
-      };
-
-      setPaymentLoading(false);
-
-      if (typeof window.Razorpay === "undefined") {
-        alert("Razorpay checkout failed to load. Please refresh the page and try again.");
-        return;
-      }
-
-      const rzp1 = new window.Razorpay(options);
-
-      // ── Success handler (fires immediately on payment completion) ──────────
-      rzp1.on("payment.failed", function (response) {
-        console.error("payment.failed:", response.error);
-        // Don't alert — modal.ondismiss will poll and show the right message
+      await fetch(`${backendUrl}/api/waitlist`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: userName, phone: userPhone, email: userEmail }),
       });
-
-      // ── Dismiss handler — polls backend to confirm status for async UPI ───
-      rzp1.on("modal.ondismiss", async function () {
-        if (!orderId) return; // no order was created, nothing to check
-        console.log("Modal dismissed — polling payment status for order:", orderId);
-
-        // Poll up to 8 times (every 1.5s = 12 seconds total) for async UPI
-        for (let i = 0; i < 8; i++) {
-          await new Promise(r => setTimeout(r, 1500));
-          try {
-            const res = await fetch(`${backendUrl}/api/payment-status?order_id=${orderId}`);
-            if (res.ok) {
-              const data = await res.json();
-              console.log(`Poll ${i + 1}: status =`, data.status);
-              if (data.status === "success") {
-                // Payment confirmed — show success screen
-                setShowPaymentModal(false);
-                setPaymentSuccess(true);
-                setUserName("");
-                setUserEmail("");
-                return;
-              }
-            }
-          } catch (e) {
-            console.warn("Poll error:", e.message);
-          }
-        }
-        // After polling, still pending — tell user to check email
-        console.log("Payment still pending after polling. Webhook will handle it.");
-      });
-
-      rzp1.open();
-    } catch (error) {
-      setPaymentLoading(false);
-      console.error("Razorpay Checkout Error:", error);
-      alert("Failed to open checkout. Please check the console for details and try again!");
+    } catch (_) {
+      // Backend optional — still redirect to WhatsApp
     }
+
+    setWaitlistLoading(false);
+    setShowWaitlistModal(false);
+    setUserName("");
+    setUserPhone("");
+    setUserEmail("");
+    // Redirect to WhatsApp group
+    window.open(WHATSAPP_COHORT3_LINK, "_blank", "noopener,noreferrer");
   };
 
   useEffect(() => {
@@ -876,7 +771,7 @@ function App() {
           <div className="iim-bg-overlay" />
           <div className="mckinsey-bg-overlay" />
 
-          <Hero setShowPaymentModal={setShowPaymentModal} />
+          <Hero setShowWaitlistModal={setShowWaitlistModal} />
 
           <div className="horizontal-scroll-outer" id="why" ref={outer1Ref}>
             <div className="horizontal-scroll-track" ref={track1Ref}>
@@ -1044,7 +939,7 @@ function App() {
               <section className="placeholder-section section-4" id="second-cohort">
                 <div className="story-stage story-stage-pricing story-panel">
                   <div className="story-topbar">
-                    <span className="story-badge">04 / SECOND COHORT</span>
+                    <span className="story-badge">04 / THIRD COHORT</span>
                     <div className="story-chip-row">
                       <span className="story-chip">
                         <svg className="chip-icon mobile-only-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: '13px', height: '13px', marginRight: '6px', display: 'none', verticalAlign: 'middle' }}>
@@ -1074,22 +969,21 @@ function App() {
                   <div className="pricing-layout">
                     <div className="pricing-copy story-panel">
                       <h2 className="story-heading">
-                        <span className="story-highlight story-highlight-blue">₹999</span>
-                        <span className="story-heading-line">for the second leap.</span>
+                        <span className="story-highlight story-highlight-blue">Cohort 03</span>
+                        <span className="story-heading-line">is coming. Get in early.</span>
                       </h2>
                       <div className="story-slant-capsule story-slant-capsule-dark">
-                        <span className="story-capsule-text story-capsule-text-dark">Early member pricing for the second cohort only.</span>
+                        <span className="story-capsule-text story-capsule-text-dark">Aug 22 & 23 · 2 PM – 4 PM · Join the waitlist now.</span>
                       </div>
                       <p className="story-body">
-                        Tight, dense, live, and useful the same day. The offer is small on price so the ambition can be big on access.
+                        Seats are limited and waitlist members get priority access. Register before we open it publicly.
                       </p>
                     </div>
                     <div className="pricing-poster story-panel">
                       <div className="pricing-poster-top">
-                        <span className="pricing-eyebrow">Finance for Builders</span>
+                        <span className="pricing-eyebrow">Finance for Builders — Cohort 03</span>
                         <div className="pricing-amounts">
-                          <span className="pricing-old">₹1,999</span>
-                          <span className="pricing-new">₹999</span>
+                          <span className="pricing-new" style={{ fontSize: '1.6rem', letterSpacing: '-0.02em' }}>Waitlist Open</span>
                         </div>
                       </div>
                       <ul className="pricing-list">
@@ -1115,7 +1009,7 @@ function App() {
                         <svg className="pricing-sparkle pricing-sparkle-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M12 2L14 10L22 12L14 14L12 22L10 14L2 12L10 10L12 2Z" fill="#f59e0b" />
                         </svg>
-                        <button className="primer-btn get-started-btn pricing-primary-btn" onClick={() => setShowPaymentModal(true)}>Join &nbsp; ➔</button>
+                        <button className="primer-btn get-started-btn pricing-primary-btn" onClick={() => setShowWaitlistModal(true)}>Join Waitlist &nbsp; ➔</button>
                       </div>
                     </div>
                   </div>
@@ -1184,13 +1078,13 @@ function App() {
                   <span className="story-heading-line">can change how you read a business.</span>
                 </h2>
                 <div className="story-slant-capsule">
-                  <span className="story-capsule-text">Two masterclass . Only Leap</span>
+                  <span className="story-capsule-text">Cohort 03 · Aug 22 & 23 · 2 PM – 4 PM</span>
                 </div>
                 <p className="story-black-strip">
                   One language every builder eventually has to learn.
                 </p>
                 <div className="cta-actions">
-                  <button className="primer-btn get-started-btn" onClick={() => setShowPaymentModal(true)}>Join the masterclass</button>
+                  <button className="primer-btn get-started-btn" onClick={() => setShowWaitlistModal(true)}>Join the Waitlist</button>
                 </div>
               </div>
             </div>
@@ -1400,7 +1294,7 @@ function App() {
               <div className="sec8-footer-bottom-bar">
                 <span>© 2026 Dhandha School · Made in India · All rights reserved</span>
                 <a href="https://www.upforgeconsulting.com" target="_blank" rel="noopener noreferrer" className="footer-upforge-link">Made by UpForge</a>
-                <span>Cohort 02 · 2026</span>
+                <span>Cohort 03 · 2026</span>
               </div>
             </footer>
           </section>
@@ -1409,16 +1303,16 @@ function App() {
 
       {loading && <Loader onComplete={() => setLoading(false)} />}
 
-      {/* Payment Modal */}
-      {showPaymentModal && (
-        <div className="payment-modal-overlay" onClick={() => setShowPaymentModal(false)}>
+      {/* Waitlist Modal */}
+      {showWaitlistModal && (
+        <div className="payment-modal-overlay" onClick={() => setShowWaitlistModal(false)}>
           <div className="payment-modal" onClick={(e) => e.stopPropagation()}>
-            <button className="payment-modal-close" onClick={() => setShowPaymentModal(false)}>
+            <button className="payment-modal-close" onClick={() => setShowWaitlistModal(false)}>
               ×
             </button>
             <div className="payment-modal-header">
-              <h2 className="payment-modal-title">Join the Masterclass</h2>
-              <p className="payment-modal-subtitle">Fill in your details to proceed with payment</p>
+              <h2 className="payment-modal-title">Join the Waitlist</h2>
+              <p className="payment-modal-subtitle">Be first in line for Cohort 03 — dates & pricing coming soon</p>
             </div>
             <div className="payment-form">
               <div className="form-group">
@@ -1429,6 +1323,16 @@ function App() {
                   value={userName}
                   onChange={(e) => setUserName(e.target.value)}
                   placeholder="Your name"
+                />
+              </div>
+              <div className="form-group">
+                <label className="form-label">Mobile Number</label>
+                <input
+                  type="tel"
+                  className="form-input"
+                  value={userPhone}
+                  onChange={(e) => setUserPhone(e.target.value)}
+                  placeholder="+91 98765 43210"
                 />
               </div>
               <div className="form-group">
@@ -1443,20 +1347,25 @@ function App() {
               </div>
 
               <div className="payment-modal-footer">
-                <div className="payment-price">₹999</div>
+                <div className="waitlist-whatsapp-note">
+                  <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: '16px', height: '16px', color: '#25D366', flexShrink: 0 }}>
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                  </svg>
+                  <span>You'll be redirected to our WhatsApp community</span>
+                </div>
                 <button
                   className="primer-btn"
-                  onClick={handleProceedToPayment}
-                  disabled={paymentLoading}
-                  style={paymentLoading ? { opacity: 0.7, cursor: 'not-allowed' } : {}}
+                  onClick={handleWaitlistSubmit}
+                  disabled={waitlistLoading}
+                  style={waitlistLoading ? { opacity: 0.7, cursor: 'not-allowed' } : {}}
                 >
-                  {paymentLoading ? (
+                  {waitlistLoading ? (
                     <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
                       <span className="payment-btn-spinner" />
-                      Opening Checkout…
+                      Joining…
                     </span>
                   ) : (
-                    'Proceed to Payment'
+                    'Join →'
                   )}
                 </button>
               </div>
@@ -1465,24 +1374,24 @@ function App() {
         </div>
       )}
 
-      {/* Payment Success Screen */}
-      {paymentSuccess && (
-        <div className="payment-success-overlay" onClick={() => setPaymentSuccess(false)}>
+      {/* Waitlist Success Screen */}
+      {waitlistSuccess && (
+        <div className="payment-success-overlay" onClick={() => setWaitlistSuccess(false)}>
           <div className="payment-success-modal" onClick={(e) => e.stopPropagation()}>
             <div className="payment-success-icon-wrap">
               <span className="payment-success-checkmark">✓</span>
               <div className="payment-success-ripple" />
               <div className="payment-success-ripple payment-success-ripple--2" />
             </div>
-            <h2 className="payment-success-title">You&rsquo;re in!</h2>
+            <h2 className="payment-success-title">You&rsquo;re on the list!</h2>
             <p className="payment-success-msg">
-              Welcome to <strong>Dhandha School</strong>. Your seat for <em>Finance for Builders — Cohort 02</em> is confirmed.
+              Welcome to <strong>Dhandha School</strong>. You're on the waitlist for <em>Finance for Builders — Cohort 03</em>.
             </p>
             <p className="payment-success-sub">
-              Check your email inbox for confirmation &amp; next steps. See you in the live session! 🚀
+              We'll reach out as soon as dates are confirmed. Join our WhatsApp group to stay in the loop! 🚀
             </p>
             <a
-              href="https://chat.whatsapp.com/HFcD0IULO1XGgtDGGf46C0"
+              href={WHATSAPP_COHORT3_LINK}
               target="_blank"
               rel="noopener noreferrer"
               className="whatsapp-join-btn"
@@ -1494,7 +1403,7 @@ function App() {
             </a>
             <button
               className="primer-btn payment-success-close-btn"
-              onClick={() => setPaymentSuccess(false)}
+              onClick={() => setWaitlistSuccess(false)}
             >
               Back to Home
             </button>

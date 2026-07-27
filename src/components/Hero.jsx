@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Hero.css';
 
-const Hero = ({ setShowPaymentModal }) => {
+const Hero = ({ setShowWaitlistModal }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [visibleItemsCount, setVisibleItemsCount] = useState(0);
   const [menuBgColor, setMenuBgColor] = useState('#050505');
@@ -234,7 +234,7 @@ const Hero = ({ setShowPaymentModal }) => {
 
           {/* Right Links */}
           <div className="nav_right_box">
-            <button className="primer-btn get-started-btn" onClick={() => setShowPaymentModal(true)}>Get started</button>
+            <button className="primer-btn get-started-btn" onClick={() => setShowWaitlistModal(true)}>Join Waitlist</button>
           </div>
         </div>
       </header>
@@ -259,8 +259,8 @@ const Hero = ({ setShowPaymentModal }) => {
             </span>
           </div>
 
-          <button className="hero-cta-btn" onClick={() => setShowPaymentModal(true)}>
-            Join the Masterclass <span className="cta-arrow">➔</span>
+          <button className="hero-cta-btn" onClick={() => setShowWaitlistModal(true)}>
+            Join the Waitlist <span className="cta-arrow">➤</span>
           </button>
         </div>
       </main>

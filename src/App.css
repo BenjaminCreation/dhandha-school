@@ -1,4 +1,4 @@
-﻿.app-shell {
+.app-shell {
   position: relative;
   min-height: 100vh;
   background-color: #fbf9f4;
@@ -1922,6 +1922,19 @@
   flex-direction: column;
   gap: 12px;
   margin-top: 24px;
+}
+
+.waitlist-whatsapp-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: #6b7280;
+  background: rgba(37, 211, 102, 0.08);
+  border: 1px solid rgba(37, 211, 102, 0.2);
+  border-radius: 8px;
+  padding: 8px 12px;
+  line-height: 1.4;
 }
 
 .primer-btn {
