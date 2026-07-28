@@ -1,0 +1,5 @@
+# Cloudflare Pages configuration
+name = "dhandha-school"
+compatibility_date = "2025-01-01"
+
+# Pages Functions (we'll proxy API calls to our Worker from here, or just point to the Worker URL)
